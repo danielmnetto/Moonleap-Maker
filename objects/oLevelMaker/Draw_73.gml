@@ -23,22 +23,22 @@ if current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
 }
 
 // HOVER TEXT
-if mode == LEVEL_EDITOR_MODE.EDITING and hover_text != "" {
-    var _mouse_x = global.level_maker_mouse_x;
-    var _mouse_y = global.level_maker_mouse_y;
+//if mode == LEVEL_EDITOR_MODE.EDITING and hover_text != "" {
+//    var _mouse_x = global.level_maker_mouse_x;
+//    var _mouse_y = global.level_maker_mouse_y;
 
-	if global.level_maker_mouse_x < room_width / 2 {
-		draw_set_halign(fa_left)
-		draw_text_shadow(_mouse_x + 14, _mouse_y, hover_text, text_shadow_x, text_shadow_y, color.nice_black);
-	} else {
-		draw_set_halign(fa_right)
-		draw_text_shadow(_mouse_x - 7, _mouse_y, hover_text, text_shadow_x, text_shadow_y, color.nice_black);
-	}
-}
+//	if global.level_maker_mouse_x < room_width / 2 {
+//		draw_set_halign(fa_left)
+//		draw_text_shadow(_mouse_x + 14, _mouse_y, hover_text, text_shadow_x, text_shadow_y, color.nice_black);
+//	} else {
+//		draw_set_halign(fa_right)
+//		draw_text_shadow(_mouse_x - 7, _mouse_y, hover_text, text_shadow_x, text_shadow_y, color.nice_black);
+//	}
+//}
 
-// CURSOR
-draw_set_halign(fa_left)
-draw_sprite(sCursor, cursor, global.level_maker_mouse_x, global.level_maker_mouse_y);
+//// CURSOR
+//draw_set_halign(fa_left)
+//draw_sprite(sCursor, cursor, global.level_maker_mouse_x, global.level_maker_mouse_y);
 
 draw_set_color(-1);
 draw_set_halign(-1);
