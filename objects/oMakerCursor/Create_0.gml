@@ -181,7 +181,6 @@ draw_preview_object = function() {
   if instance_exists(oPauseMenu)
   or not level_maker_is_editing()
   or is_undefined(_object_hover)
-  or _has_object_below_cursor
   or not is_into_level_area()
   or type == LEVEL_CURSOR_TYPE.ERASER 
   or _layer != LEVEL_CURRENT_LAYER.OBJECTS {
@@ -204,7 +203,7 @@ draw_preview_object = function() {
       _preview_xscale = object_transform.xscale,
       _preview_yscale = object_transform.yscale,
       _preview_angle = object_transform.angle,
-      _preview_blend = c_white,
+      _preview_blend = _has_object_below_cursor ? c_red : c_white,
       _preview_alpha = 0.6;
 
   if not is_undefined(_preview_frame_horizontal) {
@@ -279,5 +278,16 @@ draw_helper_text = function() {
 };
 
 draw_cursor = function() {
+  var _selected_object = oLevelMaker.selected_object;
+  
+  draw_set_alpha(1);
+  
+  if not is_undefined(_selected_object)
+  and type == LEVEL_CURSOR_TYPE.CURSOR
+  and is_into_level_area() {
+    draw_set_alpha(0.3);
+  }
+  
   draw_sprite(sCursor, type, x, y);
+  draw_set_alpha(1);
 };
