@@ -194,6 +194,7 @@ if image_index == 8 and is_mouse_left_pressing {
 if image_index == 9 and is_mouse_left_pressing {
 	audio_play_sfx(sndUiChange,false,-18.3,1)
 	oLevelMaker.cursor = LEVEL_CURSOR_TYPE.ERASER;
+  oMakerCursor.type = LEVEL_CURSOR_TYPE.ERASER;
 }
 
 // Clear level

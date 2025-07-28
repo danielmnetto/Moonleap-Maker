@@ -7,7 +7,7 @@ input = {
   flip_mirror: function() {
     return keyboard_check_pressed(ord("X"));
   },
-}
+};
 
 object_transform = {
   x: 0,
@@ -34,16 +34,31 @@ is_into_level_area = function() {
 };
 
 update_cursor_type = function() {
+  if type == LEVEL_CURSOR_TYPE.ERASER {
+    return;
+  }
+  
+  var _layer = oLevelMaker.current_layer;
+  var _selected_object = oLevelMaker.selected_object;
+  var _object_hover = oLevelMaker.object_grid_hovering
+  
   type = LEVEL_CURSOR_TYPE.CURSOR;
 
   if collision_point(x, y, [oButtonMaker, oButtonMakerObj], false, true) {
     type = LEVEL_CURSOR_TYPE.FINGER;
   }
-
-  if mouse_check_button(mb_right) and is_into_level_area() {
-    type = LEVEL_CURSOR_TYPE.ERASER;
+	
+  if _layer == LEVEL_CURRENT_LAYER.OBJECTS
+  and _object_hover != -1 {
+  	type = not is_undefined(_selected_object) and _selected_object.has_tag("is_holdable") ? LEVEL_CURSOR_TYPE.CANCEL : LEVEL_CURSOR_TYPE.FINGER;
   }
-}
+};
+
+reset_object_rotation_and_scaling = function() {
+  object_transform.xscale = 1;
+  object_transform.yscale = 1;
+  object_transform.angle = 0;
+};
 
 check_input_to_rotate_object = function() {
   var _layer = oLevelMaker.current_layer;
@@ -72,7 +87,7 @@ check_input_to_rotate_object = function() {
     object_transform.angle = 0;
   }
 	audio_play_sfx(sndPress, false, -5, 13);
-}
+};
 
 check_input_to_scale_object = function() {
   var _layer = oLevelMaker.current_layer;
@@ -102,7 +117,7 @@ check_input_to_scale_object = function() {
 		object_transform.xscale *= -1;
 	}
 	audio_play_sfx(sndPress, false, -5, 13);
-}
+};
 
 update_object_cursor_position = function() {
   var _layer = oLevelMaker.current_layer;
@@ -115,9 +130,9 @@ update_object_cursor_position = function() {
   var _object_tile_size = oLevelMaker.tile_size;
   var _room_tile_width = oLevelMaker.room_tile_width;
   var _room_tile_height = oLevelMaker.room_tile_height;
-  var _selected_object_sprite = -1;
   var _tile_scale = not is_undefined(_selected_object) and _selected_object.has_tag("grid_16") ? 2 : 1;
-
+  var _selected_object_sprite = -1;
+  
   if not is_undefined(_selected_object) {
     _selected_object_sprite = object_get_sprite(_selected_object.index);
   }
@@ -140,7 +155,7 @@ update_object_cursor_position = function() {
   _selected_object_mouse_tile_x = clamp(_selected_object_mouse_tile_x, 0, _room_tile_width - _object_width);
   _selected_object_mouse_tile_y = clamp(_selected_object_mouse_tile_y, 0, _room_tile_height - _object_height);
 
-  var _new_offset = oLevelMaker.rotate_object_offset(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, image_angle);
+  var _new_offset = oLevelMaker.rotate_object_offset(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, object_transform.angle);
 
   _sprite_offset_x = _new_offset[0];
   _sprite_offset_y = _new_offset[1];
@@ -148,47 +163,50 @@ update_object_cursor_position = function() {
   //placing objects with centered visuals
   object_transform.x = _selected_object_mouse_tile_x * _object_tile_size + _sprite_offset_x;
   object_transform.y = _selected_object_mouse_tile_y * _object_tile_size + _sprite_offset_y;
-}
+};
 
 set_object_in_level = function() {
   
-}
+};
 
 set_tile_in_level = function() {
   
-}
+};
 
 draw_preview_object = function() {
+  var _object_hover = oLevelMaker.cursor_object_hovering;
+  var _has_object_below_cursor = oLevelMaker.has_object_below_cursor;
   var _layer = oLevelMaker.current_layer;
   
-  if _layer != LEVEL_CURRENT_LAYER.OBJECTS {
+  if instance_exists(oPauseMenu)
+  or not level_maker_is_editing()
+  or is_undefined(_object_hover)
+  or _has_object_below_cursor
+  or not is_into_level_area()
+  or type == LEVEL_CURSOR_TYPE.ERASER 
+  or _layer != LEVEL_CURRENT_LAYER.OBJECTS {
     return;
   }
-  
-  if not is_into_level_area() {
-    return;
-  }
-  
-  var _grid_tile_size = oLevelMaker.tile_size;
+
   var _preview_object = oLevelMaker.cursor_object_hovering;
   
   if is_undefined(_preview_object) {
     return;
   }
-
+  
+  var _grid_tile_size = oLevelMaker.tile_size;
   var _preview_sprite = object_get_sprite(_preview_object.index),
       _preview_frame = 0,
-      _preview_x = x div _grid_tile_size * _grid_tile_size,
-      _preview_y = y div _grid_tile_size * _grid_tile_size,
+      _preview_frame_horizontal = _preview_object.preview_image_index_horizontal,
+      _preview_frame_vertical = _preview_object.preview_image_index_vertical,
+      _preview_x = object_transform.x,
+      _preview_y = object_transform.y,
       _preview_xscale = object_transform.xscale,
       _preview_yscale = object_transform.yscale,
       _preview_angle = object_transform.angle,
       _preview_blend = c_white,
       _preview_alpha = 0.6;
 
-  var _preview_frame_horizontal = _preview_object.preview_image_index_horizontal;
-  var _preview_frame_vertical = _preview_object.preview_image_index_vertical;
-    
   if not is_undefined(_preview_frame_horizontal) {
     _preview_frame = object_transform.xscale == -1 ? _preview_frame_horizontal : 0;
     _preview_xscale = 1;
@@ -234,7 +252,11 @@ draw_preview_tile = function() {
 draw_helper_text = function() {
   var _helper_text = oLevelMaker.hover_text;
   
-  if not level_maker_is_editing() or _helper_text == "" {
+  if not level_maker_is_editing() {
+    return;
+  }
+  
+  if _helper_text == "" {
     return;
   }
   
@@ -258,4 +280,4 @@ draw_helper_text = function() {
 
 draw_cursor = function() {
   draw_sprite(sCursor, type, x, y);
-}
+};
