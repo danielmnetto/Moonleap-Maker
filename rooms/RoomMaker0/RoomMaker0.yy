@@ -6,6 +6,7 @@
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
+    {"name":"inst_188C669","path":"rooms/RoomMaker0/RoomMaker0.yy",},
     {"name":"inst_57EB66F1","path":"rooms/RoomMaker0/RoomMaker0.yy",},
     {"name":"inst_E41105A","path":"rooms/RoomMaker0/RoomMaker0.yy",},
     {"name":"inst_14757B65","path":"rooms/RoomMaker0/RoomMaker0.yy",},
@@ -33,13 +34,14 @@
     {"name":"inst_40922613","path":"rooms/RoomMaker0/RoomMaker0.yy",},
     {"name":"inst_261B0AAB","path":"rooms/RoomMaker0/RoomMaker0.yy",},
     {"name":"inst_5EED01D","path":"rooms/RoomMaker0/RoomMaker0.yy",},
-    {"name":"inst_188C669","path":"rooms/RoomMaker0/RoomMaker0.yy",},
     {"name":"inst_1D46CD34","path":"rooms/RoomMaker0/RoomMaker0.yy",},
+    {"name":"inst_95AB829","path":"rooms/RoomMaker0/RoomMaker0.yy",},
   ],
   "isDnd":false,
   "layers":[
     {"$GMRLayer":"","%Name":"LayerGroup_Controllers","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[
         {"$GMRInstanceLayer":"","%Name":"Instances_2","depth":100,"effectEnabled":true,"effectType":"none","gridX":16,"gridY":16,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
+            {"$GMRInstance":"v2","%Name":"inst_95AB829","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_95AB829","objectId":{"name":"oMakerCursor","path":"objects/oMakerCursor/oMakerCursor.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":16.0,"y":0.0,},
             {"$GMRInstance":"v2","%Name":"inst_57EB66F1","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":1,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_57EB66F1","objectId":{"name":"oButtonMaker","path":"objects/oButtonMaker/oButtonMaker.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":-47.0,"y":-46.0,},
             {"$GMRInstance":"v2","%Name":"inst_E41105A","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":2,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_E41105A","objectId":{"name":"oButtonMaker","path":"objects/oButtonMaker/oButtonMaker.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":-47.0,"y":-14.0,},
             {"$GMRInstance":"v2","%Name":"inst_14757B65","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":7,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_14757B65","objectId":{"name":"oButtonMaker","path":"objects/oButtonMaker/oButtonMaker.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":336.0,"y":115.0,},
