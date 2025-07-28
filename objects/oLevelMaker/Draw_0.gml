@@ -61,8 +61,8 @@ if level_maker_is_editing() and not instance_exists(oPauseMenu) {
 }
 
 
-draw_set_color(c_white);
-draw_set_font(fntSmall);
+//draw_set_color(c_white);
+//draw_set_font(fntSmall);
 
 // Background
 draw_sprite(sPauseMaker, 0, 0, 0);

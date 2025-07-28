@@ -26,7 +26,7 @@ rank_S_change_max = 0;
 
 // Grid-related
 tile_size = 8;
-room_tile_width =  room_width div tile_size;
+room_tile_width = room_width div tile_size;
 room_tile_height = (room_height div tile_size) + tile_size;
 objects_grid = []; // Grid where the objects inserted by player are.
 
