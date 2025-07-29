@@ -1,6 +1,16 @@
-type = LEVEL_CURSOR_TYPE.CURSOR;
+enum LEVEL_MAKER_CURSOR_MODE { DRAW, QUICK_ERASE, ERASE }
+enum LEVEL_MAKER_CURSOR_STYLE { NOTHING, POINTER, HAND, ERASER, BLOCK }
+
+style = LEVEL_MAKER_CURSOR_STYLE.POINTER;
+mode = LEVEL_MAKER_CURSOR_MODE.DRAW;
 
 input = {
+  select_draw: function() {
+    return mouse_check_button(mb_left);
+  },
+  quick_erase: function() {
+    return mouse_check_button(mb_right);
+  },
   rotate: function() {
     return keyboard_check_pressed(ord("Z"));
   },
@@ -63,26 +73,48 @@ set_cursor_position = function() {
   y = (mouse_y - _app_surface_y) / _gui_scale_y;
 };
 
-update_cursor_type = function() {
-  if type == LEVEL_CURSOR_TYPE.ERASER {
+update_cursor_style = function() {
+  var _new_style = LEVEL_MAKER_CURSOR_STYLE.POINTER,
+      _layer = oLevelMaker.current_layer,
+      _selected_object = oLevelMaker.selected_object,
+      _object_hover = oLevelMaker.object_grid_hovering;
+  
+  if is_into_level_area() {
+    if _layer == LEVEL_CURRENT_LAYER.OBJECTS
+    and _object_hover != -1 {
+    	_new_style = not is_undefined(_selected_object) and _selected_object.has_tag("is_holdable")
+        ? LEVEL_MAKER_CURSOR_STYLE.BLOCK
+        : LEVEL_MAKER_CURSOR_STYLE.HAND;
+    }
+    
+    if mode == LEVEL_MAKER_CURSOR_MODE.QUICK_ERASE
+    or mode == LEVEL_MAKER_CURSOR_MODE.ERASE {
+      _new_style = LEVEL_MAKER_CURSOR_STYLE.ERASER;
+    }
+  }
+  
+  if collision_point(x, y, [oButtonMaker, oButtonMakerObj], false, true) {
+    _new_style = LEVEL_MAKER_CURSOR_STYLE.HAND;
+  }
+
+  style = _new_style;
+};
+
+update_cursor_mode = function() {
+  if mode == LEVEL_MAKER_CURSOR_MODE.ERASE {
     return;
   }
   
-  var _layer = oLevelMaker.current_layer;
-  var _selected_object = oLevelMaker.selected_object;
-  var _object_hover = oLevelMaker.object_grid_hovering
+  var _new_mode = LEVEL_MAKER_CURSOR_MODE.DRAW;
   
-  type = LEVEL_CURSOR_TYPE.CURSOR;
-
-  if collision_point(x, y, [oButtonMaker, oButtonMakerObj], false, true) {
-    type = LEVEL_CURSOR_TYPE.FINGER;
+  if is_into_level_area() {
+    if input.quick_erase() {
+      _new_mode = LEVEL_MAKER_CURSOR_MODE.QUICK_ERASE;
+    }
   }
-	
-  if _layer == LEVEL_CURRENT_LAYER.OBJECTS
-  and _object_hover != -1 {
-  	type = not is_undefined(_selected_object) and _selected_object.has_tag("is_holdable") ? LEVEL_CURSOR_TYPE.CANCEL : LEVEL_CURSOR_TYPE.FINGER;
-  }
-};
+  
+  mode = _new_mode;
+}
 
 update_helper_text = function() {
   var _button = collision_point(x, y, oButtonMaker, false, true);
@@ -107,6 +139,10 @@ reset_tile_rotation_and_scaling = function() {
 };
 
 check_input_to_rotate_object = function() {
+  if not level_maker_is_editing() {
+    return;
+  }
+  
   var _layer = oLevelMaker.current_layer;
   
   if is_undefined(_layer != LEVEL_CURRENT_LAYER.OBJECTS) {
@@ -136,6 +172,10 @@ check_input_to_rotate_object = function() {
 };
 
 check_input_to_scale_object = function() {
+  if not level_maker_is_editing() {
+    return;
+  }
+  
   var _layer = oLevelMaker.current_layer;
   
   if is_undefined(_layer != LEVEL_CURRENT_LAYER.OBJECTS) {
@@ -166,6 +206,10 @@ check_input_to_scale_object = function() {
 };
 
 check_input_to_rotate_tile = function() {
+  if not level_maker_is_editing() {
+    return;
+  }
+  
   var _selected_tile = oLevelMaker.selected_tile;
   var _layer = oLevelMaker.current_layer;
   
@@ -213,6 +257,10 @@ check_input_to_rotate_tile = function() {
 };
 
 check_input_to_flip_mirror_tile = function() {
+  if not level_maker_is_editing() {
+    return;
+  }
+  
   var _selected_tile = oLevelMaker.selected_tile;
   var _layer = oLevelMaker.current_layer;
   
@@ -276,7 +324,6 @@ update_object_cursor_position = function() {
   _sprite_offset_x = _new_offset[0];
   _sprite_offset_y = _new_offset[1];
 
-  //placing objects with centered visuals
   object_transform.x = _selected_object_mouse_tile_x * _object_tile_size + _sprite_offset_x;
   object_transform.y = _selected_object_mouse_tile_y * _object_tile_size + _sprite_offset_y;
 };
@@ -309,7 +356,7 @@ draw_preview_object = function() {
   or not level_maker_is_editing()
   or is_undefined(_object_hover)
   or not is_into_level_area()
-  or type == LEVEL_CURSOR_TYPE.ERASER 
+  or style == LEVEL_MAKER_CURSOR_STYLE.ERASER 
   or _layer != LEVEL_CURRENT_LAYER.OBJECTS {
     return;
   }
@@ -411,11 +458,11 @@ draw_cursor = function() {
   draw_set_alpha(1);
   
   if not is_undefined(_selected_object)
-  and type == LEVEL_CURSOR_TYPE.CURSOR
+  and style == LEVEL_MAKER_CURSOR_STYLE.POINTER
   and is_into_level_area() {
     draw_set_alpha(0.3);
   }
   
-  draw_sprite(sCursor, type, x, y);
+  draw_sprite(sCursor, style, x, y);
   draw_set_alpha(1);
 };

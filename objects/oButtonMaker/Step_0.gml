@@ -58,8 +58,9 @@ switch (image_index) {
 
 var is_mouse_left_pressing = mouse_check_button_pressed(mb_left);
 var is_mouse_hover = collision_point(global.level_maker_mouse_x,global.level_maker_mouse_y,self,false,false);
+
 if is_mouse_hover and mouse_check_button(mb_left) { 
-    drawplus = 2;
+  drawplus = 2;
 } else {
 	holding = 0; 
 	cleared_level = false;
@@ -73,16 +74,15 @@ if is_mouse_hover and mouse_check_button(mb_left) {
 // if image_index == 0 and is_mouse_left_pressing {}
 
 // Move object group up
-if image_index == 1 and (is_mouse_left_pressing or key_down or mouse_wheel_up())
-{
-	with(oLevelMaker)
-	{
+if image_index == 1 and (is_mouse_left_pressing or key_down or mouse_wheel_up()) {
+	with(oLevelMaker) {
 		var _pages_length = current_layer == LEVEL_CURRENT_LAYER.OBJECTS ? array_length(obj) - 1 : array_length(tiles) - 1;
 		
 		audio_play_sfx(snd_morcego_02, false, -20, 13);
 		
 		item_preview_offset_y = -4;
-	    selected_object_type -= 1;
+	  selected_object_type -= 1;
+    
 		repeat(_pages_length) {
 			if selected_object_type < 0 then
 				selected_object_type = _pages_length;
@@ -92,12 +92,12 @@ if image_index == 1 and (is_mouse_left_pressing or key_down or mouse_wheel_up())
 		
 		oButtonMakerObj.drawplus = -1;
 
-        with(oLevelMaker) {
-            image_xscale = 1;
-            image_yscale = 1;
-            image_angle = 0;
-            update_current_item();
-        }
+    with(oLevelMaker) {
+      image_xscale = 1;
+      image_yscale = 1;
+      image_angle = 0;
+      update_current_item();
+    }
 	}
 }
 
@@ -194,7 +194,7 @@ if image_index == 8 and is_mouse_left_pressing {
 if image_index == 9 and is_mouse_left_pressing {
 	audio_play_sfx(sndUiChange,false,-18.3,1)
 	oLevelMaker.cursor = LEVEL_CURSOR_TYPE.ERASER;
-  oMakerCursor.type = LEVEL_CURSOR_TYPE.ERASER;
+  oMakerCursor.mode = LEVEL_MAKER_CURSOR_MODE.ERASE;
 }
 
 // Clear level

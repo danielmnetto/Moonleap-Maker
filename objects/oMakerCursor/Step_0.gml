@@ -1,4 +1,5 @@
-update_cursor_type();
+update_cursor_style();
+update_cursor_mode();
 update_helper_text();
 
 check_input_to_rotate_object();

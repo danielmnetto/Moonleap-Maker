@@ -5,18 +5,18 @@ if not level_maker_is_editing() or instance_exists(oPauseMenu) {
 }
 
 if oLevelMaker.current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
-    with(oLevelMaker) {
-        other.object = obj[selected_object_type, other.index];
-    }
+  with(oLevelMaker) {
+    other.object = obj[selected_object_type, other.index];
+  }
 	
 	is_active = not is_undefined(object);
 
 	visible = is_active;
 	sprite_index = not is_active ? -1 : object_get_sprite(object.index);
 } else {
-    with(oLevelMaker) {
-        other.tile = tiles[selected_object_type, other.index];
-    }
+  with(oLevelMaker) {
+    other.tile = tiles[selected_object_type, other.index];
+  }
 	
 	is_active = not is_undefined(tile) or tile <= 0;
 	visible = is_active;
@@ -38,7 +38,7 @@ if is_active and point_in_rectangle(global.level_maker_mouse_x,global.level_make
   if mouse_check_button_pressed(mb_left) {
     audio_play_sfx(sndUiChange, false, -18.3, 1);
     with(oMakerCursor) {
-      type = LEVEL_CURSOR_TYPE.FINGER;
+      mode = LEVEL_MAKER_CURSOR_MODE.DRAW;
       reset_object_rotation_and_scaling();
     }
     with(oLevelMaker) {
