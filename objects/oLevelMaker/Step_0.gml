@@ -26,12 +26,6 @@ if cursor != LEVEL_CURSOR_TYPE.ERASER {
 	cursor = _cursor;
 }
 
-if _hover_button != noone {
-  set_hover_text(_hover_button.hover_text);
-} else {
-  set_hover_text("");
-}
-
 check_return_to_editor_timer();
 
 // If the level editor is not in use don't run any more code

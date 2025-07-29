@@ -44,12 +44,8 @@ return_to_editor_timer = new FrameTimer(60);
 
 // Level-related
 selected_style = LEVEL_STYLE.GRASS;
-//time = 0; //used to release the buttons
 
 // UI-related
-hover_text = "";
-text_shadow_x = 0;
-text_shadow_y = 2; 
 color = {
 	nice_black: make_color_rgb(0,0,72),
 	nice_white: make_color_rgb(170,255,255),
@@ -149,15 +145,14 @@ check_return_to_editor_timer = function() {
   }
 }
 
-cursor_set_position = function() {
-	var _in_level_editor = level_maker_is_editing();
-
-	camera_current_interpolation += _in_level_editor ? -0.07 : 0.07;
+camera_set_interpolation = function() {
+  camera_current_interpolation += level_maker_is_editing() ? -0.07 : 0.07;
 	camera_current_interpolation = clamp(camera_current_interpolation, 0, 1);
+};
 
+cursor_set_position = function() {
 	// Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application surface to keep it pixel perfect
 	// this is instead of using the actual camera cause then it would look ugly zoomed in
-
 	var _cam_offset_x = camera_get_view_x(view_camera[0]);
 	var _cam_offset_y = camera_get_view_y(view_camera[0]);
 	

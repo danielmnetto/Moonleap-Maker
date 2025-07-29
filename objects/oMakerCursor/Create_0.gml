@@ -17,6 +17,13 @@ object_transform = {
   angle: 0
 };
 
+tile_transform = {
+  x: 0,
+  y: 0,
+  xscale: 1,
+  angle: 0
+};
+
 helper_text = {
   content: "",
   shadow_position: {
@@ -31,6 +38,29 @@ helper_text = {
 
 is_into_level_area = function() {
   return x > 0 and x < room_width and y > 0 and y < room_height;
+};
+
+set_cursor_position = function() {
+  // Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application surface to keep it pixel perfect.
+  // This is instead of using the actual camera cause then it would look ugly zoomed in.
+  var _cam_offset_x = camera_get_view_x(view_camera[0]),
+      _cam_offset_y = camera_get_view_y(view_camera[0]),
+      _cam_width = camera_get_view_width(view_camera[0]),
+      _cam_height = camera_get_view_height(view_camera[0]),
+      _cam_interpolation = oLevelMaker.camera_current_interpolation,
+      _app_surface_x = 0,
+      _app_surface_y = 0,
+      _gui_scale_x = 0,
+      _gui_scale_y = 0;
+
+  _app_surface_x = lerp(0, _cam_offset_x, _cam_interpolation);
+  _app_surface_y = lerp(0, _cam_offset_y, _cam_interpolation);
+	
+  _gui_scale_x = lerp(1, _cam_width / room_width, _cam_interpolation);
+  _gui_scale_y = lerp(1, _cam_height / room_height, _cam_interpolation);
+  
+  x = (mouse_x - _app_surface_x) / _gui_scale_x;
+  y = (mouse_y - _app_surface_y) / _gui_scale_y;
 };
 
 update_cursor_type = function() {
@@ -54,10 +84,26 @@ update_cursor_type = function() {
   }
 };
 
+update_helper_text = function() {
+  var _button = collision_point(x, y, oButtonMaker, false, true);
+  
+  if _button == noone {
+    helper_text.content = "";
+    return;
+  }
+  
+  helper_text.content = _button.hover_text;
+};
+
 reset_object_rotation_and_scaling = function() {
   object_transform.xscale = 1;
   object_transform.yscale = 1;
   object_transform.angle = 0;
+};
+
+reset_tile_rotation_and_scaling = function() {
+  tile_transform.xscale = 1;
+  tile_transform.angle = 0;
 };
 
 check_input_to_rotate_object = function() {
@@ -119,6 +165,76 @@ check_input_to_scale_object = function() {
 	audio_play_sfx(sndPress, false, -5, 13);
 };
 
+check_input_to_rotate_tile = function() {
+  var _selected_tile = oLevelMaker.selected_tile;
+  var _layer = oLevelMaker.current_layer;
+  
+  if is_undefined(_selected_tile)
+  or _layer == LEVEL_CURRENT_LAYER.OBJECTS
+  or not input.rotate() { 
+		return;
+  }
+		
+	var _tile = _selected_tile.tile_id;
+	
+	audio_play_sfx(sndPress, false, -5, 13);
+		
+	tile_transform.angle += 90;
+	if tile_transform.angle >= 360 then 
+		tile_transform.angle = 0;
+		
+	var _rotated_tile = _tile;
+  
+	switch(tile_transform.angle) {
+		case 0:
+			_rotated_tile = tile_set_rotate(_rotated_tile, false);
+			_rotated_tile = tile_set_flip(_rotated_tile, false);
+			_rotated_tile = tile_set_mirror(_rotated_tile, false);
+			break;
+		case 90:
+			_rotated_tile = tile_set_rotate(_rotated_tile, true);
+			_rotated_tile = tile_set_flip(_rotated_tile, true);
+			_rotated_tile = tile_set_mirror(_rotated_tile, true);
+			break;
+		case 180:
+			_rotated_tile = tile_set_rotate(_rotated_tile, false);
+			_rotated_tile = tile_set_flip(_rotated_tile, true);
+			_rotated_tile = tile_set_mirror(_rotated_tile, true);
+			break;
+		case 270:
+			_rotated_tile = tile_set_rotate(_rotated_tile, true);
+			_rotated_tile = tile_set_flip(_rotated_tile, false);
+			_rotated_tile = tile_set_mirror(_rotated_tile, false);
+			break;
+	}
+  
+	_tile = _rotated_tile;
+	_selected_tile.tile_id = _rotated_tile;
+};
+
+check_input_to_flip_mirror_tile = function() {
+  var _selected_tile = oLevelMaker.selected_tile;
+  var _layer = oLevelMaker.current_layer;
+  
+  if is_undefined(_selected_tile)
+  or _layer == LEVEL_CURRENT_LAYER.OBJECTS
+  or not input.flip_mirror() { 
+		return;
+  }
+		
+	var _tile = _selected_tile.tile_id;
+  var _new_tile = _tile;
+  
+	audio_play_sfx(sndPress, false, -5, 13);
+	
+	tile_transform.xscale *= -1;
+	_new_tile = tile_set_mirror(_new_tile, not tile_get_mirror(_tile));
+		
+	_tile = _new_tile;
+	
+	_selected_tile.tile_id = _tile;
+};
+
 update_object_cursor_position = function() {
   var _layer = oLevelMaker.current_layer;
   
@@ -165,11 +281,22 @@ update_object_cursor_position = function() {
   object_transform.y = _selected_object_mouse_tile_y * _object_tile_size + _sprite_offset_y;
 };
 
-set_object_in_level = function() {
+update_tile_cursor_position = function() {
+  var _layer = oLevelMaker.current_layer;
+  
+  if is_undefined(_layer == LEVEL_CURRENT_LAYER.OBJECTS) {
+    return;
+  }
+  
+  tile_transform.x = x;
+	tile_transform.y = y;
+};
+
+place_object_in_level = function() {
   
 };
 
-set_tile_in_level = function() {
+place_tile_in_level = function() {
   
 };
 
@@ -237,8 +364,8 @@ draw_preview_tile = function() {
   }
   
   var _preview_tile_size = oLevelMaker.tileset_size;
-  var _x = x div _preview_tile_size * _preview_tile_size;
-	var _y = y div _preview_tile_size * _preview_tile_size;
+  var _x = floor(tile_transform.x / _preview_tile_size) * _preview_tile_size;
+	var _y = floor(tile_transform.y / _preview_tile_size) * _preview_tile_size;
   var _preview_alpha = 0.6;
 
 	draw_set_alpha(_preview_alpha);
@@ -249,7 +376,7 @@ draw_preview_tile = function() {
 };
 
 draw_helper_text = function() {
-  var _helper_text = oLevelMaker.hover_text;
+  var _helper_text = helper_text.content;
   
   if not level_maker_is_editing() {
     return;
@@ -274,6 +401,7 @@ draw_helper_text = function() {
   	draw_text_shadow(_x - _x_offset_left, _y, _helper_text, helper_text.shadow_position.x, helper_text.shadow_position.y, helper_text.color.shadow);
   }
   
+  draw_set_halign(-1);
   draw_set_color(-1);
 };
 

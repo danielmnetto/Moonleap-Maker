@@ -217,9 +217,6 @@ function LMTile(_tile_id) constructor {
 	
 	draw_sprite_preview = function(_x, _y) {
 		draw_tile(tileset, original_tile_id, 0, _x, _y);
-		
-		//if can_change and _show_indicator then
-		//	draw_sprite(sMakerChangeIcon, 0, _x + 16, _y + 16);
 	}
 	
 	draw_sprite_cursor = function(_x, _y) {
