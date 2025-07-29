@@ -338,6 +338,7 @@
     {"id":{"name":"oMakerAnimatedTile","path":"objects/oMakerAnimatedTile/oMakerAnimatedTile.yy",},},
     {"id":{"name":"oMakerBack","path":"objects/oMakerBack/oMakerBack.yy",},},
     {"id":{"name":"oMakerCursor","path":"objects/oMakerCursor/oMakerCursor.yy",},},
+    {"id":{"name":"oMakerEditorObjectDraft","path":"objects/oMakerEditorObjectDraft/oMakerEditorObjectDraft.yy",},},
     {"id":{"name":"oMakerEditorTileDraft","path":"objects/oMakerEditorTileDraft/oMakerEditorTileDraft.yy",},},
     {"id":{"name":"oMakerWarning","path":"objects/oMakerWarning/oMakerWarning.yy",},},
     {"id":{"name":"oMb2","path":"objects/oMb2/oMb2.yy",},},

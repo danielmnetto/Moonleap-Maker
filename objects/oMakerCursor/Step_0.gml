@@ -10,3 +10,6 @@ check_input_to_flip_mirror_tile();
 
 update_object_cursor_position();
 update_tile_cursor_position();
+
+place_object_in_level();
+place_tile_in_level();

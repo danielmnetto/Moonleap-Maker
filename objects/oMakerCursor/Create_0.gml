@@ -1,4 +1,4 @@
-enum LEVEL_MAKER_CURSOR_MODE { DRAW, QUICK_ERASE, ERASE }
+enum LEVEL_MAKER_CURSOR_MODE { DRAW, DRAG, QUICK_ERASE, ERASE }
 enum LEVEL_MAKER_CURSOR_STYLE { NOTHING, POINTER, HAND, ERASER, BLOCK }
 
 style = LEVEL_MAKER_CURSOR_STYLE.POINTER;
@@ -114,7 +114,7 @@ update_cursor_mode = function() {
   }
   
   mode = _new_mode;
-}
+};
 
 update_helper_text = function() {
   var _button = collision_point(x, y, oButtonMaker, false, true);
@@ -340,7 +340,36 @@ update_tile_cursor_position = function() {
 };
 
 place_object_in_level = function() {
+  var _layer = oLevelMaker.current_layer;
+  var _selected_object = oLevelMaker.selected_object;
+  var _is_blocking_placement = not item_place_disable_timer.has_timed_out()
   
+  if _layer != LEVEL_CURRENT_LAYER.OBJECTS
+  or is_undefined(_selected_object)
+  or _is_blocking_placement
+  or not is_into_level_area()
+  or not input.select_draw()
+  or (mode == LEVEL_MAKER_CURSOR_MODE.ERASE or mode == LEVEL_MAKER_CURSOR_MODE.QUICK_ERASE) {
+    return;
+  }
+  
+  var _draft_x = object_transform.x;
+  var _draft_y = object_transform.y;
+  var _draft_width = _selected_object.size_x;
+  var _draft_height = _selected_object.size_y;
+  
+  if collision_rectangle(_draft_x, _draft_y, _draft_x + _draft_width, _draft_y + _draft_height, oMakerEditorObjectDraft, false, false) {
+    return;
+  }
+  
+  var _object_draft = instance_create_layer(object_transform.x, object_transform.y, "Instances", oMakerEditorObjectDraft);
+  
+  _object_draft.object = _selected_object.index;
+  _object_draft.width = _draft_width;
+  _object_draft.height = _draft_height;
+  _object_draft.image_xscale = object_transform.xscale;
+  _object_draft.image_yscale = object_transform.yscale;
+  _object_draft.image_angle = object_transform.angle;
 };
 
 place_tile_in_level = function() {

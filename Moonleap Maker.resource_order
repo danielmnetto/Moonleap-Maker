@@ -168,6 +168,7 @@
     {"name":"oMakerAnimatedTile","order":10,"path":"objects/oMakerAnimatedTile/oMakerAnimatedTile.yy",},
     {"name":"oMakerBack","order":26,"path":"objects/oMakerBack/oMakerBack.yy",},
     {"name":"oMakerCursor","order":12,"path":"objects/oMakerCursor/oMakerCursor.yy",},
+    {"name":"oMakerEditorObjectDraft","order":13,"path":"objects/oMakerEditorObjectDraft/oMakerEditorObjectDraft.yy",},
     {"name":"oMakerEditorTileDraft","order":11,"path":"objects/oMakerEditorTileDraft/oMakerEditorTileDraft.yy",},
     {"name":"oMakerWarning","order":4,"path":"objects/oMakerWarning/oMakerWarning.yy",},
     {"name":"oMb2","order":1,"path":"objects/oMb2/oMb2.yy",},
