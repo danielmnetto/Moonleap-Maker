@@ -1,9 +1,8 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function scr_change() { 
-
 	if instance_exists(oPlayer) {oPlayer.changecount+=1}
-	if instance_exists(oMagicOrb) {oMagicOrb.change=true exit;} 
+	if instance_exists(oMagicOrb) {oMagicOrb.change = true; return;} 
 
 	if instance_exists(oBat) {oBat.change=true}
 	if instance_exists(oKey) {oKey.change=true}
@@ -244,13 +243,13 @@ function level_maker_change_tilesets() {
 	
 function scr_change_orb(){ 
 
-    if instance_exists(oBat) {oBat.change=true}
-    if instance_exists(oKey) {oKey.change=true}
-    if instance_exists(oKeyDoor) {oKeyDoor.change=true}
-    if instance_exists(oBatVer) {oBatVer.change=true}
-    if instance_exists(oSpecial1) {oSpecial1.change=true}
+  if instance_exists(oBat) {oBat.change=true}
+  if instance_exists(oKey) {oKey.change=true}
+  if instance_exists(oKeyDoor) {oKeyDoor.change=true}
+  if instance_exists(oBatVer) {oBatVer.change=true}
+  if instance_exists(oSpecial1) {oSpecial1.change=true}
 
-    audio_play_sfx(snd_switch,false,-20.4,13)
+  audio_play_sfx(snd_switch,false,-20.4,13)
     
 	if instance_exists(oPlayer) {oPlayer.glow=true}
 		
@@ -258,15 +257,15 @@ function scr_change_orb(){
 			oReactParent.night=false
 
 			with (oParentDay)   {ani=2 image_index=0 night=false}
-			with (oSnail)		{ani=3}
-			with (oSnailNight)  {ani=3}
+			with (oSnail)		{ani=3 night=false}
+		  with (oSnailNight)  {ani=3 night=false}
 			with (oParentNight) {ani=2 image_index=2 night=false}
 		} else {
 			oReactParent.night=true
 
 			with (oParentDay)   {ani=2 image_index=2 night=false}
-			with (oSnail)		{ani=3}
-			with (oSnailNight)  {ani=3}
+			with (oSnail)		{ani=3 night=true}
+		  with (oSnailNight)  {ani=3 night=true}
 			with (oParentNight) {ani=2 image_index=0 night=false}
 			//if levelnumb<10 { oDust.sprite_index=sDustNight } else { oDust.sprite_index=sDustNightClouds }
 		}

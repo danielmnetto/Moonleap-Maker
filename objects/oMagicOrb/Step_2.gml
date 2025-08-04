@@ -11,12 +11,14 @@ if change and instance_exists(oPlayer) and cooldown == 0 {
 	
 	instance_create_layer(x,y,layer,oGemSpark)
 	
-	var sfxcogu = choose(snd_warp,snd_warp2,snd_warp3);
-    audio_play_sfx(sfxcogu,false,-14,2)
+	var sfxcogu = choose(snd_warp, snd_warp2, snd_warp3);
+  
+  audio_play_sfx(sfxcogu, false, -14, 2);
+  
 	change = false;
-	scr_change_orb()
+	scr_change_orb();
 	
-    night = not oPlayer.night;
+  night = not oPlayer.night;
 }
 
 if instance_exists(oPauseMenu) 

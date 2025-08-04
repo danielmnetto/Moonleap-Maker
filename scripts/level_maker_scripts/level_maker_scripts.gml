@@ -8,113 +8,105 @@ global.is_maker_mode = true;
 function level_maker_save(_level_name) {
 	with(oLevelMaker) {
 
-		//----------------------
-		// COPYING ALL OBJECTS
-		//----------------------
+    // Get all objects information
 		var _objects_data = [];
-		
-		//loop through all the objs in level maker
+
 		for(var _x = 0; _x < room_tile_width; _x++){
 			for(var _y = 0; _y < room_tile_height; _y++){
 				var _object_data = [];
 				var _object_grid = objects_grid[_x, _y];
 				
 				if is_struct(_object_grid) {
-                    var _object_name = object_get_name(_object_grid.object.index);
+          var _object_name = object_get_name(_object_grid.object.index);
 
 					_object_data = [
-						_object_grid.top_left_x,
-						_object_grid.top_left_y,
-						_object_name,
-						_object_grid.object_width,
-						 _object_grid.object_height,
-						_object_grid.xscale,
-						_object_grid.yscale,
-						_object_grid.angle,
+  					_object_grid.top_left_x,
+  					_object_grid.top_left_y,
+  					_object_name,
+  					_object_grid.object_width,
+  					_object_grid.object_height,
+  					_object_grid.xscale,
+  					_object_grid.yscale,
+  					_object_grid.angle,
 					];
 				} else {
 					_object_data = -1;
 				}
 				
-				_objects_data[_x,_y] = _object_data;
+				_objects_data[_x, _y] = _object_data;
 			}
 		}
 
-        //--------------------
-		// COPYING ALL TILES 
-		//--------------------
-        var _tiles_data = [];
-        var _draft_col_size = tileset_size;
-        var _draft_list = ds_list_create();
-        var _draft_layers = [
-            layer_get_id("Instances_Foreground"),
-            layer_get_id("Instances_Background1"),
-            layer_get_id("Instances_Background2"),
-            layer_get_id("Instances_Background3"),
-            layer_get_id("Instances_Background4")
-        ];
+    // Get all tiles information
+    var _tiles_data = [];
+    var _draft_col_size = tileset_size;
+    var _draft_list = ds_list_create();
+    var _draft_layers = [
+      layer_get_id("Instances_Foreground"),
+      layer_get_id("Instances_Background1"),
+      layer_get_id("Instances_Background2")
+    ];
 
-        for (var l = 0; l < array_length(_draft_layers); l++) {
-            var _layer = _draft_layers[l];
-            var _layer_name = layer_get_name(_layer);
+    for (var l = 0; l < array_length(_draft_layers); l++) {
+      var _layer = _draft_layers[l];
+      var _layer_name = layer_get_name(_layer);
 
-            for(var xx = 0; xx < room_width; xx += 16) {
-                for(var yy = 0; yy < room_height; yy += 16) {
-                    ds_list_clear(_draft_list);
+      for(var xx = 0; xx < room_width; xx += 16) {
+        for(var yy = 0; yy < room_height; yy += 16) {
+          ds_list_clear(_draft_list);
 
-                    var _draft_amount = collision_rectangle_list(xx, yy, xx + 16, yy + 16, oMakerEditorTileDraft, false, true, _draft_list, true);
-                    var _draft_to_save = noone;
+          var _draft_amount = collision_rectangle_list(xx, yy, xx + 16, yy + 16, oMakerEditorTileDraft, false, true, _draft_list, true);
+          var _draft_to_save = noone;
 
-                    for (var i = 0; i < _draft_amount and _draft_to_save == noone; i++) {
-                        var _current_draft = ds_list_find_value(_draft_list, i);
-                        var _dx = _current_draft.x;
-                        var _dy = _current_draft.y;
+          for (var i = 0; i < _draft_amount and _draft_to_save == noone; i++) {
+            var _current_draft = ds_list_find_value(_draft_list, i);
+            var _dx = _current_draft.x;
+            var _dy = _current_draft.y;
                         
-                        if _dx == xx and _dy == yy and layer_get_name(_current_draft.layer) == _layer_name {
-                            _draft_to_save = _current_draft;
-                        }
-                    }
-
-                    if _draft_to_save != noone {
-                        var _tilemap_layer = layer_get_element_layer(_draft_to_save.tilemap_id)
-                        var _tilemap_layer_name = layer_get_name(_tilemap_layer);
-
-                        var _draft_data = [
-                            _draft_to_save.x,
-                            _draft_to_save.y,
-                            _layer_name,
-                            _draft_to_save.tile_id,
-                            _draft_to_save.is_rotated,
-                            _draft_to_save.is_mirrored,
-                            _draft_to_save.is_flipped,
-                            _tilemap_layer_name,
-                            _draft_to_save.xscale,
-                            _draft_to_save.yscale,
-                            _draft_to_save.angle
-                        ];
-
-                        array_push(_tiles_data, _draft_data);
-                    }
-                }
+            if _dx == xx and _dy == yy and layer_get_name(_current_draft.layer) == _layer_name {
+              _draft_to_save = _current_draft;
             }
+          }
+
+          if _draft_to_save != noone {
+            var _tilemap_layer = layer_get_element_layer(_draft_to_save.tilemap_id)
+            var _tilemap_layer_name = layer_get_name(_tilemap_layer);
+
+            var _draft_data = [
+              _draft_to_save.x,
+              _draft_to_save.y,
+              _layer_name,
+              _draft_to_save.tile_id,
+              _draft_to_save.is_rotated,
+              _draft_to_save.is_mirrored,
+              _draft_to_save.is_flipped,
+              _tilemap_layer_name,
+              _draft_to_save.xscale,
+              _draft_to_save.yscale,
+              _draft_to_save.angle
+            ];
+
+            array_push(_tiles_data, _draft_data);
+          }
         }
+      }
+    }
 
-        ds_list_destroy(_draft_list);
+    ds_list_destroy(_draft_list);
 
-		//--------------------
-		// COPYING ALL TILES 
-		//--------------------
-		var _save = {
-			version: SAVE_SYSTEM_VERSION,
-            name: level_name,
-            author: level_author_name,
-			level_data: {
-                style: selected_style,
-                objects: _objects_data,
-                tiles: _tiles_data
-            } 
-		};
+		// Set level information
+    var _save = {
+      version: SAVE_SYSTEM_VERSION,
+      name: level_name,
+      author: level_author_name,
+      level_data: {
+        style: selected_style,
+        objects: _objects_data,
+        tiles: _tiles_data
+      } 
+    };
 		
+    // Write on file
 		var _file_name = string(_level_name);
 		var _json = json_stringify(_save);
 		
@@ -123,6 +115,7 @@ function level_maker_save(_level_name) {
 		}
 		
 		var _file = file_text_open_write(_file_name);
+    
 		file_text_write_string(_file, _json);
 		file_text_close(_file);
 	}
