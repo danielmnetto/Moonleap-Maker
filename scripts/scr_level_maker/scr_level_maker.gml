@@ -232,8 +232,6 @@ function level_maker_get_tileset_layers() {
 		layer_get_id("Tiles_Foreground"),
 		layer_get_id("Tiles_Background1"),
 		layer_get_id("Tiles_Background2"),
-		layer_get_id("Tiles_Background3"),
-		layer_get_id("Tiles_Background4")
 	];
 }
 
@@ -242,8 +240,6 @@ function level_maker_get_asset_layers() {
 		layer_get_id("Assets_Foreground"),
 		layer_get_id("Assets_Background1"),
 		layer_get_id("Assets_Background2"),
-		layer_get_id("Assets_Background3"),
-		layer_get_id("Assets_Background4")
 	];
 }
 
@@ -253,8 +249,6 @@ function level_maker_get_instances_layers() {
 		layer_get_id("Instances_Foreground"),
 		layer_get_id("Instances_Background1"),
 		layer_get_id("Instances_Background2"),
-		layer_get_id("Instances_Background3"),
-		layer_get_id("Instances_Background4")
 	];
 }
 
