@@ -15,7 +15,7 @@ based on that they update their colors
 // Input variables
 scr_inputcreate()
 
-mode = LEVEL_EDITOR_MODE.EDITING;
+mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 
 // User Level Config
 level_name = "";
@@ -31,7 +31,7 @@ room_tile_height = (room_height div tile_size) + tile_size;
 objects_grid = []; // Grid where the objects inserted by player are.
 
 // Cursor-related
-cursor = LEVEL_CURSOR_TYPE.NOTHING;
+cursor = LEVEL_MAKER_CURSOR.NOTHING;
 cursor_object_hovering = undefined;
 is_cursor_inside_level = false;
 item_preview_offset_x = 0;
@@ -57,7 +57,7 @@ color = {
 };
 
 // List-related
-current_layer = LEVEL_CURRENT_LAYER.OBJECTS;
+current_layer = LEVEL_MAKER_LAYERS.OBJECTS;
 list_positions_length = 16;
 
 // Tileset-related
@@ -71,7 +71,7 @@ obj = level_maker_get_objects_list();
 selected_object = 0;
 selected_object_type = 0;
 selected_object_position = 0;
-default_sprite_origin = SPRITE_ORIGIN.TOP_LEFT;
+default_sprite_origin = LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.TOP_LEFT;
 object_grid_hovering = -1; // Object where cursor is above at.
 
 object_types_length = array_length(obj);
@@ -126,7 +126,7 @@ update_selected_tile = function() {
 }
 
 update_current_item = function() {
-    if current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
+    if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
         update_selected_object();
     } else {
         update_selected_tile();
@@ -176,9 +176,9 @@ cursor_set_position = function() {
 
 cursor_get_object_from_grid = function() {
 	if not is_cursor_inside_level
-	or current_layer != LEVEL_CURRENT_LAYER.OBJECTS
+	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS
 	or not mouse_check_button_pressed(mb_left)
-	or cursor != LEVEL_CURSOR_TYPE.FINGER
+	or cursor != LEVEL_MAKER_CURSOR.FINGER
 	or not is_struct(object_grid_hovering)
 	or not item_place_disable_timer.has_timed_out() {
 		return;
@@ -198,14 +198,14 @@ cursor_get_object_from_grid = function() {
 
 cursor_create_object_in_grid = function(_tile_x, _tile_y) {
 	if not is_cursor_inside_level
-	or current_layer != LEVEL_CURRENT_LAYER.OBJECTS
+	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS
 	or is_undefined(selected_object)
 	or not item_place_disable_timer.has_timed_out() then
 		return;
 	
 	if (mouse_check_button_released(mb_left) 
 			or (mouse_check_button(mb_left) and selected_object.has_tag("is_holdable"))
-		) and cursor == LEVEL_CURSOR_TYPE.CURSOR 
+		) and cursor == LEVEL_MAKER_CURSOR.CURSOR 
 		and not is_undefined(selected_object)
 		and not has_object_below_cursor
 	{
@@ -246,12 +246,12 @@ cursor_create_object_in_grid = function(_tile_x, _tile_y) {
 
 cursor_remove_object_from_grid = function() {
 	if not is_cursor_inside_level
-	or current_layer != LEVEL_CURRENT_LAYER.OBJECTS then
+	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS then
 		return;
 	
 	if (mouse_check_button(mb_right) 
 		or (mouse_check_button(mb_left) 
-			and cursor == LEVEL_CURSOR_TYPE.ERASER))
+			and cursor == LEVEL_MAKER_CURSOR.ERASER))
 		and is_struct(object_grid_hovering) 
 	{
 		remove_object_from_grid(object_grid_hovering);
@@ -264,8 +264,8 @@ cursor_remove_object_from_grid = function() {
 
 cursor_create_tile_in_grid = function() {
 	if not is_cursor_inside_level
-	or current_layer == LEVEL_CURRENT_LAYER.OBJECTS
-	or cursor != LEVEL_CURSOR_TYPE.CURSOR
+	or current_layer == LEVEL_MAKER_LAYERS.OBJECTS
+	or cursor != LEVEL_MAKER_CURSOR.CURSOR
 	or is_undefined(selected_tile)
 	or not mouse_check_button(mb_left)
    or not item_place_disable_timer.has_timed_out() {
@@ -327,11 +327,11 @@ cursor_create_tile_in_grid = function() {
 
 cursor_remove_tile_from_grid = function() {
 	if not is_cursor_inside_level 
-	or current_layer == LEVEL_CURRENT_LAYER.OBJECTS then
+	or current_layer == LEVEL_MAKER_LAYERS.OBJECTS then
 		return;
 		
 	if (not mouse_check_button(mb_left) and mouse_check_button(mb_right)) 
-    or (mouse_check_button(mb_left) and cursor == LEVEL_CURSOR_TYPE.ERASER) {
+    or (mouse_check_button(mb_left) and cursor == LEVEL_MAKER_CURSOR.ERASER) {
 		var _instance_layer_name = level_maker_get_background_instances_layer_name();
 		var _x = floor(x / tileset_size) * tileset_size;
 		var _y = floor(y / tileset_size) * tileset_size;
@@ -403,7 +403,7 @@ update_tilesets_by_style = function() {
 
 set_tile_manipulation = function() {
 	if is_undefined(selected_tile)
-  or current_layer == LEVEL_CURRENT_LAYER.OBJECTS then 
+  or current_layer == LEVEL_MAKER_LAYERS.OBJECTS then 
 		return;
 		
 	var _tile = selected_tile.tile_id;
@@ -459,7 +459,7 @@ set_tile_manipulation = function() {
 
 set_object_rotation_and_scaling = function() {
 	if is_undefined(selected_object) 
-  or current_layer != LEVEL_CURRENT_LAYER.OBJECTS then 
+  or current_layer != LEVEL_MAKER_LAYERS.OBJECTS then 
 		return;
 	
 	if selected_object.has_tag("can_flip") {
@@ -790,7 +790,7 @@ start_level = function() {
 		return;
 	}
 	
-  mode = LEVEL_EDITOR_MODE.TESTING;
+  mode = LEVEL_MAKER_EDITOR_MODE.TESTING;
 	//instance_destroy(oPause);
 	audio_play_sfx(sndStarGame, false, -18.3, 1);
 	
@@ -991,7 +991,7 @@ end_level_and_return_to_editor = function() {
         remove_from_room();
     }
 
-    mode = LEVEL_EDITOR_MODE.EDITING;
+    mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 	//instance_create_layer(-16, -16, layer, oPause);
 	
 	// Reset day/night state

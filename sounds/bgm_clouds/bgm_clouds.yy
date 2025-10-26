@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":1,
   "conversionMode":0,
-  "duration":191.51741,
+  "duration":191.51744,
   "name":"bgm_clouds",
   "parent":{
     "name":"Bgm",

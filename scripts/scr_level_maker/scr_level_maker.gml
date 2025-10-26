@@ -1,8 +1,8 @@
-enum LEVEL_CURRENT_LAYER { FOREGROUND, OBJECTS, BACKGROUND_1, BACKGROUND_2 }
-enum LEVEL_CURSOR_TYPE { NOTHING, CURSOR, FINGER, ERASER, CANCEL }
-enum LEVEL_STYLE { GRASS, CLOUDS, FLOWERS, SPACE, DUNGEON,LENGTH }
-enum LEVEL_EDITOR_MODE { EDITING, TESTING }
-enum SPRITE_ORIGIN { TOP_LEFT, CENTER, BOTTOM, OFFSET5 }
+enum LEVEL_MAKER_LAYERS { FOREGROUND, OBJECTS, BACKGROUND_1, BACKGROUND_2 }
+enum LEVEL_MAKER_CURSOR { NOTHING, CURSOR, FINGER, ERASER, CANCEL }
+enum LEVEL_STYLE { GRASS, CLOUDS, FLOWERS, SPACE, DUNGEON, LENGTH }
+enum LEVEL_MAKER_EDITOR_MODE { EDITING, TESTING }
+enum LEVEL_MAKER_OBJECT_SPRITE_ORIGIN { TOP_LEFT, CENTER, BOTTOM, OFFSET5 }
 
 /// @description A "Level Maker Object" constructor. Use this as base to create
 /// an object for the level editor.
@@ -10,8 +10,8 @@ enum SPRITE_ORIGIN { TOP_LEFT, CENTER, BOTTOM, OFFSET5 }
 /// @param {real} _object_size_x The horizontal size this object will occupy on the level grid.
 /// @param {real} _object_size_y The vertical size this object will occupy on the level grid.
 /// @param {real} _origin_type The origin type to position the object sprite on level grid.
-/// Use one of the SPRITE_ORIGIN enumerator values to set it.
-function LMObject(_object_index, _object_size_x, _object_size_y, _origin_type = SPRITE_ORIGIN.TOP_LEFT) constructor {
+/// Use one of the LEVEL_MAKER_OBJECT_SPRITE_ORIGIN enumerator values to set it.
+function LMObject(_object_index, _object_size_x, _object_size_y, _origin_type = LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.TOP_LEFT) constructor {
 	label = "";
 	index = _object_index;
 	size_x = _object_size_x;
@@ -122,22 +122,22 @@ function LMObject(_object_index, _object_size_x, _object_size_y, _origin_type = 
 		var _h = sprite_get_height(_sprite);
 		
 		switch(origin_type){
-			case SPRITE_ORIGIN.OFFSET5:
+			case LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5:
 				return [
 					_offx - 8,
 					_offy - 8
 				];
-			case SPRITE_ORIGIN.TOP_LEFT:
+			case LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.TOP_LEFT:
 				return [
 					_offx,
 					_offy
 				];
-			case SPRITE_ORIGIN.BOTTOM:
+			case LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM:
 				return [
 					_offx - _w / 2 + _object_tile_width * _tile_size / 2,
 					_offy - _h + _object_tile_height * _tile_size,
 				];
-			case SPRITE_ORIGIN.CENTER:
+			case LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER:
 				return [
 					_offx - _w / 2 + _object_tile_width * _tile_size / 2,
 					_offy - _h / 2 + _object_tile_height * _tile_size / 2
@@ -227,6 +227,68 @@ function LMTile(_tile_id) constructor {
 	}
 }
 
+function LevelMakerDecorationLayer(_name, _lang_name) constructor {
+  name = _name;
+  lang_name = _lang_name;
+
+  get_lang_name = function() {
+    return LANG[$ lang_name];
+  }
+
+  get_asset_layer_name = function() {
+    return $"Assets_{name}";
+  };
+
+  get_asset_layer_id = function() {
+    return layer_get_id(get_asset_layer_name());
+  };
+
+  get_tile_layer_name = function() {
+    return $"Tiles_{name}";
+  };
+
+  get_tile_layer_id = function() {
+    return layer_get_id(get_tile_layer_name());
+  };
+
+  get_instances_layer_name = function() {
+    return $"Instances_{name}";
+  };
+
+  get_instances_layer_id = function() {
+    return layer_get_id(get_instances_layer_name());
+  };
+}
+
+function LevelMakerObjectLayer(_lang_name) constructor {
+  lang_name = _lang_name;
+  instances_layer_name = "Instances";
+  gimmick_instances_layer_name = "Gimmick_Instances";
+
+  get_lang_name = function() {
+    return LANG[$ lang_name]
+  };
+
+  get_instances_layer_id = function() {
+    return layer_get_id(instances_layer_name);
+  };
+
+  get_gimmick_instances_layer_id = function() {
+    return layer_get_id(gimmick_instances_layer_name);
+  };
+}
+
+function level_maker_get_layers() {
+  return {
+    foreground: new LevelMakerDecorationLayer("Foreground", "maker_foreground"),
+    objects: new LevelMakerObjectLayer("maker_objects"),
+    background1: new LevelMakerDecorationLayer("Background1", "maker_background"),
+    background2: new LevelMakerDecorationLayer("Background2", "maker_far_background"),
+  };
+}
+
+global.layers = level_maker_get_layers();
+
 function level_maker_get_tileset_layers() {
 	return [
 		layer_get_id("Tiles_Foreground"),
@@ -258,45 +320,86 @@ function level_maker_get_instances_layers() {
 	];
 }
 
+function level_maker_get_background_tile_layer_name() {
+	switch(oLevelMaker.current_layer) {
+		case LEVEL_MAKER_LAYERS.FOREGROUND:
+			return "Tiles_Foreground";
+		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
+			return "Tiles_Background1";
+		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
+			return "Tiles_Background2";
+		default:
+			return -1;
+	}
+}
+
+function level_maker_get_background_instances_layer_name() {
+	switch(oLevelMaker.current_layer) {
+		case LEVEL_MAKER_LAYERS.FOREGROUND:
+			return "Instances_Foreground";
+		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
+			return "Instances_Background1";
+		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
+			return "Instances_Background2";
+		default:
+			return -1;
+	}
+}
+
+function level_maker_get_layer_hover_text() {
+	switch(oLevelMaker.current_layer) {
+		case LEVEL_MAKER_LAYERS.FOREGROUND:
+			return LANG.maker_foreground;	//"1: Frente (Decoração)";
+		case LEVEL_MAKER_LAYERS.OBJECTS:
+			return LANG.maker_objects;		//"2: Objetos";
+		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
+			return LANG.maker_background;	//"3: Fundo (Decoração)";
+		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
+			return LANG.maker_far_background;//"4: Fundo Distante (Decoração)";
+		default:
+			return "undefined";
+	}
+}
+
 function level_maker_get_objects_list() {
 	var _obj = [];
 	
-	_obj[0, 00] =	new LMObject(oPlayer,			16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_player");
+	_obj[0, 00] =	new LMObject(oPlayer,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_player");
 	_obj[0, 01] =	new LMObject(oSolid,				16, 16).add_tag("grid_16", "is_holdable");
 	_obj[0, 02] =	new LMObject(oBrokenStone,		16, 16).add_tag("grid_16", "is_holdable");
 	_obj[0, 03] =	new LMObject(oPlatGhost,		16, 16).add_tag("can_spin");
-	_obj[0, 04] =	new LMObject(oSolidRamp,		32, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sBlockRampEditor, 0, 16, 0, -8, -8);
+	_obj[0, 04] =	new LMObject(oSolidRamp,		32, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sBlockRampEditor, 0, 16, 0, -8, -8);
 	_obj[0, 05] =	new LMObject(oPermaSpike,		16, 16).add_tag("is_holdable");
-	_obj[0, 06] =	new LMObject(oSolidDay,			16, 16, SPRITE_ORIGIN.OFFSET5).add_tag("grid_16", "is_holdable").set_can_change(true);
-	_obj[0, 07] =	new LMObject(oSolidNight,		16, 16, SPRITE_ORIGIN.OFFSET5).add_tag("grid_16", "is_holdable").set_can_change(true).set_is_moon_variant(true);
+	_obj[0, 06] =	new LMObject(oSolidDay,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5).add_tag("grid_16", "is_holdable").set_can_change(true);
+	_obj[0, 07] =	new LMObject(oSolidNight,		16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5).add_tag("grid_16", "is_holdable").set_can_change(true).set_is_moon_variant(true);
 	_obj[0, 08] =	new LMObject(oLadderDay,		16, 16).set_can_change(true);
 	_obj[0, 09] =	new LMObject(oLadderNight,		16, 16).set_can_change(true).set_is_moon_variant(true);
 	_obj[0, 10] =	new LMObject(oStar,				16, 16).add_tag("can_spin");
 	_obj[0, 11] =	new LMObject(oStarRunning,		16, 16);
-	_obj[0, 12] =	new LMObject(oSnail,				16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("can_flip").set_sprite_button_part(sSnailWalk, 0, 0, 2, -9, 0).set_can_change(true);
-	_obj[0, 13] =	new LMObject(oSnailNight,		16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("can_flip").set_sprite_button_part(sSnailIdleNight, 0, 0, 2, -11, 0, 18).set_can_change(true).set_is_moon_variant(true);
-	_obj[0, 14] =	new LMObject(oLady,				16, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_preview_index_horizontal(1);
-	_obj[0, 15] =	new LMObject(oBat,				16, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip", "grid_16").set_sprite_button_part(sBat, 0, 10, 4, -7, -8);
+	_obj[0, 12] =	new LMObject(oSnail,				16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("can_flip").set_sprite_button_part(sSnailWalk, 0, 0, 2, -9, 0).set_can_change(true);
+	_obj[0, 13] =	new LMObject(oSnailNight,		16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("can_flip").set_sprite_button_part(sSnailIdleNight, 0, 0, 2, -11, 0, 18).set_can_change(true).set_is_moon_variant(true);
+	_obj[0, 14] =	new LMObject(oLady,				16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_preview_index_horizontal(1);
+	_obj[0, 15] =	new LMObject(oBat,				16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip", "grid_16").set_sprite_button_part(sBat, 0, 10, 4, -7, -8);
 	
-	_obj[1, 00] =	new LMObject(oPlayerDir,		16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_player");
+	_obj[1, 00] =	new LMObject(oPlayerDir,		16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_player");
 	_obj[1, 01] =	new LMObject(oBigSolid,			32, 32).add_tag("grid_16", "is_holdable").set_sprite_button_part(sBlockGrayGiant, 0, 0, 0, 0, 0);
 	_obj[1, 02] =	new LMObject(oBrokenStoneBig,	32, 32).add_tag("grid_16", "is_holdable").set_sprite_button_part(sBrokenStoneBig, 0, 0, 0, 0, 0);
 	_obj[1, 03] =	new LMObject(oLadderNeutral,	16, 16);
 	_obj[1, 04] =	new LMObject(oStarColor,		16, 16);
 	_obj[1, 05] =	new LMObject(oStarRunningColor,	16, 16);
-	_obj[1, 06] =	new LMObject(oMush,				16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("can_spin");
-	_obj[1, 07] =	new LMObject(oMushGray,			16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("can_spin").set_sprite_button_part(sMushGrayUI, 0, 0, 0, 0, 0);
-	_obj[1, 08] =	new LMObject(oSnailGray,		16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("can_flip");
-	_obj[1, 09] =	new LMObject(oLadyGray,			16, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sLadyGrayUI, 0, 3, 0, -8, -8);
-	_obj[1, 10] =	new LMObject(oLadyVer,			16, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip", "is_vertical").set_preview_index_vertical(1).set_sprite_button_part(sLadyVerUI, 0, 3, 1, -8, -8);
-	_obj[1, 11] =	new LMObject(oLadyGiant,		48, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_preview_index_horizontal(1).set_sprite_button_part(sLadyGiant, 0, 19, 1, -8, -8);
-	_obj[1, 12] =	new LMObject(oLadyGiant4,		64, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_preview_index_horizontal(1).set_sprite_button_part(sLadyGiant4, 0, 14, 1, -8, -8);
-	_obj[1, 13] =	new LMObject(oBatVer,			16, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip", "grid_16", "is_vertical").set_preview_index_vertical(1).set_sprite_button_part(sBatDown, 0, 10, 4, -7, -8);
-	_obj[1, 14] =	new LMObject(oBatGiant,			48, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sBatGiant, 0, 21, 1, -8, -8)
-	_obj[1, 15] =	new LMObject(oBatSuperGiant,	64, 16, SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sBatGiant4, 0, 12, 1, -8, -8);
+	_obj[1, 06] =	new LMObject(oMush,				16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("can_spin");
+	_obj[1, 07] =	new LMObject(oMushGray,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("can_spin").set_sprite_button_part(sMushGrayUI, 0, 0, 0, 0, 0);
+	_obj[1, 08] =	new LMObject(oSnailGray,		16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("can_flip");
+	_obj[1, 09] =	new LMObject(oLadyGray,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sLadyGrayUI, 0, 3, 0, -8, -8);
+	_obj[1, 10] =	new LMObject(oLadyVer,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip", "is_vertical").set_preview_index_vertical(1).set_sprite_button_part(sLadyVerUI, 0, 3, 1, -8, -8);
+	_obj[1, 11] =	new LMObject(oLadyGiant,		48, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_preview_index_horizontal(1).set_sprite_button_part(sLadyGiant, 0, 19, 1, -8, -8);
+	_obj[1, 12] =	new LMObject(oLadyGiant4,		64, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_preview_index_horizontal(1).set_sprite_button_part(sLadyGiant4, 0, 14, 1, -8, -8);
+	_obj[1, 13] =	new LMObject(oBatVer,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip", "grid_16", "is_vertical").set_preview_index_vertical(1).set_sprite_button_part(sBatDown, 0, 10, 4, -7, -8);
+	_obj[1, 14] =	new LMObject(oBatGiant,			48, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sBatGiant, 0, 21, 1, -8, -8)
+	_obj[1, 15] =	new LMObject(oBatSuperGiant,	64, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER).add_tag("can_flip").set_sprite_button_part(sBatGiant4, 0, 12, 1, -8, -8);
 	
-	_obj[2, 00] =	new LMObject(oPlayerNeutral,	16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_player");
-	_obj[2, 01] =	new LMObject(oBird,				16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("can_flip", "is_unique");
+	_obj[2, 00] =	new LMObject(oPlayerNeutral,	16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_player");
+	_obj[2, 01] =	new LMObject(oBird,				16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("can_flip", "is_unique");
 	_obj[2, 02] =	new LMObject(oKey,				16, 16);
 	_obj[2, 03] =	new LMObject(oKeyDoor,			16, 16);
 	_obj[2, 04] =	new LMObject(oKeyTall,			16, 32).set_sprite_button_part(sKeyDoorTallUI, 0, 0, 8, -8, -8);
@@ -305,7 +408,7 @@ function level_maker_get_objects_list() {
 	_obj[2, 07] =	new LMObject(oKeyDoorWide,		32, 16).set_sprite_button_part(sKeyDoorWide, 0, 8, 0, -8, -8);
 	_obj[2, 08] =	new LMObject(oKeyTallWide,		32, 32).set_sprite_button_part(sKeyDoorTallWideUI, 0, 0, 0, -8, -8);
 	_obj[2, 09] =	new LMObject(oKeyDoorTallWide,	32, 32).set_sprite_button_part(sKeyDoorWideTall, 0, 0, 0, -8, -8);
-	_obj[2, 10] =	new LMObject(oMagicOrb,			16, 16, SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_orb");
+	_obj[2, 10] =	new LMObject(oMagicOrb,			16, 16, LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.BOTTOM).add_tag("is_unique", "is_orb");
 	_obj[2, 11] =	new LMObject(oStarFly,			16, 16);
 	_obj[2, 12] =	new LMObject(oSolidInv,			16, 16).add_tag("grid_16", "is_holdable");
 	_obj[2, 13] =	undefined; //new LMObject(oNope,             16, 16).add_tag("grid_16", "is_holdable");
@@ -454,49 +557,8 @@ function level_maker_get_tiles_list(_style) {
 	return _tiles_list;
 }
 
-function level_maker_get_background_tile_layer_name() {
-	switch(oLevelMaker.current_layer) {
-		case LEVEL_CURRENT_LAYER.FOREGROUND:
-			return "Tiles_Foreground";
-		case LEVEL_CURRENT_LAYER.BACKGROUND_1:
-			return "Tiles_Background1";
-		case LEVEL_CURRENT_LAYER.BACKGROUND_2:
-			return "Tiles_Background2";
-		default:
-			return -1;
-	}
-}
-
-function level_maker_get_background_instances_layer_name() {
-	switch(oLevelMaker.current_layer) {
-		case LEVEL_CURRENT_LAYER.FOREGROUND:
-			return "Instances_Foreground";
-		case LEVEL_CURRENT_LAYER.BACKGROUND_1:
-			return "Instances_Background1";
-		case LEVEL_CURRENT_LAYER.BACKGROUND_2:
-			return "Instances_Background2";
-		default:
-			return -1;
-	}
-}
-
-function level_maker_get_layer_hover_text() {
-	switch(oLevelMaker.current_layer) {
-		case LEVEL_CURRENT_LAYER.FOREGROUND:
-			return LANG.maker_foreground;	//"1: Frente (Decoração)";
-		case LEVEL_CURRENT_LAYER.OBJECTS:
-			return LANG.maker_objects;		//"2: Objetos";
-		case LEVEL_CURRENT_LAYER.BACKGROUND_1:
-			return LANG.maker_background;	//"3: Fundo (Decoração)";
-		case LEVEL_CURRENT_LAYER.BACKGROUND_2:
-			return LANG.maker_far_background;//"4: Fundo Distante (Decoração)";
-		default:
-			return "undefined";
-	}
-}
-
 function level_maker_is_editing() {
-	return instance_exists(oLevelMaker) and oLevelMaker.mode == LEVEL_EDITOR_MODE.EDITING;
+	return instance_exists(oLevelMaker) and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.EDITING;
 }
 
 function is_level_maker_room() {

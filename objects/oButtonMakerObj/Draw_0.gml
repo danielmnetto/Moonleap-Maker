@@ -1,11 +1,11 @@
 // Draw button
-var button_sprite = oLevelMaker.current_layer == LEVEL_CURRENT_LAYER.OBJECTS ? sButtonsMakerObj : sButtonsMakerTile;
+var button_sprite = oLevelMaker.current_layer == LEVEL_MAKER_LAYERS.OBJECTS ? sButtonsMakerObj : sButtonsMakerTile;
 
 draw_sprite(button_sprite, 0, xstart, ystart + drawplus);
 
 // Draw object/tile
 switch (oLevelMaker.current_layer) {
-	case LEVEL_CURRENT_LAYER.OBJECTS:
+	case LEVEL_MAKER_LAYERS.OBJECTS:
 		if not is_undefined(object) and not is_undefined(object.sprite_button_sprite_index) then
 			object.draw_sprite_button_part(xx, yy + drawplus);
 		else if sprite_exists(sprite_index) {

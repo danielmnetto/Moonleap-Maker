@@ -77,7 +77,7 @@ if image_index == 1 and (is_mouse_left_pressing or key_down or mouse_wheel_up())
 {
 	with(oLevelMaker)
 	{
-		var _pages_length = current_layer == LEVEL_CURRENT_LAYER.OBJECTS ? array_length(obj) - 1 : array_length(tiles) - 1;
+		var _pages_length = current_layer == LEVEL_MAKER_LAYERS.OBJECTS ? array_length(obj) - 1 : array_length(tiles) - 1;
 		
 		audio_play_sfx(snd_morcego_02, false, -20, 13);
 		
@@ -104,7 +104,7 @@ if image_index == 1 and (is_mouse_left_pressing or key_down or mouse_wheel_up())
 // Move object group down
 if image_index == 2 and (is_mouse_left_pressing or key_up or mouse_wheel_down()) {
 	with(oLevelMaker) {
-		var _pages_length = current_layer == LEVEL_CURRENT_LAYER.OBJECTS ? array_length(obj) - 1 : array_length(tiles) - 1;
+		var _pages_length = current_layer == LEVEL_MAKER_LAYERS.OBJECTS ? array_length(obj) - 1 : array_length(tiles) - 1;
 		
 		audio_play_sfx(snd_morcego_02, false, -20, 13);
 		
@@ -193,7 +193,7 @@ if image_index == 8 and is_mouse_left_pressing {
 // Eraser
 if image_index == 9 and is_mouse_left_pressing {
 	audio_play_sfx(sndUiChange,false,-18.3,1)
-	oLevelMaker.cursor = LEVEL_CURSOR_TYPE.ERASER;
+	oLevelMaker.cursor = LEVEL_MAKER_CURSOR.ERASER;
 }
 
 // Clear level
@@ -229,7 +229,7 @@ if image_index == 11 and is_mouse_left_pressing {
 		
 		current_layer += 1;
 		if current_layer > 3 then
-			current_layer = LEVEL_CURRENT_LAYER.FOREGROUND;
+			current_layer = LEVEL_MAKER_LAYERS.FOREGROUND;
 
     update_current_item();
 	}

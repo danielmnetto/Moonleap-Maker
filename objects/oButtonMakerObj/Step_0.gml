@@ -4,7 +4,7 @@ if not level_maker_is_editing() or instance_exists(oPauseMenu) {
 	exit;
 }
 
-if oLevelMaker.current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
+if oLevelMaker.current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
     with(oLevelMaker) {
         other.object = obj[selected_object_type, other.index];
     }
@@ -39,7 +39,7 @@ if is_active and point_in_rectangle(global.level_maker_mouse_x,global.level_make
         audio_play_sfx(sndUiChange, false, -18.3 ,1);
         with(oLevelMaker) {
             selected_object_position = other.index;
-            cursor = LEVEL_CURSOR_TYPE.FINGER;
+            cursor = LEVEL_MAKER_CURSOR.FINGER;
             image_xscale = 1;
             image_yscale = 1;
             image_angle = 0;
@@ -67,9 +67,9 @@ switch(sprite_index) {
 
 var _selected_layer = oLevelMaker.current_layer;
 
-if (_selected_layer == LEVEL_CURRENT_LAYER.OBJECTS
+if (_selected_layer == LEVEL_MAKER_LAYERS.OBJECTS
 	and object == oLevelMaker.obj[oLevelMaker.selected_object_type, oLevelMaker.selected_object_position]
-) or (_selected_layer != LEVEL_CURRENT_LAYER.OBJECTS
+) or (_selected_layer != LEVEL_MAKER_LAYERS.OBJECTS
 	and tile == oLevelMaker.tiles[oLevelMaker.selected_object_type, oLevelMaker.selected_object_position]
 ) {
 	drawtarget = -2;

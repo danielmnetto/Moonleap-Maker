@@ -5,22 +5,22 @@ item_place_disable_timer.count();
 
 var _hover_button = collision_point(global.level_maker_mouse_x, global.level_maker_mouse_y, oButtonMaker, false, true);
 
-if cursor != LEVEL_CURSOR_TYPE.ERASER {
-	var _cursor = LEVEL_CURSOR_TYPE.CURSOR;
+if cursor != LEVEL_MAKER_CURSOR.ERASER {
+	var _cursor = LEVEL_MAKER_CURSOR.CURSOR;
 	
 	var _hover_button_object = collision_point(global.level_maker_mouse_x, global.level_maker_mouse_y, oButtonMakerObj, false, true);
 	
-	_cursor = LEVEL_CURSOR_TYPE.CURSOR;
+	_cursor = LEVEL_MAKER_CURSOR.CURSOR;
 	
 	if _hover_button
 	or _hover_button_object {
-		_cursor = LEVEL_CURSOR_TYPE.FINGER;
+		_cursor = LEVEL_MAKER_CURSOR.FINGER;
 	}
 	
-	if current_layer == LEVEL_CURRENT_LAYER.OBJECTS
+	if current_layer == LEVEL_MAKER_LAYERS.OBJECTS
 	and object_grid_hovering != -1 {
 		_cursor = not is_undefined(selected_object) 
-      and selected_object.has_tag("is_holdable") ? LEVEL_CURSOR_TYPE.CANCEL : LEVEL_CURSOR_TYPE.FINGER;
+      and selected_object.has_tag("is_holdable") ? LEVEL_MAKER_CURSOR.CANCEL : LEVEL_MAKER_CURSOR.FINGER;
 	}
 	
 	cursor = _cursor;
@@ -111,7 +111,7 @@ _sprite_offset_y = _new_offset[1];
 x = _selected_object_mouse_tile_x * tile_size + _sprite_offset_x;
 y = _selected_object_mouse_tile_y * tile_size + _sprite_offset_y;
 
-if current_layer != LEVEL_CURRENT_LAYER.OBJECTS {
+if current_layer != LEVEL_MAKER_LAYERS.OBJECTS {
 	x = global.level_maker_mouse_x;
 	y = global.level_maker_mouse_y;
 }

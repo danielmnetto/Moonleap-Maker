@@ -109,8 +109,8 @@ draw_set_font(fntSmall);
 draw_sprite(sPauseMaker, 0, 0, 0);
 
 // Draw item preview on cursor
-if current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
-	if cursor != LEVEL_CURSOR_TYPE.ERASER
+if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+	if cursor != LEVEL_MAKER_CURSOR.ERASER
 	and is_cursor_inside_level 
 	and level_maker_is_editing()
 	and not instance_exists(oPauseMenu)
@@ -179,7 +179,7 @@ if current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
 		draw_sprite_ext(_sprite, _new_image_index, x + item_preview_offset_x, y + item_preview_offset_y, _new_x_scale, _new_y_scale, image_angle, c_white, alpha);
 	}
 } else {
-	if cursor != LEVEL_CURSOR_TYPE.ERASER
+	if cursor != LEVEL_MAKER_CURSOR.ERASER
 	and is_cursor_inside_level 
    and not is_undefined(selected_tile)
 	and level_maker_is_editing() 
