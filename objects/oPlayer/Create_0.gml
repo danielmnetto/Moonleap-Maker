@@ -29,9 +29,9 @@ trueblack = false;
 
 if instance_exists(oLevelMaker) {
 	switch(oLevelMaker.selected_style) {
-		case LEVEL_STYLE.FLOWERS:
-		case LEVEL_STYLE.SPACE:
-		case LEVEL_STYLE.DUNGEON:
+		case LEVEL_MAKER_STYLE.FLOWERS:
+		case LEVEL_MAKER_STYLE.SPACE:
+		case LEVEL_MAKER_STYLE.DUNGEON:
 			trueblack = true; break;
 	}
 } else if instance_exists(oSpaceDay)
@@ -466,14 +466,14 @@ set_jump = function() {
 	 
 	// Spawn leaf particles on jump from grass ground.
 	if place_meeting(x, y + 1, oGrassDay)
-	or (instance_exists(oLevelMaker) and oLevelMaker.selected_style == LEVEL_STYLE.GRASS and place_meeting(x, y + 1, oSolidDay)) {
+	or (instance_exists(oLevelMaker) and oLevelMaker.selected_style == LEVEL_MAKER_STYLE.GRASS and place_meeting(x, y + 1, oSolidDay)) {
 		repeat (irandom_range(1, 2)) {
 			instance_create_layer(x, y + (sprite_height / 3), "Instances_2", oLeafDay);
 		}
 	}
 		
 	if place_meeting(x, y + 1, oGrassNight)
-	or (instance_exists(oLevelMaker) and oLevelMaker.selected_style == LEVEL_STYLE.GRASS and place_meeting(x, y + 1, oSolidNight)) {
+	or (instance_exists(oLevelMaker) and oLevelMaker.selected_style == LEVEL_MAKER_STYLE.GRASS and place_meeting(x, y + 1, oSolidNight)) {
 		repeat (irandom_range(1, 2)) {
 			instance_create_layer(x, y + (sprite_height / 3), "Instances_2", oLeafNight);
 		}
@@ -504,8 +504,8 @@ set_footstep_sound = function() {
 	   or place_meeting(x, y + 1, oFlowerDay)
 	   or place_meeting(x, y + 1, oFlowerNight)
 	   or (instance_exists(oLevelMaker) 
-	      and (oLevelMaker.selected_style == LEVEL_STYLE.GRASS
-	            or oLevelMaker.selected_style == LEVEL_STYLE.FLOWERS
+	      and (oLevelMaker.selected_style == LEVEL_MAKER_STYLE.GRASS
+	            or oLevelMaker.selected_style == LEVEL_MAKER_STYLE.FLOWERS
 	      ) and (place_meeting(x, y + 1, oSolidDay) 
 	            or place_meeting(x, y + 1, oSolidNight)
 	      )
@@ -519,7 +519,7 @@ set_footstep_sound = function() {
 	and (place_meeting(x, y + 1,oCloudDay) 
 	   or place_meeting(x, y + 1,oCloudNight)
 	   or (instance_exists(oLevelMaker) 
-	      and oLevelMaker.selected_style == LEVEL_STYLE.CLOUDS 
+	      and oLevelMaker.selected_style == LEVEL_MAKER_STYLE.CLOUDS 
 	      and (place_meeting(x, y + 1, oSolidDay) 
 	            or place_meeting(x, y + 1, oSolidNight)
 	      )

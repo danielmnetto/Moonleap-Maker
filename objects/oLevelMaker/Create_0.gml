@@ -43,7 +43,7 @@ item_place_disable_timer = new FrameTimer(30);
 return_to_editor_timer = new FrameTimer(60);
 
 // Level-related
-selected_style = LEVEL_STYLE.GRASS;
+selected_style = LEVEL_MAKER_STYLE.GRASS;
 //time = 0; //used to release the buttons
 
 // UI-related
@@ -380,19 +380,19 @@ update_tilesets_by_style = function() {
 		if _tilemap == -1 then continue;
 		
 		switch(selected_style) {
-			case LEVEL_STYLE.GRASS:
+			case LEVEL_MAKER_STYLE.GRASS:
 				_tileset = tMakerGrassDay;
 				break;
-			case LEVEL_STYLE.CLOUDS:
+			case LEVEL_MAKER_STYLE.CLOUDS:
 				_tileset = tMakerCloudDay;
 				break;
-			case LEVEL_STYLE.FLOWERS:
+			case LEVEL_MAKER_STYLE.FLOWERS:
 				_tileset = tMakerFlowerDay;
 				break;
-			case LEVEL_STYLE.SPACE:
+			case LEVEL_MAKER_STYLE.SPACE:
 				_tileset = tMakerSpaceDay;
 				break;
-			case LEVEL_STYLE.DUNGEON:
+			case LEVEL_MAKER_STYLE.DUNGEON:
 				_tileset = tMakerDungeonDay;
 				break;
 		}
@@ -798,19 +798,19 @@ start_level = function() {
 	// MUSIC SETTING
 	// =========================
 	switch (selected_style) {
-		case LEVEL_STYLE.GRASS:	
+		case LEVEL_MAKER_STYLE.GRASS:	
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_grass_song_night : o_grass_song);
 			break;
-		case LEVEL_STYLE.CLOUDS:
+		case LEVEL_MAKER_STYLE.CLOUDS:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_cloud_song_night : o_cloud_song);
 			break;
-		case LEVEL_STYLE.FLOWERS:
+		case LEVEL_MAKER_STYLE.FLOWERS:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_flower_song_night : o_flower_song);
 			break;
-		case LEVEL_STYLE.SPACE:
+		case LEVEL_MAKER_STYLE.SPACE:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_space_song_night : o_space_song);
 			break;
-		case LEVEL_STYLE.DUNGEON:
+		case LEVEL_MAKER_STYLE.DUNGEON:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_dungeon_song_night : o_dungeon_song);
 			break;
 	}
@@ -942,7 +942,7 @@ start_level = function() {
 		scr_update_style();
 	}
   
-  if selected_style == LEVEL_STYLE.DUNGEON {
+  if selected_style == LEVEL_MAKER_STYLE.DUNGEON {
     instance_create_layer(0, 0, "Instances_2", oFogMaker);
   }
 
@@ -953,7 +953,7 @@ start_level = function() {
     
   layer_set_visible(_fx_dust, true);
 
-  //if selected_style == LEVEL_STYLE.DUNGEON then
+  //if selected_style == LEVEL_MAKER_STYLE.DUNGEON then
   //    instance_create_layer(0, 0, "Instances_2", oFog);
 	
   level_maker_change_fx();
@@ -1034,7 +1034,7 @@ set_sample_level = function() {
 	// star
 	place_object_in_object_grid(22, 12, get_lmobject_from_list(oStar));
 
-	selected_style = LEVEL_STYLE.GRASS;
+	selected_style = LEVEL_MAKER_STYLE.GRASS;
 
 	update_selected_object();
 	update_selected_tile();

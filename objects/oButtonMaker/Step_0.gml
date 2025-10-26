@@ -43,11 +43,11 @@ switch (image_index) {
     case 7:  hover_text = LANG.maker_help;				break;
     case 8: //get style text
         switch (oLevelMaker.selected_style) {
-            case LEVEL_STYLE.GRASS:		stext = LANG.maker_grassstyle;		break;
-            case LEVEL_STYLE.CLOUDS:	stext = LANG.maker_cloudstyle;		break;
-            case LEVEL_STYLE.FLOWERS:	stext = LANG.maker_flowerstyle;		break;
-            case LEVEL_STYLE.SPACE:		stext = LANG.maker_spacestyle;		break;
-            case LEVEL_STYLE.DUNGEON:	stext = LANG.maker_dungeonstyle;	break;
+            case LEVEL_MAKER_STYLE.GRASS:		stext = LANG.maker_grassstyle;		break;
+            case LEVEL_MAKER_STYLE.CLOUDS:	stext = LANG.maker_cloudstyle;		break;
+            case LEVEL_MAKER_STYLE.FLOWERS:	stext = LANG.maker_flowerstyle;		break;
+            case LEVEL_MAKER_STYLE.SPACE:		stext = LANG.maker_spacestyle;		break;
+            case LEVEL_MAKER_STYLE.DUNGEON:	stext = LANG.maker_dungeonstyle;	break;
         }
         hover_text = $"{LANG.maker_change_level_style}\n{stext}";
         break;

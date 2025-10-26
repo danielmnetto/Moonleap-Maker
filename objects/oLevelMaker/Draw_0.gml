@@ -56,19 +56,19 @@ if level_maker_is_editing() and not instance_exists(oPauseMenu) {
         
         if _object.index == oSolidDay {
           switch(selected_style) {
-            case LEVEL_STYLE.GRASS:
+            case LEVEL_MAKER_STYLE.GRASS:
               _sprite = sGrassGre;
             break;
-            case LEVEL_STYLE.CLOUDS:
+            case LEVEL_MAKER_STYLE.CLOUDS:
               _sprite = sCloudDay;
             break;
-            case LEVEL_STYLE.FLOWERS:
+            case LEVEL_MAKER_STYLE.FLOWERS:
               _sprite = sFlowerDay;
             break;
-            case LEVEL_STYLE.SPACE:
+            case LEVEL_MAKER_STYLE.SPACE:
               _sprite = sSpacePurple;
             break;
-            case LEVEL_STYLE.DUNGEON:
+            case LEVEL_MAKER_STYLE.DUNGEON:
               _sprite = sDunDay;
             break;
           }
@@ -76,19 +76,19 @@ if level_maker_is_editing() and not instance_exists(oPauseMenu) {
         
         if _object.index == oSolidNight {
           switch(selected_style) {
-            case LEVEL_STYLE.GRASS:
+            case LEVEL_MAKER_STYLE.GRASS:
               _sprite = sGrassOre;
             break;
-            case LEVEL_STYLE.CLOUDS:
+            case LEVEL_MAKER_STYLE.CLOUDS:
               _sprite = sCloudNight;
             break;
-            case LEVEL_STYLE.FLOWERS:
+            case LEVEL_MAKER_STYLE.FLOWERS:
               _sprite = sFlowerNight;
             break;
-            case LEVEL_STYLE.SPACE:
+            case LEVEL_MAKER_STYLE.SPACE:
               _sprite = sSpaceGre;
             break;
-            case LEVEL_STYLE.DUNGEON:
+            case LEVEL_MAKER_STYLE.DUNGEON:
               _sprite = sDunNight;
             break;
           }
@@ -136,19 +136,19 @@ if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
     
     if _object == oSolidDay {
       switch(selected_style) {
-        case LEVEL_STYLE.GRASS:
+        case LEVEL_MAKER_STYLE.GRASS:
           _sprite = sGrassGre;
         break;
-        case LEVEL_STYLE.CLOUDS:
+        case LEVEL_MAKER_STYLE.CLOUDS:
           _sprite = sCloudDay;
         break;
-        case LEVEL_STYLE.FLOWERS:
+        case LEVEL_MAKER_STYLE.FLOWERS:
           _sprite = sFlowerDay;
         break;
-        case LEVEL_STYLE.SPACE:
+        case LEVEL_MAKER_STYLE.SPACE:
           _sprite = sSpacePurple;
         break;
-        case LEVEL_STYLE.DUNGEON:
+        case LEVEL_MAKER_STYLE.DUNGEON:
           _sprite = sDunDay;
         break;
       }
@@ -156,19 +156,19 @@ if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
         
     if _object == oSolidNight {
       switch(selected_style) {
-        case LEVEL_STYLE.GRASS:
+        case LEVEL_MAKER_STYLE.GRASS:
           _sprite = sGrassOre;
         break;
-        case LEVEL_STYLE.CLOUDS:
+        case LEVEL_MAKER_STYLE.CLOUDS:
           _sprite = sCloudNight;
         break;
-        case LEVEL_STYLE.FLOWERS:
+        case LEVEL_MAKER_STYLE.FLOWERS:
           _sprite = sFlowerNight;
         break;
-        case LEVEL_STYLE.SPACE:
+        case LEVEL_MAKER_STYLE.SPACE:
           _sprite = sSpaceGre;
         break;
-        case LEVEL_STYLE.DUNGEON:
+        case LEVEL_MAKER_STYLE.DUNGEON:
           _sprite = sDunNight;
         break;
       }

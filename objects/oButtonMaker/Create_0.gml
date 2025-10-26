@@ -33,7 +33,7 @@ change_style = function() {
 		selected_object_position = 0;
 		
 		selected_style += 1;
-		if selected_style >= LEVEL_STYLE.LENGTH then 
+		if selected_style >= LEVEL_MAKER_STYLE.LENGTH then 
 			selected_style = 0;
 			
 		tiles = level_maker_get_tiles_list(selected_style);

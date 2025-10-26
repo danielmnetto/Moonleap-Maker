@@ -153,7 +153,7 @@ function level_maker_load(_level_name) {
     }
 	
 	with(oLevelMaker) {
-		var _level_style = struct_read(_level_data, "style", LEVEL_STYLE.GRASS);
+		var _level_style = struct_read(_level_data, "style", LEVEL_MAKER_STYLE.GRASS);
     var _level_objects = struct_read(_level_data, "objects", []);
     var _level_tiles = struct_read(_level_data, "tiles", []);
 
@@ -269,11 +269,11 @@ function scr_update_style(){
 	instance_destroy(oDunDay)
 	
 	switch(selected_style) {
-		case LEVEL_STYLE.GRASS:		instance_create_layer(-64, -64, layer, oGrassDay);		break;
-		case LEVEL_STYLE.CLOUDS:	instance_create_layer(-64, -64, layer, oCloudDay);		break;
-		case LEVEL_STYLE.FLOWERS:	instance_create_layer(-64, -64, layer, oFlowerDay);		break;
-		case LEVEL_STYLE.SPACE:		instance_create_layer(-64, -64, layer, oSpaceDay);		break;
-		case LEVEL_STYLE.DUNGEON:	instance_create_layer(-64, -64, layer, oDunDay);		break;
+		case LEVEL_MAKER_STYLE.GRASS:		instance_create_layer(-64, -64, layer, oGrassDay);		break;
+		case LEVEL_MAKER_STYLE.CLOUDS:	instance_create_layer(-64, -64, layer, oCloudDay);		break;
+		case LEVEL_MAKER_STYLE.FLOWERS:	instance_create_layer(-64, -64, layer, oFlowerDay);		break;
+		case LEVEL_MAKER_STYLE.SPACE:		instance_create_layer(-64, -64, layer, oSpaceDay);		break;
+		case LEVEL_MAKER_STYLE.DUNGEON:	instance_create_layer(-64, -64, layer, oDunDay);		break;
 	}
 	
 	for (var yy = list_positions_length - 1; yy>=0; yy-=1) {

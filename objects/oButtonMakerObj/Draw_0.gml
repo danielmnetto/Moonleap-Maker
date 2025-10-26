@@ -15,19 +15,19 @@ switch (oLevelMaker.current_layer) {
       
       if _object == oSolidDay {
         switch(oLevelMaker.selected_style) {
-          case LEVEL_STYLE.GRASS:
+          case LEVEL_MAKER_STYLE.GRASS:
             _sprite = sGrassGre;
           break;
-          case LEVEL_STYLE.CLOUDS:
+          case LEVEL_MAKER_STYLE.CLOUDS:
             _sprite = sCloudDay;
           break;
-          case LEVEL_STYLE.FLOWERS:
+          case LEVEL_MAKER_STYLE.FLOWERS:
             _sprite = sFlowerDay;
           break;
-          case LEVEL_STYLE.SPACE:
+          case LEVEL_MAKER_STYLE.SPACE:
             _sprite = sSpacePurple;
           break;
-          case LEVEL_STYLE.DUNGEON:
+          case LEVEL_MAKER_STYLE.DUNGEON:
             _sprite = sDunDay;
           break;
         }
@@ -35,19 +35,19 @@ switch (oLevelMaker.current_layer) {
       
       if _object == oSolidNight {
         switch(oLevelMaker.selected_style) {
-          case LEVEL_STYLE.GRASS:
+          case LEVEL_MAKER_STYLE.GRASS:
             _sprite = sGrassOre;
           break;
-          case LEVEL_STYLE.CLOUDS:
+          case LEVEL_MAKER_STYLE.CLOUDS:
             _sprite = sCloudNight;
           break;
-          case LEVEL_STYLE.FLOWERS:
+          case LEVEL_MAKER_STYLE.FLOWERS:
             _sprite = sFlowerNight;
           break;
-          case LEVEL_STYLE.SPACE:
+          case LEVEL_MAKER_STYLE.SPACE:
             _sprite = sSpaceGre;
           break;
-          case LEVEL_STYLE.DUNGEON:
+          case LEVEL_MAKER_STYLE.DUNGEON:
             _sprite = sDunNight;
           break;
         }

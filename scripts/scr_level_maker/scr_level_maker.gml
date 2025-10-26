@@ -1,6 +1,6 @@
 enum LEVEL_MAKER_LAYERS { FOREGROUND, OBJECTS, BACKGROUND_1, BACKGROUND_2 }
 enum LEVEL_MAKER_CURSOR { NOTHING, CURSOR, FINGER, ERASER, CANCEL }
-enum LEVEL_STYLE { GRASS, CLOUDS, FLOWERS, SPACE, DUNGEON, LENGTH }
+enum LEVEL_MAKER_STYLE { GRASS, CLOUDS, FLOWERS, SPACE, DUNGEON, LENGTH }
 enum LEVEL_MAKER_EDITOR_MODE { EDITING, TESTING }
 enum LEVEL_MAKER_OBJECT_SPRITE_ORIGIN { TOP_LEFT, CENTER, BOTTOM, OFFSET5 }
 
@@ -428,7 +428,7 @@ function level_maker_get_tiles_list(_style) {
 	var _pages = 1; // number of tile pages to show in the level editor
 	
 	switch(_style) {
-		case LEVEL_STYLE.GRASS:
+		case LEVEL_MAKER_STYLE.GRASS:
 			_tileset = tMakerGrassDay;
 			_pages = 4;
 			_tiles_amount = 56;
@@ -436,7 +436,7 @@ function level_maker_get_tiles_list(_style) {
       _excluded_tile_indexes = [14];
 			break;
 
-		case LEVEL_STYLE.CLOUDS:
+		case LEVEL_MAKER_STYLE.CLOUDS:
 			_tileset = tMakerCloudDay;
 			_pages = 4;
 			_tiles_amount = 62;
@@ -466,7 +466,7 @@ function level_maker_get_tiles_list(_style) {
 			};
 			break;
 
-		case LEVEL_STYLE.FLOWERS:
+		case LEVEL_MAKER_STYLE.FLOWERS:
 			_tileset = tMakerFlowerDay;
 			_pages = 3;
 			_tiles_amount = 39;
@@ -474,7 +474,7 @@ function level_maker_get_tiles_list(_style) {
 			_tile_changes_starts_from = infinity; // infinity = no tiles that changes day/night in this tileset
 			break;
 
-		case LEVEL_STYLE.SPACE:
+		case LEVEL_MAKER_STYLE.SPACE:
 			_tileset = tMakerSpaceDay;
 			_pages = 3;
 			_tiles_amount = 53;
@@ -504,7 +504,7 @@ function level_maker_get_tiles_list(_style) {
       }
 			break;
 
-		case LEVEL_STYLE.DUNGEON:
+		case LEVEL_MAKER_STYLE.DUNGEON:
 			_tileset = tMakerDungeonDay;
 			_pages = 4;
 			_tiles_amount = 57;
