@@ -66,7 +66,7 @@ if level_maker_is_editing() and not instance_exists(oPauseMenu) {
               _sprite = sFlowerDay;
             break;
             case LEVEL_MAKER_STYLE.SPACE:
-              _sprite = sSpacePurple;
+              _sprite = sSpaceGre;
             break;
             case LEVEL_MAKER_STYLE.DUNGEON:
               _sprite = sDunDay;
@@ -86,7 +86,7 @@ if level_maker_is_editing() and not instance_exists(oPauseMenu) {
               _sprite = sFlowerNight;
             break;
             case LEVEL_MAKER_STYLE.SPACE:
-              _sprite = sSpaceGre;
+              _sprite = sSpacePurple;
             break;
             case LEVEL_MAKER_STYLE.DUNGEON:
               _sprite = sDunNight;
@@ -146,7 +146,7 @@ if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
           _sprite = sFlowerDay;
         break;
         case LEVEL_MAKER_STYLE.SPACE:
-          _sprite = sSpacePurple;
+          _sprite = sSpaceGre;
         break;
         case LEVEL_MAKER_STYLE.DUNGEON:
           _sprite = sDunDay;
@@ -166,7 +166,7 @@ if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
           _sprite = sFlowerNight;
         break;
         case LEVEL_MAKER_STYLE.SPACE:
-          _sprite = sSpaceGre;
+          _sprite = sSpacePurple;
         break;
         case LEVEL_MAKER_STYLE.DUNGEON:
           _sprite = sDunNight;

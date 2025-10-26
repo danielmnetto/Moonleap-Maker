@@ -25,7 +25,7 @@ switch (oLevelMaker.current_layer) {
             _sprite = sFlowerDay;
           break;
           case LEVEL_MAKER_STYLE.SPACE:
-            _sprite = sSpacePurple;
+            _sprite = sSpaceGre;
           break;
           case LEVEL_MAKER_STYLE.DUNGEON:
             _sprite = sDunDay;
@@ -45,7 +45,7 @@ switch (oLevelMaker.current_layer) {
             _sprite = sFlowerNight;
           break;
           case LEVEL_MAKER_STYLE.SPACE:
-            _sprite = sSpaceGre;
+            _sprite = sSpacePurple;
           break;
           case LEVEL_MAKER_STYLE.DUNGEON:
             _sprite = sDunNight;

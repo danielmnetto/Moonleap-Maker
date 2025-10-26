@@ -327,7 +327,8 @@ function level_maker_get_objects_list() {
 	_obj[0, 08] =	new LMObject(oLadderDay, 16, 16)
     .set_can_change(true);
 	_obj[0, 09] =	new LMObject(oLadderNight, 16, 16)
-    .set_can_change(true).set_is_moon_variant(true);
+    .set_can_change(true)
+    .set_is_moon_variant(true);
 	_obj[0, 10] =	new LMObject(oStar, 16, 16)
     .add_tag("can_spin");
 	_obj[0, 11] =	new LMObject(oStarRunning, 16, 16);
