@@ -234,55 +234,50 @@ function LMTile(_tile_id) constructor {
 	}
 }
 
-function level_maker_get_tileset_layers() {
-	return [
-		layer_get_id("Tiles_Foreground"),
-		layer_get_id("Tiles_Background1"),
-		layer_get_id("Tiles_Background2"),
-	];
-}
-
-function level_maker_get_asset_layers() {
-	return [
-		layer_get_id("Assets_Foreground"),
-		layer_get_id("Assets_Background1"),
-		layer_get_id("Assets_Background2"),
-	];
-}
-
-
-function level_maker_get_instances_layers() {
-	return [
-		layer_get_id("Instances_Foreground"),
-		layer_get_id("Instances_Background1"),
-		layer_get_id("Instances_Background2"),
-	];
-}
-
-function level_maker_get_background_tile_layer_name() {
-	switch(oLevelMaker.current_layer) {
-		case LEVEL_MAKER_LAYERS.FOREGROUND:
-			return "Tiles_Foreground";
-		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
-			return "Tiles_Background1";
-		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
-			return "Tiles_Background2";
-		default:
-			return -1;
-	}
-}
-
-function level_maker_get_background_instances_layer_name() {
-	switch(oLevelMaker.current_layer) {
-		case LEVEL_MAKER_LAYERS.FOREGROUND:
-			return "Instances_Foreground";
-		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
-			return "Instances_Background1";
-		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
-			return "Instances_Background2";
-		default:
-			return -1;
-	}
+function level_maker_get_decoration_layers() {
+  return {
+    tiles: [
+      layer_get_id("Tiles_Foreground"),
+  		layer_get_id("Tiles_Background1"),
+  		layer_get_id("Tiles_Background2"),
+    ],
+    assets: [
+  		layer_get_id("Assets_Foreground"),
+  		layer_get_id("Assets_Background1"),
+  		layer_get_id("Assets_Background2"),
+  	],
+    instances: [
+  		layer_get_id("Instances_Foreground"),
+  		layer_get_id("Instances_Background1"),
+  		layer_get_id("Instances_Background2"),
+  	],
+    names: {
+      get_tile_name: function(_current_layer) {
+        switch(_current_layer) {
+      		case LEVEL_MAKER_LAYERS.FOREGROUND:
+      			return "Tiles_Foreground";
+      		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
+      			return "Tiles_Background1";
+      		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
+      			return "Tiles_Background2";
+      		default:
+      			return -1;
+      	}
+      },
+      get_instance_name: function(_current_layer) {
+        switch(_current_layer) {
+      		case LEVEL_MAKER_LAYERS.FOREGROUND:
+      			return "Instances_Foreground";
+      		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
+      			return "Instances_Background1";
+      		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
+      			return "Instances_Background2";
+      		default:
+      			return -1;
+      	}
+      }
+    }
+  }
 }
 
 function level_maker_get_layer_hover_text() {

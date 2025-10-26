@@ -271,8 +271,8 @@ cursor_create_tile_in_grid = function() {
       return;
    }
 
-    var _instance_layer_name = level_maker_get_background_instances_layer_name();
-    var _tileset_layer_name = level_maker_get_background_tile_layer_name();
+    var _instance_layer_name = level_maker_get_decoration_layers().names.get_instance_name(current_layer);
+    var _tileset_layer_name = level_maker_get_decoration_layers().names.get_tile_name(current_layer);
     var _tilemap_id = layer_tilemap_get_id(_tileset_layer_name);
 
     if _tilemap_id == -1 then return;
@@ -331,46 +331,46 @@ cursor_remove_tile_from_grid = function() {
 		
 	if (not mouse_check_button(mb_left) and mouse_check_button(mb_right)) 
     or (mouse_check_button(mb_left) and cursor == LEVEL_MAKER_CURSOR.ERASER) {
-		var _instance_layer_name = level_maker_get_background_instances_layer_name();
+		var _instance_layer_name = level_maker_get_decoration_layers().names.get_instance_name(current_layer);
 		var _x = floor(x / tileset_size) * tileset_size;
 		var _y = floor(y / tileset_size) * tileset_size;
-        var _tile_draft_list = ds_list_create();
-        var _tile_draft_amount = collision_rectangle_list(_x, _y, _x + tileset_size, _y + tileset_size, oMakerEditorTileDraft, false, true, _tile_draft_list, true);
-        var _tile_draft_to_remove = noone;
+    var _tile_draft_list = ds_list_create();
+    var _tile_draft_amount = collision_rectangle_list(_x, _y, _x + tileset_size, _y + tileset_size, oMakerEditorTileDraft, false, true, _tile_draft_list, true);
+    var _tile_draft_to_remove = noone;
 
-        for (var i = 0; i < _tile_draft_amount and _tile_draft_to_remove == noone; i++) {
-            var _current_draft = ds_list_find_value(_tile_draft_list, i);
+    for (var i = 0; i < _tile_draft_amount and _tile_draft_to_remove == noone; i++) {
+      var _current_draft = ds_list_find_value(_tile_draft_list, i);
+
+      if layer_get_name(_current_draft.layer) == _instance_layer_name {
+        _tile_draft_to_remove = _current_draft;
+      }
+    }
+
+    ds_list_destroy(_tile_draft_list);
     
-            if layer_get_name(_current_draft.layer) == _instance_layer_name {
-                _tile_draft_to_remove = _current_draft;
-            }
-        }
+    if _tile_draft_to_remove == noone {
+      return;
+    }
 
-        ds_list_destroy(_tile_draft_list);
-        
-        if _tile_draft_to_remove == noone {
-            return;
-        }
+    instance_destroy(_tile_draft_to_remove);
 
-        instance_destroy(_tile_draft_to_remove);
-
-        audio_play_sfx(snd_brokestone, false, -5, 15); 
-        repeat(2) {
-            instance_create_layer(x, y, "Instances_2", oBigSmoke);
-        }
+    audio_play_sfx(snd_brokestone, false, -5, 15); 
+    repeat(2) {
+      instance_create_layer(x, y, "Instances_2", oBigSmoke);
+    }
 	}
 }
 
 update_tilesets_by_style = function() {
 	if not level_maker_is_editing() then return;
 	
-	var _layers = level_maker_get_tileset_layers();
+	var _tilemap_layers = level_maker_get_decoration_layers().tiles;
 	
 	var _tilemaps = [];
 	var _tileset = undefined;
 	
-	for (var i = 0; i < array_length(_layers); i++) {
-		var _layer = _layers[i];
+	for (var i = 0; i < array_length(_tilemap_layers); i++) {
+		var _layer = _tilemap_layers[i];
 		
 		if _layer == -1 then continue;
 		
