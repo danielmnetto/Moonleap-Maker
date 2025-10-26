@@ -564,7 +564,6 @@
     {"id":{"name":"ElephantToJSON","path":"scripts/ElephantToJSON/ElephantToJSON.yy",},},
     {"id":{"name":"ElephantWrite","path":"scripts/ElephantWrite/ElephantWrite.yy",},},
     {"id":{"name":"freeze_game","path":"scripts/freeze_game/freeze_game.yy",},},
-    {"id":{"name":"level_maker_scripts","path":"scripts/level_maker_scripts/level_maker_scripts.yy",},},
     {"id":{"name":"MACRO","path":"scripts/MACRO/MACRO.yy",},},
     {"id":{"name":"on_ground_inv","path":"scripts/on_ground_inv/on_ground_inv.yy",},},
     {"id":{"name":"on_ground","path":"scripts/on_ground/on_ground.yy",},},
