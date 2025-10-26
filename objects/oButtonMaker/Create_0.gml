@@ -38,7 +38,7 @@ change_style = function() {
 			
 		tiles = level_maker_get_tiles_list(selected_style);
 
-		scr_update_style();
+		level_maker_update_style();
     update_current_item();
     reset_level_tiles_grid();
 	}

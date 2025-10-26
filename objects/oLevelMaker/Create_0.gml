@@ -21,8 +21,7 @@ mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 level_name = "";
 level_author_name = "";
 use_night_music = false;
-use_ranking_system = false;
-rank_S_change_max = 0;
+max_changes_for_s_rank = 1;
 
 // Grid-related
 tile_size = 8;
@@ -939,7 +938,7 @@ start_level = function() {
 	ds_priority_destroy(instance_queue);
 	
 	with(oLevelMaker) {
-		scr_update_style();
+		level_maker_update_style();
 	}
   
   if selected_style == LEVEL_MAKER_STYLE.DUNGEON {

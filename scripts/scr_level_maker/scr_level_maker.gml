@@ -826,7 +826,7 @@ function level_maker_load(_level_name) {
   }
 }
 
-function scr_update_style() {
+function level_maker_update_style() {
 	instance_destroy(oGrassDay);
 	instance_destroy(oCloudDay);
 	instance_destroy(oFlowerDay);
