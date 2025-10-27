@@ -36,7 +36,7 @@ if (room==Room100){
 if os_type= os_windows or os_type= os_linux or os_type= os_macosx  { //desktop
 	var _main_options = [];
 	
-	if is_level_maker_room() {
+	if room_is(RoomMaker0) {
 		_main_options = [
 			{
 				name: "resume",
@@ -588,7 +588,7 @@ update_menu_title = function() {
     return;
   }
 
-  if is_level_maker_room() {
+  if room_is(RoomMaker0) {
   	var name = LANG.maker_name;
 
     if not is_string(name) then name = " ";

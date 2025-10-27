@@ -574,10 +574,6 @@ function level_maker_is_editing() {
 	return instance_exists(oLevelMaker) and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.EDITING;
 }
 
-function is_level_maker_room() {
-	return room == RoomMaker0;
-}
-
 function level_maker_save(_level_name) {
 	with(oLevelMaker) {
 
