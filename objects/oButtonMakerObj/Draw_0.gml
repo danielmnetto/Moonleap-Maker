@@ -32,7 +32,7 @@ switch (oLevelMaker.current_layer) {
           break;
         }
       }
-      
+
       if _object == oSolidNight {
         switch(oLevelMaker.selected_style) {
           case LEVEL_MAKER_STYLE.GRASS:
@@ -75,7 +75,3 @@ switch (oLevelMaker.current_layer) {
 			draw_sprite(sColorBlind, 0, x, y + drawplus);
 		break;
 }
-
-//draw_set_color(c_yellow);
-//draw_rectangle(bbox_left, bbox_top, bbox_right - 1, bbox_bottom - 1, true);
-//draw_set_color(-1);

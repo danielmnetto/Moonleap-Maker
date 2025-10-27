@@ -13,7 +13,7 @@ if cursor != LEVEL_MAKER_CURSOR.ERASER {
 	_cursor = LEVEL_MAKER_CURSOR.CURSOR;
 	
 	if _hover_button
-	or _hover_button_object {
+	or (_hover_button_object and _hover_button_object.is_active) {
 		_cursor = LEVEL_MAKER_CURSOR.FINGER;
 	}
 	

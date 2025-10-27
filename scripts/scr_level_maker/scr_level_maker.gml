@@ -206,8 +206,8 @@ function LMTile(_tile_id) constructor {
 	sprite_day = -1;
 	sprite_night = -1;
 
-    xscale = 1;
-    yscale = 1;
+  xscale = 1;
+  yscale = 1;
 	
 	set_original_tile_id = function(_original_tile_id) {
 		original_tile_id = _original_tile_id;
