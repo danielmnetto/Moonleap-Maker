@@ -614,11 +614,7 @@ function level_maker_save(_level_name) {
     var _tiles_data = [];
     var _draft_col_size = tileset_size;
     var _draft_list = ds_list_create();
-    var _draft_layers = [
-      layer_get_id("Instances_Foreground"),
-      layer_get_id("Instances_Background1"),
-      layer_get_id("Instances_Background2")
-    ];
+    var _draft_layers = level_maker_get_decoration_layers().instances;
 
     for (var l = 0; l < array_length(_draft_layers); l++) {
       var _layer = _draft_layers[l];
