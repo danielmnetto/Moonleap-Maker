@@ -10,16 +10,16 @@ else if (image_index == LEVEL_MAKER_BUTTON_TYPE.CHANGE_LAYER)
 {
 	switch (oLevelMaker.current_layer)
 	{
-		case 0:
+		case LEVEL_MAKER_LAYERS.FOREGROUND:
 			draw_sprite(sprite_index, image_index, x + drawx, y + drawy + drawplus);
 			break;
-		case 1:
+		case LEVEL_MAKER_LAYERS.OBJECTS:
 			draw_sprite(sprite_index, image_index + 1, x + drawx, y + drawy + drawplus);
 			break;
-		case 2:
+		case LEVEL_MAKER_LAYERS.BACKGROUND_1:
 			draw_sprite(sprite_index, image_index + 2, x + drawx, y + drawy + drawplus);
 			break;
-		case 3:
+		case LEVEL_MAKER_LAYERS.BACKGROUND_2:
 			draw_sprite(sprite_index, image_index + 3, x + drawx, y + drawy + drawplus);
 			break;
 		default:
