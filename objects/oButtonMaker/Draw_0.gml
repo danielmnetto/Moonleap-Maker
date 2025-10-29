@@ -1,4 +1,4 @@
-if (image_index == 6)
+if (image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL)
 {
 	var _scale = image_xscale;
 	draw_sprite_ext(sButtonStretch, 0, x + drawx, y + drawy + drawplus, _scale, _scale, 0, c_white, 1);
@@ -6,7 +6,7 @@ if (image_index == 6)
 	var _frame = level_maker_is_editing() ? 1 : 2;
 	draw_sprite(sButtonStretch, _frame, x + drawx - 16 + _scale * 16, y + drawy - 16 + _scale * 16 + drawplus);
 }
-else if (image_index == 11)
+else if (image_index == LEVEL_MAKER_BUTTON_TYPE.CHANGE_LAYER)
 {
 	switch (oLevelMaker.current_layer)
 	{

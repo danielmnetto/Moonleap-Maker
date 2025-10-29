@@ -46,6 +46,7 @@ and point_in_rectangle(_mouse_x, _mouse_y, _button_left, _button_top, _button_ri
 and mouse_check_button_pressed(mb_left) {
   audio_play_sfx(sndUiChange, false, -18.3, 1);
   with(oLevelMaker) {
+    cursor = LEVEL_MAKER_CURSOR.FINGER;
     selected_object_position = other.index;
     image_xscale = 1;
     image_yscale = 1;
