@@ -1,6 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
-if on_desktop()
+if is_on_desktop()
 {
 window_command_set_active(window_command_close, false);	
 }
@@ -41,13 +41,10 @@ if actualroom!=room {deathcount=0 actualroom=room}
 night=false
 
 
-if room!=RoomMenu and room!=RoomMenu2 and room!=RoomFinal and room!=RoomCredits and room!=RoomCreditsAlves and room!=RoomProgress
-{
-levelnumb=real(string_digits(room_get_name(room)))
-}
-else
-{
-levelnumb=noone //noone
+if not room_is([RoomMenu, RoomMenu2, RoomFinal, RoomCredits, RoomCreditsAlves, RoomProgress, RoomMakerMenu, RoomMaker0]) {
+  levelnumb = real(string_digits(room_get_name(room)));
+} else {
+  levelnumb = noone;
 }
 
 if room=Room100

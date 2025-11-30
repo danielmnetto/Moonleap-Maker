@@ -11,7 +11,7 @@ if(GooglePlayServices_IsAvailable())
 
 //if(steam_initialised())show_message("foi")
 
-if (on_desktop()) {
+if (is_on_desktop()) {
 	steam_update();
 }
 
@@ -51,11 +51,12 @@ if (shaketime == 0) {
 	}
 }
 
-
-if !instance_exists(oPlayer) and room!=RoomCreditsAlves and room!=RoomProgress and room!=RoomMaker0
-{
-	
- {if !instance_exists(oTransition) {var trans=instance_create_layer(x,y,layer,oTransition) trans.target_room=room}}
+// QUESTION: Pra que isso?
+if !instance_exists(oPlayer) and not room_is([RoomCreditsAlves, RoomProgress, RoomMaker0, RoomMakerMenu]) {
+  if !instance_exists(oTransition) { 
+    var trans = instance_create_layer(x,y,layer,oTransition);
+    trans.target_room = room;
+  }
 }
 
 //if levelnumb<20 and levelnumb>=8 {image_speed=2 with(oDust){y+=0.25}}

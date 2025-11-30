@@ -96,11 +96,28 @@ function in_hub_view() {
 }
 
 function is_at_hub() {
-	return room == Room100;
+	return room_is([Room100]);
 }
 
-function on_desktop() {
-	return ((os_type == os_windows) or (os_type == os_linux) or (os_type == os_macosx));
+/// @description Checks whether the current OS is one of the items in the array.
+/// @param {Array<Constant.OperatingSystem>} os_type_array 
+function is_os_type_any(_os_type_array) {
+  return array_any(_os_type_array, function(_os_type) { return os_type == _os_type });
+}
+
+/// @desc Checks whether the current OS is desktop.
+function is_on_desktop() {
+	return is_os_type_any([os_windows, os_linux, os_macosx]);
+}
+
+/// @desc Checks whether the current OS is console.
+function is_on_console() {
+	return is_os_type_any([os_ps4, os_ps5, os_xboxseriesxs, os_gdk, os_switch, os_switch2]);
+}
+
+/// @desc Checks whether the current OS is mobile.
+function is_on_mobile() {
+	return is_os_type_any([os_android, os_ios]);
 }
 
 function draw_text_shadow(_x, _y, _text, _shadow_offset_x, _shadow_offset_y, _shadow_color) {
@@ -112,8 +129,10 @@ function draw_text_shadow(_x, _y, _text, _shadow_offset_x, _shadow_offset_y, _sh
 	draw_text(_x, _y, _text);
 }
 
-function room_transit(_target) {
+/// @description Calls the transition effects and redirects to the room target.
+/// @param {Asset.GMRoom} room_target The room to transit.
+function room_transit(_room_target) {
 	var trans = instance_create_layer(0, 0, layer, oTransition);
 	
-	trans.target_room = _target;
+	trans.target_room = _room_target;
 }
