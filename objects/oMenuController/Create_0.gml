@@ -1,12 +1,12 @@
+// You can edit these variables below
 current_menu_name = "";
 fill_background = false;
-show_game_version = false;
 background_fill_color = COLOR_NICE_BLACK;
+show_game_version = false;
 use_draw_end = false;
 
-menus = {
-  main: menu_get_main()
-};
+// Do not edit these variables below
+menus = {};
 current_option_index = 0;
 is_on_input_mode = false;
 
@@ -37,5 +37,21 @@ play_sound_on_select_option = function() {
 
   audio_play_sound(_ui_select_sound, _priority, _loop, _gain, _offset, _pitch);
 };
+
+check_debugging_mode = function() {
+  var _string_match = "05081999debugmode",
+      _debug_sound = sndUiChange,
+      _priority = 10,
+      _loop = false,
+      _gain = (power(10, -18.2/20)) * (global.settings.enable_sfx),
+      _offset = 0,
+      _pitch = 1.4;
+
+  if keyboard_string == _string_match and not oCamera.debug {
+    oCamera.debug = true;
+    audio_play_sound(_debug_sound, _priority, _loop, _gain, _offset, _pitch);
+    keyboard_string = "";
+  }
+}
 
 //update_touch_controls_alpha();

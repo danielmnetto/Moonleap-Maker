@@ -4,6 +4,8 @@
 function MenuOptionBase(_label, _description = undefined) constructor {
   label = _label;
   description = _description;
+  is_dangerous = false;
+  can_play_select_sound = true;
 
   get_label = function() {
     if is_method(label) {
@@ -38,7 +40,7 @@ function MenuOptionActionCall(_label, _action, _description = undefined): MenuOp
 /// @param {string} menu_name The menu which will be changed when selecting this option.
 /// @param {Function} action OPTIONAL. The action when this option is selected.
 /// @param {string|Function} description OPTIONAL. The description to display at the window footer. Can be a string for hardcoded description or a function to return a dynamic description.
-function MenuOptionMenuCall(_label, _menu_name, _action = undefined, _description = undefined): MenuOptionActionCall(_label, _description) constructor {
+function MenuOptionMenuCall(_label, _menu_name, _action = undefined, _description = undefined): MenuOptionActionCall(_label, _action, _description) constructor {
   menu_name = _menu_name;
 }
 

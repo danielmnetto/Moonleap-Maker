@@ -10,7 +10,7 @@
   "compression":1,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":91.887726,
+  "duration":91.88773,
   "exportDir":"",
   "name":"bgm_dungeon",
   "parent":{

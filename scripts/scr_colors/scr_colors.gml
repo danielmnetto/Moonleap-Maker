@@ -1,5 +1,5 @@
 #macro COLOR_NICE_WHITE make_color_rgb(170, 255, 255)
-#macro COLOR_NICE_YELLOW make_color_rgb(170, 255, 255)
+#macro COLOR_NICE_YELLOW make_color_rgb(85, 170, 255)
 #macro COLOR_NICE_MAGENTA make_color_rgb(85, 85, 255)
 #macro COLOR_NICE_BLUE make_color_rgb(85, 170, 255)
 #macro COLOR_NICE_DARK make_color_rgb(85, 85, 255)

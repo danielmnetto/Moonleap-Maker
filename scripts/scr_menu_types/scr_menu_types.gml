@@ -39,8 +39,7 @@ function menu_get_main() {
     array_push(_menu_main, new MenuOptionActionCall(
       function() { return LANG.text_exit; },
       function() {
-        audio_play_sfx(sndStarGame, false, -6, 0);
-        show_debug_message("exit game!");
+        game_end();
       }
     ));
   }
@@ -77,15 +76,31 @@ function menu_get_options() {
     ),
 
     // Language
-    new MenuOptionValueToggle(
+    new MenuOptionActionCall(
       function() { return $"{LANG.text_language}{lang_get()}"; },
-      ["EN", "PT-BR", "JA", "ES", "IT", "ZH"],
-      function(_langs) {
-        return array_find_index_of_value(_langs, lang_get())
-      },
-      function(_lang) {
-        lang_set(_lang);
+      function() {
+        var _langs = ["EN","PT-BR","JA","ES","IT","ZH"];
+        var _lang_index = array_find_index_of_value(_langs,lang_get());
+        _lang_index++;
+        if (_lang_index >= array_length(_langs)) _lang_index = 0;
+        lang_set(_langs[_lang_index]); //update current language				 
       }
+    ),
+    //new MenuOptionValueToggle(
+      //function() { return $"{LANG.text_language}{lang_get()}"; },
+      //["EN", "PT-BR", "JA", "ES", "IT", "ZH"],
+      //function(_langs) {
+        //return array_find_index_of_value(_langs, lang_get())
+      //},
+      //function(_lang) {
+        //lang_set(_lang);
+      //}
+    //),
+
+    // Delete save
+    new MenuOptionMenuCall(
+      function() { return LANG.text_deletesave; },
+      "deletesure"
     ),
 
     // Go back
@@ -97,4 +112,126 @@ function menu_get_options() {
   ];
 
   return _menu_options;
+}
+
+function menu_get_assist() {
+  var _menu_assist = [
+    // Colorblind
+    new MenuOptionActionCall(
+      function() { 
+        var _filter_state = global.settings.filter ? LANG.text_ON : LANG.text_OFF
+        return $"{LANG.text_colorblind}{_filter_state}";
+      },
+      function() { global.settings.filter = !global.settings.filter; },
+      function() { return LANG.text_full_colorblind }
+    ),
+
+    // Game speed
+    new MenuOptionActionCall(
+      function() { return $"{LANG.text_speed}{global.settings.gamespd}%"; },
+      function() {
+        global.settings.gamespd -= 10;
+        if (global.settings.gamespd <= 40) global.settings.gamespd = 100;
+        game_set_speed((global.settings.gamespd / 100) * 60, gamespeed_fps);
+      },
+      function() { return LANG.text_full_speed }
+    ),
+
+    // Go back
+    new MenuOptionMenuCall(
+      function() { return LANG.text_back; },
+      "options",
+      function() { oSaveManager.save = true; }
+    ),
+  ];
+
+  return _menu_assist;
+}
+
+function menu_get_soundvideo() {
+  var _menu_soundvideo = [
+    // Music
+    new MenuOptionActionCall(
+      function() { 
+        var _music_state = global.settings.bgm_volume ? LANG.text_ON : LANG.text_OFF;
+        return $"{LANG.text_music}{_music_state}";
+      },
+      function() { bgm_set_volume(!global.settings.bgm_volume) },
+    ),
+
+    // Sound effects
+    new MenuOptionActionCall(
+      function() { 
+        var _sfx_state = global.settings.enable_sfx ? LANG.text_ON : LANG.text_OFF;
+        return $"{LANG.text_sfx}{_sfx_state}";
+      },
+      function() { global.settings.enable_sfx = !global.settings.enable_sfx; },
+    ),
+    
+    // Fullscreen
+    new MenuOptionActionCall(
+      function() { 
+        var _fullscreen_state = window_get_fullscreen() ? LANG.text_ON : LANG.text_OFF;
+        return $"{LANG.text_fullscreen}{_fullscreen_state}";
+      },
+      function() { 
+        global.settings.fullscreen = !global.settings.fullscreen;
+        window_set_fullscreen(global.settings.fullscreen);
+        window_set_size(GUI_W * global.settings.window_scale, GUI_H * global.settings.window_scale);
+      },
+    ),
+    // Window scale
+    new MenuOptionActionCall(
+      function() { 
+        return $"{LANG.text_windowscale}x{global.settings.window_scale}";
+      },
+      function() {
+        global.settings.window_scale += 1;
+        if (global.settings.window_scale > 5) global.settings.window_scale = 1
+        window_set_size(GUI_W * global.settings.window_scale, GUI_H * global.settings.window_scale);
+      },
+    ),
+
+    // Go back
+    new MenuOptionMenuCall(
+      function() { return LANG.text_back; },
+      "options",
+      function() { oSaveManager.save = true; }
+    ),
+  ];
+
+  return _menu_soundvideo;
+}
+
+function menu_get_deletesure() {
+  var _menu_deletesure = [
+    new MenuOptionBase(
+      function() { return LANG.text_sure; },
+    ),
+    new MenuOptionMenuCall(
+      function() { return LANG.text_yes; },
+      "main",
+      function() {
+        with (oSaveManager) {
+          first_save = true;
+          event_user(1);
+        }
+        audio_play_sfx(sfx_luano_death_pause_01, false, -8.79, 5);
+        oCamera.shake = 2;
+      },
+      function() { return LANG.text_savecaution; }
+    ),
+    new MenuOptionMenuCall(
+      function() { return LANG.text_no; },
+      "options"
+    ),
+  ];
+
+  _menu_deletesure[0].can_play_select_sound = false;
+
+  for (var _i = 0; _i < array_length(_menu_deletesure); _i++) {
+    _menu_deletesure[_i].is_dangerous = true;
+  }
+
+  return _menu_deletesure;
 }
