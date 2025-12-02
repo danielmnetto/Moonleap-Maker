@@ -9,7 +9,7 @@ cy -= vsp_new;
 repeat(abs(vsp_new)) {
 	if has_collided(0, sign(vsp)) {
 		vsp = 0;
-        break;
+    break;
 	}
 	
 	y += sign(vsp);

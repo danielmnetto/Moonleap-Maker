@@ -1,11 +1,28 @@
+/*
+ * This script holds functions of all the menus composed with their options.
+ * 
+ * Each function returns a menu represented by an array with options of
+ * MenuOption* struct type with their configuration set.
+ * 
+ * You can add, modify or erase any of the options and menus of the game here.
+ */
+
+function menu_play_redirect_option_sound() {
+  audio_play_sfx(sndStarGame, false, -6, 0);
+}
+
 function menu_get_main() {
   var _menu_main = [
     // Start
     new MenuOptionActionCall(
       function() { return LANG.text_start; },
       function() {
-        audio_play_sfx(sndStarGame, false, -6, 0);
-        show_debug_message("start game!");
+        var _room = Room100;
+        if oCamera.arcade {
+          _room = Room0;
+        }
+        menu_play_redirect_option_sound();
+        room_transit(_room);
       }
     ),
 
@@ -19,19 +36,20 @@ function menu_get_main() {
     new MenuOptionActionCall(
       function() { return LANG.text_credits; },
       function() {
-        audio_play_sfx(sndStarGame, false, -6, 0);
-        show_debug_message("credits!");
+        menu_play_redirect_option_sound();
+        room_transit(RoomCreditsAlves);
       }
     )
   ];
 
+  // Options available only on desktop releases.
   if is_on_desktop() {
     // Level Maker
     array_push(_menu_main, new MenuOptionActionCall(
       function() { return LANG.maker_name; },
       function() {
-        audio_play_sfx(sndStarGame, false, -6, 0);
-        show_debug_message("level maker!");
+        menu_play_redirect_option_sound();
+        room_transit(RoomMakerMenu);
       }
     ));
 
@@ -46,6 +64,50 @@ function menu_get_main() {
 
   return _menu_main;
 };
+
+function menu_get_level_pause() {
+  var _menu_pause = [
+    // Resume
+    new MenuOptionCloseMenu(
+      function() { return LANG.text_resume; },
+    ),
+
+    // Options
+    new MenuOptionMenuCall(
+      function() { return LANG.text_options; },
+      "options",
+    ),
+
+    // Change level
+    new MenuOptionActionCall(
+      function() { return LANG.text_changelevel; },
+      function() { 
+        if not instance_exists(oTransition) {
+          audio_play_sfx(sndStarGame, false, -6.2, 0);  
+          room_transit(Room100);
+        }
+      }
+    ),
+
+    // Give up
+    new MenuOptionActionCall(
+      function() { return LANG.text_giveup; },
+      function() { 
+        if not instance_exists(oTransition) {
+          audio_sound_gain(bgm_hub   , 0, 1000);
+          audio_sound_gain(bgm_hub_01, 0, 1000);
+          audio_sound_gain(bgm_hub_02, 0, 1000);
+          audio_sound_gain(bgm_hub_03, 0, 1000);
+          audio_sound_gain(bgm_hub_04, 0, 1000);
+          audio_play_sfx(sndStarGame, false, -6.2, 0);
+          room_transit(RoomMenu);
+        }
+      }
+    ),
+  ];
+  
+  return _menu_pause;
+}
 
 function menu_get_options() {
   var _menu_options = [

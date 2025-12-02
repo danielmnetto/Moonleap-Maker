@@ -1,16 +1,32 @@
-// You can edit these variables below
+/*
+ * This object is a replacement for the oMenu and oPauseMenu objects.
+ * 
+ * To call this menu controller in the game, use menu_call(...) command or
+ * instantiate it in the room and edit the variables below through the
+ * Instance Creation Code.
+ */ 
+
+// You can edit these variables below.
+menus = {};
 current_menu_name = "";
 fill_background = false;
-background_fill_color = COLOR_NICE_BLACK;
 show_game_version = false;
-use_draw_end = false;
+show_title = false;
 
-// Do not edit these variables below
-menus = {};
+// DO NOT EDIT THESE VARIABLES BELOW!
 current_option_index = 0;
-is_on_input_mode = false;
+background_fill_color = COLOR_NICE_BLACK;
 
 scr_inputcreate();
+
+// Change background fill color to black on space themed places.
+if instance_exists(oPlayer)
+and (
+  (room_is(Room100) and oPlayer.y < room_height / 2)
+  or instance_exists_any([oFlowerDay, oSpaceDay, oDunDay])
+) {
+  background_fill_color = c_black;
+}
 
 update_touch_controls_alpha = function() {
   obDirection.image_alpha =	global.settings.buttons / 100;
@@ -52,6 +68,25 @@ check_debugging_mode = function() {
     audio_play_sound(_debug_sound, _priority, _loop, _gain, _offset, _pitch);
     keyboard_string = "";
   }
-}
+};
 
-//update_touch_controls_alpha();
+get_title = function() {
+  if room_is([RoomMenu, RoomMenu2, RoomCredits, RoomCreditsAlves, Room100, rm_blank0]) {
+  	return " ";
+  }
+
+  var name = " ";
+
+  if room_is(RoomMaker0) {
+  	name = LANG.maker_name;
+
+    if not is_string(name) then name = " ";
+    return name;
+  }
+
+  name = LANG[$ room_get_name(room)];
+  if not is_string(name) then name = " ";
+  return name;
+};
+
+update_touch_controls_alpha();

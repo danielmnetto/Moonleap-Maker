@@ -1,4 +1,4 @@
- 
+pause_delay = max(pause_delay - 1, 0);
 
 //snails dont like ramps
 

@@ -6,7 +6,8 @@ if fill_background {
 
 var _menu = menus[$ current_menu_name],
     _options_length = array_length(_menu),
-    
+    _current_option = _menu[current_option_index],
+
     _text_halign = fa_center,
     _text_valign = fa_top,
     _text_font = oCamera.font,
@@ -21,35 +22,85 @@ var _menu = menus[$ current_menu_name],
 
     _text_shake_char = "$",
 
+    _option_base_x = GUI_W / 2,
+    _option_base_y = 78,
+    _option_base_alt_title_y1 = 64,
+    _option_base_alt_title_y2 = 73,
+    _option_y_gap = 14,
+    _option_color_default = COLOR_NICE_MAGENTA,
+    _option_color_selected = COLOR_NICE_YELLOW,
+    _option_letters_distance = 0,
+    _option_line_distance = 12,
+    _option_line_width = 320,
+    _option_break_on_space = false,
+    _option_alpha = 1,
+
+    _description_base_x = GUI_W / 2,
+    _description_base_y = 140,
+    _description_text = _current_option.get_description(),
+    _description_letters_distance = 0,
+    _description_line_distance = 12,
+    _description_line_width = 320,
+    _description_break_on_space = false,
+    _description_alpha = 1,
+    _description_color = COLOR_NICE_YELLOW,
+
     _game_version_base_x = GUI_W - 21,
     _game_version_base_y = GUI_H - 18,
     _game_version_label = "v"+string_copy(GM_version,1,5),
     _game_version_label_color = COLOR_NICE_PURPLE,
 
-    _current_option = _menu[current_option_index],
-    _option_base_x = GUI_W / 2,
-    _option_base_y = 78,
-    _option_y_gap = 14,
-    _option_color_default = COLOR_NICE_MAGENTA,
-    _option_color_selected = COLOR_NICE_YELLOW,
-    _option_color_on_input = COLOR_NICE_WHITE,
+    _title_base_x = GUI_W / 2,
+    _title_base_y = _option_base_y - (_option_y_gap * 2),
+    _title_text = get_title(),
+    _title_letters_distance = 0,
+    _title_line_distance = 12,
+    _title_line_width = 320,
+    _title_break_on_space = false,
+    _title_alpha = 1,
+    _title_color = COLOR_NICE_DARK,
 
-    _description = _current_option.get_description(),
-    _description_color = COLOR_NICE_YELLOW,
-    _description_base_x = GUI_W / 2,
-    _description_base_y = 140,
-
-    _letters_distance = 0,
-    _line_distance = 12,
-    _line_width = 320,
-    _break_on_space = false,
-    _alpha = 1;
+    _title_text_wave_height = 2.25,
+    _title_text_wave_time = 1,
+    _title_text_wave_length = 100,
+    _title_text_wave_char = "~";
 
 draw_set_halign(_text_halign);
 draw_set_valign(_text_valign);
 draw_set_font(_text_font);
 
-nox_set_wave(_text_wave_height, _text_wave_time, _text_wave_length, _text_wave_char);
+if show_title {
+  if room_is([RoomMenu, RoomMenu2, RoomCredits, RoomCreditsAlves, Room100, rm_blank0]) {
+  	_option_base_y = _option_base_alt_title_y1;
+  } else {
+  	_option_base_y = _option_base_alt_title_y2;
+  }
+  _title_text = $"~{_title_text}~";
+  nox_set_wave(
+    _title_text_wave_height,
+    _title_text_wave_time,
+    _title_text_wave_length,
+    _title_text_wave_char
+  );
+  draw_set_color(_title_color);
+  draw_text_nox(
+    _title_base_x,
+    _title_base_y,
+    _title_text,
+    _title_letters_distance,
+    _title_line_distance,
+    _title_line_width,
+    _title_break_on_space,
+    _title_alpha
+  );
+}
+
+nox_set_wave(
+  _text_wave_height,
+  _text_wave_time,
+  _text_wave_length,
+  _text_wave_char
+);
 nox_set_alternative_color(_text_blink_color, _text_blink_char);
 
 if show_game_version {
@@ -64,27 +115,41 @@ for (var _i = 0; _i < _options_length; _i++) {
 
       _option_x = _option_base_x,
       _option_y = _option_base_y + (_option_y_gap * _i),
-      _option_label = _menu_option.get_label(),
+      _option_text = _menu_option.get_label(),
       _option_color = _is_option_selected ? _option_color_selected : _option_color_default;
-
-  if is_on_input_mode {
-    _option_color = _option_color_on_input;
-  }
   
   draw_set_color(_option_color);
   
   if _is_option_selected {
-    _option_label = _is_option_dangerous 
-      ? $"{_text_shake_char}{_option_label}{_text_shake_char}"
-      : $"{_text_wave_char}{_option_label}{_text_wave_char}";
+    _option_text = _is_option_dangerous 
+      ? $"{_text_shake_char}{_option_text}{_text_shake_char}"
+      : $"{_text_wave_char}{_option_text}{_text_wave_char}";
 	}
-  draw_text_nox(_option_x, _option_y, _option_label, _letters_distance, _line_distance, _line_width, _break_on_space, _alpha); 
+  draw_text_nox(
+    _option_x,
+    _option_y,
+    _option_text,
+    _option_letters_distance,
+    _option_line_distance,
+    _option_line_width,
+    _option_break_on_space,
+    _option_alpha
+  );
 }
 
-if not is_undefined(_description) {
+if not is_undefined(_description_text) {
   if _current_option.is_dangerous {
-    _description = $"{_text_blink_char}{_description}{_text_blink_char}";
+    _description_text = $"{_text_blink_char}{_description_text}{_text_blink_char}";
   }
   draw_set_color(_description_color);
-  draw_text_nox(_description_base_x, _description_base_y, _description, _letters_distance, _line_distance, _line_width, _break_on_space, _alpha);
+  draw_text_nox(
+    _description_base_x,
+    _description_base_y,
+    _description_text,
+    _description_letters_distance,
+    _description_line_distance,
+    _description_line_width,
+    _description_break_on_space,
+    _description_alpha
+  );
 }

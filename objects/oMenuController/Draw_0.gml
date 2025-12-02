@@ -1,3 +1,5 @@
-if not use_draw_end {
-  event_user(0);
+/// @desc Depth drawing during intro
+if not instance_exists(oIntro) {
+  exit;
 }
+event_user(0);

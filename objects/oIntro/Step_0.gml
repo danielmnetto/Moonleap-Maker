@@ -4,7 +4,7 @@ if global.is_maker_mode {
   exit;
 }
 
-if debug_mode {
+if false and debug_mode {
 	room_goto(Room100);
 	instance_destroy();
   exit;

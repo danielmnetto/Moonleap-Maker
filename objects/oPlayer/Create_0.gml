@@ -1,12 +1,14 @@
-// ------------------------------------ NOTA IMPORTANTE ------------------------------------
-//
-// Nas fases, o jogador deve ser instanciado depois que as estrelas forem instanciadas.
-// Havia um problema no editor de níveis onde algumas estrelas eram instanciadas depois
-// do oPlayer, fazendo com que estas não sejam contabilizadas.
-// O ideal é que o oPlayer seja criado na Room depois que as estrelas já forem criadas
-// para que a contagem de estrelas seja feita corretamente.
-//
-// -----------------------------------------------------------------------------------------
+/* ------------------------------------ NOTA IMPORTANTE ------------------------------------
+ *
+ * Nas fases, o jogador deve ser instanciado depois que as estrelas forem instanciadas.
+ *
+ * Havia um problema no editor de níveis onde algumas estrelas eram instanciadas depois
+ * do oPlayer, fazendo com que estas não sejam contabilizadas.
+ * O ideal é que o oPlayer seja criado na Room depois que as estrelas já forem criadas
+ * para que a contagem de estrelas seja feita corretamente.
+ *
+ * -----------------------------------------------------------------------------------------
+ */
 
 enum PLAYER_MODE { LEAP, DIRECTION, NEUTRAL }
 
@@ -255,6 +257,7 @@ state.add("win", {
 		check_mushroom_collision();
 	}
 });
+state.add("paused", {});
 
 // ---- State transitions ----
 // Transitions help making one or more states changing to another even easier.
@@ -274,6 +277,14 @@ state.add_transition("t_tr", ["run", "jump"], "idle", function() {
 
 state.add_transition("t_tr", ["idle", "run", "jump"], "win", function() {
 	return stars_collected == stars_to_collect;
+});
+
+state.add_transition("t_tr", ["idle", "run", "jump"], "paused", function() {
+	return oCamera.pause_delay > 0;
+});
+
+state.add_transition("t_tr", ["paused"], "idle", function() {
+	return oCamera.pause_delay <= 0;
 });
 
 // -------------------------------------
@@ -303,7 +314,7 @@ set_movement_and_gravity = function() {
 		alarm[11] = game_get_speed(gamespeed_fps) * 30;
 	}
     
-	if is_at_hub() or instance_exists(oPauseMenu) {
+	if is_at_hub() or instance_exists_any([oPauseMenu, oMenuController]) {
 		alarm[11] += 1;
 	}
     
@@ -354,24 +365,24 @@ set_movement_and_gravity = function() {
 }
 
 set_godmode_toggling = function() {
-    if not debug_mode
-    or not oCamera.debug
-    or not key_reset {
-        return;
-    }
+  if not debug_mode
+  or not oCamera.debug
+  or not key_reset {
+    return;
+  }
 
-    godmode = not godmode;
-    oCamera.show_debug = godmode;
+  godmode = not godmode;
+  oCamera.show_debug = godmode;
 }
 
 set_godmode_movement = function() {
-    if not godmode then return;
+  if not godmode then return;
 
-    grav = 0;
-    if key_jump or key_up then vsp = -4;
-    if key_down then vsp = 2;
-    if key_left then hsp = -3;
-    if key_right then hsp = 3;
+  grav = 0;
+  if key_jump or key_up then vsp = -4;
+  if key_down then vsp = 2;
+  if key_left then hsp = -3;
+  if key_right then hsp = 3;
 }
 
 set_jump = function() {
@@ -383,59 +394,59 @@ set_jump = function() {
 	}
 
 	if vsp > -1 {
-	   // Go up a bit higher from oParentDay & oParentNight
-	   // to not collide with spikes while jumping and changing.
-	   // day/night state.
-	   if not night {
-	      var _parent_night = instance_place(x, y + 6, oParentNight);
-	      if _parent_night != noone {
-	            y += _parent_night.bbox_top - (y + 10); //é 10 porque sprite_height/2=9
-                
-	            if not place_meeting(x, y, oNope) 
-	            and not state.state_is("win")
-	            and not godmode {
-	               instance_destroy();
-	            } 
-	      }
-	   } else {
-	      var _parent_day = instance_place(x, y + 6, oParentDay);
-	      if _parent_day != noone { 
-	            y += _parent_day.bbox_top - (y + 10);
+    // Go up a bit higher from oParentDay & oParentNight
+    // to not collide with spikes while jumping and changing.
+    // day/night state.
+    if not night {
+      var _parent_night = instance_place(x, y + 6, oParentNight);
+      if _parent_night != noone {
+        y += _parent_night.bbox_top - (y + 10); //é 10 porque sprite_height/2=9
+          
+        if not place_meeting(x, y, oNope) 
+        and not state.state_is("win")
+        and not godmode {
+          instance_destroy();
+        } 
+      }
+    } else {
+      var _parent_day = instance_place(x, y + 6, oParentDay);
+      if _parent_day != noone { 
+        y += _parent_day.bbox_top - (y + 10);
 
-	            if not place_meeting(x, y, oNope) 
-	            and not state.state_is("win")
-	            and not godmode {
-	               instance_destroy();
-	            } 
-	      }
-	   }
+        if not place_meeting(x, y, oNope) 
+        and not state.state_is("win")
+        and not godmode {
+          instance_destroy();
+        } 
+      }
+    }
     
-	   var _solid = instance_place(x, y + 6, oSolid);
+    var _solid = instance_place(x, y + 6, oSolid);
     
-	   if place_meeting(x, y + 8, oPlatGhost) and not place_meeting(x, y, oPlatGhost) {
-	      _solid = instance_place(x, y + 6, oPlatGhost);
-	   }
-
-	   if _solid != noone {
-	      if not place_meeting(x, y + 6, oRamp) {
-	            grace_time = 2;
-	            y += _solid.bbox_top - (y + 10)
-	      }
-            
-	      // Don't jump but stick to the floor, this prevents a gamebreaker bug
-	      if key > 0 and (place_meeting(x,y + 6, oKeyDoor) 
-	            or place_meeting(x,y + 6,oKeyDoorTall) 
-	            or place_meeting(x,y + 6,oKeyDoorWide) 
-	            or place_meeting(x,y + 6,oKeyDoorWide)) {
-	            grace_time = 0;
-	            y += _solid.bbox_top - (y + 10);
-	      } 
-	   }
-
-	   var _broken_stone_below = instance_place(x, y + 6, oBrokenStone);
-
-	   if _broken_stone_below != noone then 
-	      instance_destroy(_broken_stone_below);
+    if place_meeting(x, y + 8, oPlatGhost) and not place_meeting(x, y, oPlatGhost) {
+      _solid = instance_place(x, y + 6, oPlatGhost);
+    }
+  
+    if _solid != noone {
+      if not place_meeting(x, y + 6, oRamp) {
+        grace_time = 2;
+        y += _solid.bbox_top - (y + 10)
+      }
+          
+      // Don't jump but stick to the floor, this prevents a gamebreaker bug
+      if key > 0 and (place_meeting(x,y + 6, oKeyDoor) 
+      or place_meeting(x,y + 6,oKeyDoorTall) 
+      or place_meeting(x,y + 6,oKeyDoorWide) 
+      or place_meeting(x,y + 6,oKeyDoorWide)) {
+        grace_time = 0;
+        y += _solid.bbox_top - (y + 10);
+      } 
+    }
+  
+    var _broken_stone_below = instance_place(x, y + 6, oBrokenStone);
+  
+    if _broken_stone_below != noone then 
+      instance_destroy(_broken_stone_below);
 	}
     
     
@@ -443,10 +454,10 @@ set_jump = function() {
 
 	// Change day/night state
 	if mode == PLAYER_MODE.LEAP then
-	   scr_change();
+    scr_change();
 
 	if last_plat != noone then
-	   instance_destroy(last_plat);
+    instance_destroy(last_plat);
 
 	grace_time = 0;
 	vsp = -jumpspeed;
@@ -458,10 +469,10 @@ set_jump = function() {
 
 	shake_gamepad(0.4, 2);
 	repeat(irandom_range(3, 5)) {
-	   var dust = instance_create_layer(x, y + (sprite_height / 2), "Instances_2", oBigDust);
-
-	   dust.hsp = hsp / random_range(5, 10);
-	   dust.vsp = vsp / random_range(5, 10);
+    var dust = instance_create_layer(x, y + (sprite_height / 2), "Instances_2", oBigDust);
+  
+    dust.hsp = hsp / random_range(5, 10);
+    dust.vsp = vsp / random_range(5, 10);
 	}
 	 
 	// Spawn leaf particles on jump from grass ground.
@@ -484,12 +495,38 @@ set_game_paused = function() {
 	if not key_start
 	or vsp != 0 
 	or hsp != 0
-	or instance_exists(oPauseMenu)
+	or instance_exists_any([oPauseMenu, oMenuController])
 	or room_is([RoomMenu, RoomMenu2]) {
 		return;
 	}
 
-	instance_create_layer(0, 0, layer, oPauseMenu);
+  // Pause menu
+  var _menu_list = menus_get_level_pause(),
+      _first_menu_name = "main",
+      _layer = layer,
+      _fill_background = true,
+      _show_game_version = false,
+      _show_title = true,
+    
+      // Pause sound effect
+      _pause_sound = sndUiChange,
+      _priority = 10,
+      _loop = false,
+      _gain = power(10, -18.2 / 20),
+      _offset = 0,
+      _pitch = 1.4;
+
+  if global.settings.enable_sfx {
+    audio_play_sound(_pause_sound, _priority, _loop, _gain, _offset, _pitch);
+  }
+  menu_call_layer(
+    _menu_list,
+    _first_menu_name,
+    _layer,
+    _fill_background,
+    _show_game_version,
+    _show_title
+  );
 }
 
 set_footstep_sound = function() {
@@ -553,7 +590,7 @@ set_rope_swinging = function() {
 check_destroy_itself = function() {
 	if debug_mode
 	or state.state_is("win")
-	or instance_exists_any([oMenu, oPauseMenu, oIntro, oTransition])
+	or instance_exists_any([oMenu, oPauseMenu, oMenuController, oIntro, oTransition])
 	or room_is([RoomMenu, RoomMenu2, RoomFinal, RoomCredits, RoomCreditsAlves, RoomProgress]) {
 	   return;
 	}
@@ -671,7 +708,7 @@ perform_win = function() {
 
 check_controls_disabling = function() {
     if not state.state_is("win")
-    and not instance_exists(oPauseMenu) 
+    and not instance_exists_any(oPauseMenu, oMenuController) 
     and numb <= 0
     and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub())) {
     	return;
@@ -703,251 +740,254 @@ check_on_landing = function() {
 }
 
 check_day_night_spikes_collision = function() {
-    if place_meeting(x, y, oNope)
-    or godmode 
-    or state.state_is("win") {
-        return;
+  if place_meeting(x, y, oNope)
+  or godmode 
+  or state.state_is("win") {
+    return;
+  }
+  
+  if night {
+    if (place_meeting(x + 1, y + 1, oParentDay) and vsp > -1.75)
+    or (place_meeting(x - 1, y - 2, oParentDay))
+    or (place_meeting(x - 1, y + 1, oParentDay) and vsp > -1.75)
+    or (place_meeting(x + 1, y - 2, oParentDay)) {
+      instance_destroy();
     }
-
-    if night {
-        if (place_meeting(x + 1, y + 1, oParentDay) and vsp > -1.75)
-        or (place_meeting(x - 1, y - 2, oParentDay))
-        or (place_meeting(x - 1, y + 1, oParentDay) and vsp > -1.75)
-        or (place_meeting(x + 1, y - 2, oParentDay)) {
-            instance_destroy();
-        }
-    } else {
-        if (place_meeting(x + 1, y + 1, oParentNight) and vsp > -1.75)
-            or (place_meeting(x - 1, y - 2, oParentNight))
-            or (place_meeting(x - 1, y + 1, oParentNight) and vsp > -1.75)
-            or (place_meeting(x + 1, y - 2, oParentNight)) { 
-                instance_destroy()
-        }
+  } else {
+    if (place_meeting(x + 1, y + 1, oParentNight) and vsp > -1.75)
+    or (place_meeting(x - 1, y - 2, oParentNight))
+    or (place_meeting(x - 1, y + 1, oParentNight) and vsp > -1.75)
+    or (place_meeting(x + 1, y - 2, oParentNight)) { 
+      instance_destroy();
     }
+  }
 }
 
 check_ceiling_collision = function() {
-    if vsp >= 0 
-    or on_ladder
-    or audio_is_playing(snd_bump)
-    or vsp >= -0.75 
-    or not has_collided(0, -3) {
-        return;	
-    }
-
-    var _broken_stone = instance_place(x, y - 3, oBrokenStone);
-
-    instance_destroy(_broken_stone);
-    if _broken_stone != noone then vsp = 0;
-            
-    shake_gamepad(1, 3);
-    audio_play_sfx(snd_bump, false, -5, 13);
-            
-    // Create particles above the player
-    repeat(3) {
-        instance_create_layer(x, y - sprite_height / 2, "Instances_2", oStarSmol);
-    }
+  if vsp >= 0 
+  or on_ladder
+  or audio_is_playing(snd_bump)
+  or vsp >= -0.75 
+  or not has_collided(0, -3) {
+    return;	
+  }
+  
+  var _broken_stone = instance_place(x, y - 3, oBrokenStone);
+  
+  instance_destroy(_broken_stone);
+  if _broken_stone != noone then vsp = 0;
+        
+  shake_gamepad(1, 3);
+  audio_play_sfx(snd_bump, false, -5, 13);
+        
+  // Create particles above the player
+  repeat(3) {
+    instance_create_layer(x, y - sprite_height / 2, "Instances_2", oStarSmol);
+  }
 }
 
 check_ladder_collision = function() {
-    if not ds_exists(ladder_list, ds_type_list) then return;
+  if not ds_exists(ladder_list, ds_type_list) then return;
 
-    ds_list_clear(ladder_list);
+  ds_list_clear(ladder_list);
 
-    var ladder_count = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom, oLadderParent, false, true, ladder_list, true);
+  var ladder_count = collision_rectangle_list(bbox_left, bbox_top, bbox_right, bbox_bottom, oLadderParent, false, true, ladder_list, true);
 
-    if ladder_count <= 0 or not key_jump {
-        on_ladder = false;
-        return;
-    }
+  if ladder_count <= 0 or not key_jump {
+    on_ladder = false;
+    return;
+  }
 
-    on_ladder = true;
-	 
-    var nearest_ladder = ds_list_find_value(ladder_list, 0);
+  on_ladder = true;
 
-    if ladder_count > 1
-        or y > nearest_ladder.bbox_top - 4
-        or place_meeting(x, y, oPlatGhost)
-    {
-        vsp = -0.75;
-    } else {
-        vsp = 0;
-    }
+  var nearest_ladder = ds_list_find_value(ladder_list, 0);
 
-    if key_left + key_right == 0 then
-        x = approach(x, nearest_ladder.x + nearest_ladder.sprite_width / 2, 0.5);
+  if ladder_count > 1
+    or y > nearest_ladder.bbox_top - 4
+    or place_meeting(x, y, oPlatGhost)
+  {
+    vsp = -0.75;
+  } else {
+    vsp = 0;
+  }
+
+  if key_left + key_right == 0 {
+    var _ladder_center_x = object_get_sprite_center_x(nearest_ladder);
+    
+    if x < _ladder_center_x then hsp = 0.5;
+    if x > _ladder_center_x then hsp = -0.5;
+  }
 }
 
 check_snail_spike_collision = function() {
-    if not (place_meeting(x, y + 1, oSnailGray)
-    	or (place_meeting(x, y + 1, oSnail) and not night)
-    	or (place_meeting(x, y + 1, oSnailNight) and night)
-    ) or vsp <= -1.75
-    or state.state_is("win")
-    or godmode {
-    	return;
-    }
-
-    instance_destroy();
+  if not (place_meeting(x, y + 1, oSnailGray)
+    or (place_meeting(x, y + 1, oSnail) and not night)
+    or (place_meeting(x, y + 1, oSnailNight) and night)
+  ) or vsp <= -1.75
+  or state.state_is("win")
+  or godmode {
+    return;
+  }
+  instance_destroy();
 }
 
 check_wall_squash_collision = function() {
-   if not place_meeting(x, y, oSolid)
-	or object_is_outside_room()
-   or state.state_is("win")
-   or godmode {
-		return;
-   }
-
-	show_debug_message("THE PLAYER WAS SQUASHED!!!");
-   instance_destroy(); 
-   squash = true;
+  if not place_meeting(x, y, oSolid)
+  or object_is_outside_room()
+  or state.state_is("win")
+  or godmode {
+    return;
+  }
+  
+  show_debug_message("THE PLAYER WAS SQUASHED!!!");
+  instance_destroy(); 
+  squash = true;
 }
 
 check_star_collision = function() {
-    var _star = instance_place(x, y, oStar);
-
-    if _star == noone then return;
-    if not _star.visible then return;
-
-    if _star.sprite_index == sStarDaySpike
-    and not state.state_is("win")
-    and not godmode {
-        instance_destroy();
-        return;
-    }
-
-    if not _star.neww {
-        if stars_collected == 0 then audio_play_sfx(sndStar1, false, -9.3, 0);
-        if stars_collected == 1 then audio_play_sfx(sndStar2, false, -9.3, 0);
-        if stars_collected == 2 then audio_play_sfx(sndStar3, false, -9.3, 0);
-        if stars_collected >= 3 and global.settings.enable_sfx then 
-            audio_play_sound(sndStar3, 10, false, power(10, -9.3 / 20), 0, 1.05);
-    }
-
-    instance_destroy(_star);
-    stars_collected += 1;
-    flash = 1;
+  var _star = instance_place(x, y, oStar);
+  
+  if _star == noone then return;
+  if not _star.visible then return;
+  
+  if _star.sprite_index == sStarDaySpike
+  and not state.state_is("win")
+  and not godmode {
+    instance_destroy();
+    return;
+  }
+  
+  if not _star.neww {
+    if stars_collected == 0 then audio_play_sfx(sndStar1, false, -9.3, 0);
+    if stars_collected == 1 then audio_play_sfx(sndStar2, false, -9.3, 0);
+    if stars_collected == 2 then audio_play_sfx(sndStar3, false, -9.3, 0);
+    if stars_collected >= 3 and global.settings.enable_sfx then 
+      audio_play_sound(sndStar3, 10, false, power(10, -9.3 / 20), 0, 1.05);
+  }
+  
+  instance_destroy(_star);
+  stars_collected += 1;
+  flash = 1;
 }
 
 check_perma_spike_collision = function() {
-    if not instance_exists(oPermaSpike)
-    or state.state_is("win")
-    or godmode
-    or collision_rectangle(x - 2, y - 2, x + 2, y + 4, oPermaSpike, false, false) == noone
-    or place_meeting(x, y, oNope) {
-    	return;
-    }
-
-    instance_destroy();
+  if not instance_exists(oPermaSpike)
+  or state.state_is("win")
+  or godmode
+  or collision_rectangle(x - 2, y - 2, x + 2, y + 4, oPermaSpike, false, false) == noone
+  or place_meeting(x, y, oNope) {
+    return;
+  }
+  
+  instance_destroy();
 }
 
 check_mushroom_collision = function() {
-   var nearmush = instance_place(x, y, oMush);
+  var nearmush = instance_place(x, y, oMush);
+  
+  if nearmush == noone then return;
+  
+  var _mush_angle = nearmush.image_angle;
+  var _mush_xscale = nearmush.image_xscale;
+  var _mush_yscale = nearmush.image_yscale;
+  
+  if nearmush.image_speed != 0 then return;
+  
+  var _play_mush_sound = function() {
+    audio_play_sfx(choose(snd_cogumelo_01, snd_cogumelo_02, snd_cogumelo_03, snd_cogumelo_04), false, -16, 2);
+  }
+  
+  var _spawn_mush_particles = function() {
+    repeat(irandom_range(3, 5)) {
+      var dust = instance_create_layer(x, y + (sprite_height / 2), "Instances_2", oBigDust);
+      dust.hsp = hsp / random_range(5, 10);
+      dust.vsp = vsp / random_range(5, 10);
+    }
+  }
+  
+  if (_mush_angle == 0) and vsp >= 0 { // Mush is facing up
+    if not nearmush.gray {
+      scr_change();
+    }
+      
+    y = nearmush.y;
+    nearmush.image_speed = 1;
+    grace_time = 0;
+      
+    if instance_exists(oMagicOrb) and not nearmush.gray {
+      oMagicOrb.vsp = -(jumpspeed + 0.65)
+    } else {
+      vsp = -(jumpspeed + 0.65)
+    }
+      
+    image_index = 0;
+    
+    _play_mush_sound();
+    shake_gamepad(0.4, 2);
+    _spawn_mush_particles();
+  } else if (_mush_angle == -90 or _mush_angle == 270) and numb == 0 { // Mush is facing right
+    if not nearmush.gray {
+      scr_change();
+    }
+    
+    numb = 10;
+    vsp = -0.5;
+    
+    nearmush.image_speed = 1;
+    grace_time = 0;
+    if instance_exists(oMagicOrb) and not nearmush.gray {
+      oMagicOrb.hsp = jumpspeed
+    } else {
+      hsp = jumpspeed
+    }
 
-   if nearmush == noone then return;
-	 
-   var _mush_angle = nearmush.image_angle;
-   var _mush_xscale = nearmush.image_xscale;
-   var _mush_yscale = nearmush.image_yscale;
-
-   if nearmush.image_speed != 0 then return;
-
-   var _play_mush_sound = function() {
-      audio_play_sfx(choose(snd_cogumelo_01, snd_cogumelo_02, snd_cogumelo_03, snd_cogumelo_04), false, -16, 2);
-   }
-
-   var _spawn_mush_particles = function() {
-      repeat(irandom_range(3, 5)) {
-         var dust = instance_create_layer(x, y + (sprite_height / 2), "Instances_2", oBigDust);
-         dust.hsp = hsp / random_range(5, 10);
-         dust.vsp = vsp / random_range(5, 10);
-      }
-   }
-
-	if (_mush_angle == 0) and vsp >= 0 { // Mush is facing up
-      if not nearmush.gray {
-         scr_change();
-      }
-        
-      y = nearmush.y;
-      nearmush.image_speed = 1;
-      grace_time = 0;
-        
-      if instance_exists(oMagicOrb) and not nearmush.gray {
-         oMagicOrb.vsp = -(jumpspeed + 0.65)
-      } else {
-         vsp = -(jumpspeed + 0.65)
-      }
-        
-      image_index = 0;
-
-      _play_mush_sound();
-      shake_gamepad(0.4, 2);
-		_spawn_mush_particles();
-	} else if (_mush_angle == -90 or _mush_angle == 270) and numb == 0 { // Mush is facing right
-	   if not nearmush.gray {
-	      scr_change();
-	   }
-
-	   numb = 10;
-	   vsp = -0.5;
-
-	   nearmush.image_speed = 1;
-	   grace_time = 0;
-	   if instance_exists(oMagicOrb) and not nearmush.gray {
-	      oMagicOrb.hsp = jumpspeed
-	   } else {
-	      hsp = jumpspeed
-	   }
-        
-	   v_fric = 0;
-	   image_index = 0;
-	   _play_mush_sound();
-		shake_gamepad(0.4, 2);
-	   _spawn_mush_particles();
-   } else if (_mush_angle == -270 or _mush_angle == 90) and numb == 0 { // Mush is facing left
-      if not nearmush.gray {
-         scr_change();
-      }
-
-      numb = 10;
-      vsp = -0.5;
-
-      nearmush.image_speed = 1;
-      grace_time = 0;
-        
-      if instance_exists(oMagicOrb) and not nearmush.gray {
-         oMagicOrb.hsp = -jumpspeed;
-      } else {
-         hsp = -jumpspeed;
-      }
-            
-      v_fric = 0;
-      image_index = 0;
-      _play_mush_sound();
-		shake_gamepad(0.4, 2);
-      _spawn_mush_particles();
-   } else if abs(_mush_angle) == 180 or (_mush_angle == 0 and _mush_yscale == -1) and vsp < 0 { // Mush is facing down
-      if not nearmush.gray {
-         scr_change();
-      }
-        
-      y = nearmush.y;
-      nearmush.image_speed = 1;
-      grace_time = 0;
-        
-      if instance_exists(oMagicOrb)
-      and not nearmush.gray {
-         oMagicOrb.vsp = (jumpspeed + 0.65)
-      } else {
-         vsp = (jumpspeed + 0.65)
-      }
-        
-      image_index = 0;
-        
-      _play_mush_sound();
-		shake_gamepad(0.4, 2);
-      _spawn_mush_particles();
-   }
+    v_fric = 0;
+    image_index = 0;
+    _play_mush_sound();
+    shake_gamepad(0.4, 2);
+    _spawn_mush_particles();
+  } else if (_mush_angle == -270 or _mush_angle == 90) and numb == 0 { // Mush is facing left
+    if not nearmush.gray {
+      scr_change();
+    }
+  
+    numb = 10;
+    vsp = -0.5;
+  
+    nearmush.image_speed = 1;
+    grace_time = 0;
+      
+    if instance_exists(oMagicOrb) and not nearmush.gray {
+      oMagicOrb.hsp = -jumpspeed;
+    } else {
+      hsp = -jumpspeed;
+    }
+          
+    v_fric = 0;
+    image_index = 0;
+    _play_mush_sound();
+    shake_gamepad(0.4, 2);
+    _spawn_mush_particles();
+  } else if abs(_mush_angle) == 180 or (_mush_angle == 0 and _mush_yscale == -1) and vsp < 0 { // Mush is facing down
+    if not nearmush.gray {
+      scr_change();
+    }
+      
+    y = nearmush.y;
+    nearmush.image_speed = 1;
+    grace_time = 0;
+      
+    if instance_exists(oMagicOrb)
+    and not nearmush.gray {
+      oMagicOrb.vsp = (jumpspeed + 0.65)
+    } else {
+      vsp = (jumpspeed + 0.65)
+    }
+      
+    image_index = 0;
+      
+    _play_mush_sound();
+    shake_gamepad(0.4, 2);
+    _spawn_mush_particles();
+  }
 }
