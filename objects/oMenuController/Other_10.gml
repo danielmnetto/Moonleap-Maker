@@ -1,5 +1,9 @@
 /// @desc Menu drawing
 
+if is_disabled {
+  exit;
+}
+
 if fill_background {
   draw_clear(background_fill_color);
 }

@@ -637,78 +637,78 @@ check_change_by_direction = function() {
 }
 
 perform_win = function() {
-	 winwait -= 1;
+  winwait = max(winwait - 1, -1);
 
-    if winwait >= 0
-    or room == RoomMaker0
-    or instance_exists(oTransition) {
-        return;
-    }
+  if winwait >= 0
+  or room == RoomMaker0
+  or instance_exists(oTransition) {
+    return;
+  }
 
-    audio_play_sfx(sndStgClear, false, -14.4, 0);
-        
-    if changecount == 0 then changecount = 1;
+  audio_play_sfx(sndStgClear, false, -14.4, 0);
+      
+  if changecount == 0 then changecount = 1;
+  
+  //stage is only half completed (50% completed)
+  if instance_exists(oBird) {
+    var levelminusoom = string_replace(room_get_name(room), "Room", "r");
     
-    //stage is only half completed (50% completed)
-    if instance_exists(oBird) {
-        var levelminusoom = string_replace(room_get_name(room), "Room", "r");
+    //0 = not complete; >0.5 & <1.0 without bird; >1.0 complete
+    var loadvalue = variable_struct_get(oSaveManager.struct_main, levelminusoom);
         
-        //0 = not complete; >0.5 & <1.0 without bird; >1.0 complete
-        var loadvalue = variable_struct_get(oSaveManager.struct_main, levelminusoom) 
-            
-        if loadvalue == 0 {
-            variable_struct_set(oSaveManager.struct_main, levelminusoom, "0.5099");
-            oSaveManager.save = true;
-        }
-    } else { //stage is completed 
-        if changecount > 99 {
-            changecount = 99;
-        }
-        
-        var jumpstr = "00" + string(real(changecount));
-        if changecount >= 10 {
-            jumpstr = "0" + string(real(changecount));
-        }
-            
-        var levelminusoom = string_replace(room_get_name(room), "Room", "r");
-        var newscore = "1.0" + jumpstr;
-        var oldscore = variable_struct_get(oSaveManager.struct_main, levelminusoom);
-        
-        //less jumps= better
-        if real(newscore) < oldscore or oldscore < 1.0001 {
-            variable_struct_set(oSaveManager.struct_main,levelminusoom,newscore)
-        }
-        oSaveManager.save = true;
+    if loadvalue == 0 {
+      variable_struct_set(oSaveManager.struct_main, levelminusoom, "0.5099");
+      oSaveManager.save = true;
+    }
+  } else { //stage is completed 
+    if changecount > 99 {
+      changecount = 99;
+    }
+    
+    var jumpstr = "00" + string(real(changecount));
+    if changecount >= 10 {
+      jumpstr = "0" + string(real(changecount));
     }
         
-    // Go to next room
-    if instance_exists(oTimeAttack) {
-        oTimeAttack.hearts += 2
-    } 
+    var levelminusoom = string_replace(room_get_name(room), "Room", "r");
+    var newscore = "1.0" + jumpstr;
+    var oldscore = variable_struct_get(oSaveManager.struct_main, levelminusoom);
+    
+    //less jumps= better
+    if real(newscore) < oldscore or oldscore < 1.0001 {
+      variable_struct_set(oSaveManager.struct_main, levelminusoom, newscore);
+    }
+    oSaveManager.save = true;
+  }
+      
+  // Go to next room
+  if instance_exists(oTimeAttack) {
+    oTimeAttack.hearts += 2
+  }
 
-    var trans = instance_create_layer(0, 0, layer, oTransition);
-    var level_index = oCamera.levelnumb;
-    var level_next = level_index + 1;
-    
-    trans.target_room = asset_get_index(string_insert(level_next, "Room", 5));
-    
-    // Se for 5, 10, 15, 20... vai pra HUB
-    if (level_index + 1) mod 5 == 0 {
-        trans.target_room = Room100;
-    }
-    // Secret rooms
-    if level_index >= 50 and level_index < 60 {
-        trans.target_room = Room100;
-    } 
-    // Final rooms
-    if level_index == 63 {
-        trans.target_room = Room100;
-    }
+  var trans = instance_create_layer(0, 0, layer, oTransition);
+  var level_index = oCamera.levelnumb;
+  var level_next = level_index + 1;
+  
+  trans.target_room = asset_get_index(string_insert(level_next, "Room", 5));
+  
+  // Se for 5, 10, 15, 20... vai pra HUB
+  if (level_index + 1) mod 5 == 0 {
+    trans.target_room = Room100;
+  }
+  // Secret rooms
+  if level_index >= 50 and level_index < 60 {
+    trans.target_room = Room100;
+  } 
+  // Final rooms
+  if level_index == 63 {
+    trans.target_room = Room100;
+  }
 }
 
 check_controls_disabling = function() {
     if not state.state_is("win")
-    and not instance_exists_any(oPauseMenu, oMenuController) 
+    and not instance_exists_any([oPauseMenu, oMenuController])
     and numb <= 0
     and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub())) {
     	return;

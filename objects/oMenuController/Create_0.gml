@@ -6,12 +6,18 @@
  * Instance Creation Code.
  */ 
 
+// Singleton object.
+if instance_number(oMenuController) > 1 {
+  instance_destroy();
+}
+
 // You can edit these variables below.
 menus = {};
 current_menu_name = "";
 fill_background = false;
 show_game_version = false;
 show_title = false;
+is_disabled = false;
 
 // DO NOT EDIT THESE VARIABLES BELOW!
 current_option_index = 0;

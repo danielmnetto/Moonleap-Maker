@@ -62,4 +62,7 @@ function MenuOptionMenuCall(_label, _menu_name, _action = undefined, _descriptio
 }
 
 /// @desc The constructor of menu option that closes the menu when it is triggered.
-function MenuOptionCloseMenu(_label, _description = undefined): MenuOptionBase(_label, _description) constructor {}
+/// @param {string|Function} label The menu label. Can be a string for hardcoded label or a function to return a dynamic label.
+/// @param {Function} action OPTIONAL. The action when this option is triggered.
+/// @param {string|Function} description OPTIONAL. The description to display at the window footer. Can be a string for hardcoded description or a function to return a dynamic description.
+function MenuOptionCloseMenu(_label, _action = undefined, _description = undefined): MenuOptionActionCall(_label, _action, _description) constructor {}

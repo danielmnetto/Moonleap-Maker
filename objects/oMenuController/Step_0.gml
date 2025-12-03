@@ -1,3 +1,7 @@
+if is_disabled {
+  exit;
+}
+
 oCamera.pause_delay = 10;
 
 var _menus_length = struct_get_names(menus);
@@ -48,6 +52,6 @@ if _input_nav_up and current_option_index > 0 {
     _option.run_action();
   } else if is_instanceof(_option, MenuOptionCloseMenu) {
     instance_destroy();
-    exit;
+    _option.run_action();
   }
 }
