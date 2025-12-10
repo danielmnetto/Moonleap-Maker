@@ -680,6 +680,7 @@ perform_win = function() {
     }
     oSaveManager.save = true;
   }
+  
       
   // Go to next room
   if instance_exists(oTimeAttack) {

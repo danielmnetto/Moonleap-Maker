@@ -10,7 +10,7 @@
   "compression":1,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":96.048,
+  "duration":96.048004,
   "exportDir":"",
   "name":"bgm_grass_night",
   "parent":{

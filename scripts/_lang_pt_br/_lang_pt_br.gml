@@ -118,6 +118,21 @@ lang_add("PT-BR", {
   maker_object_oMagicOrb: "Orbe mágico",
   maker_object_oStarFly: "Estrela voadora",
   maker_object_oSolidInv: "Bloco sólido invisível",
+  maker_levels: "fases: ",
+  maker_rank_title: "rank",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "ordenar por: ",
+  maker_orderby_name_asc: "nome (crescente)",
+  maker_orderby_name_desc: "nome (decrescente)",
+  maker_orderby_author_asc: "autor (crescente)",
+  maker_orderby_author_desc: "autor (decrescente)",
+  maker_orderby_rank_desc: "rank (maior -> menor)",
+  maker_orderby_rank_asc: "rank (menor -> maior)",
 
 	//			d888888b d8b   db d888888b d8888b.  .d88b.  
 	//			  `88'   888o  88 `~~88~~' 88  `8D .8P  Y8. 
