@@ -80,6 +80,7 @@ var _levels = levels_get_orderedby(),
     _scroll_arrow_down_y = _menu_start_y + (_box_height * levels_to_display),
 
     _scroll_bar_sprite = sLevelScrollBar,
+    _scroll_bar_sprite_frame = current_level_index >= 0,    
     _scroll_bar_sprite_width = sprite_get_width(_scroll_bar_sprite),
     _scroll_bar_sprite_height = sprite_get_height(_scroll_bar_sprite),
     _scroll_bar_margin_right = 3,
@@ -232,7 +233,7 @@ for (var _i = level_display_range_start; _i <= level_display_range_end and _i < 
 
 // Scroll bar
 if _levels_length > 3 {
-  draw_sprite(_scroll_arrow_up_sprite, 0, _scroll_arrow_up_x, _scroll_arrow_up_y);
-  draw_sprite(_scroll_arrow_down_sprite, 0, _scroll_arrow_down_x, _scroll_arrow_down_y);
-  draw_sprite(_scroll_bar_sprite, 0, _scroll_bar_x, _scroll_bar_y);
+  draw_sprite(_scroll_arrow_up_sprite, _scroll_bar_sprite_frame, _scroll_arrow_up_x, _scroll_arrow_up_y);
+  draw_sprite(_scroll_arrow_down_sprite, _scroll_bar_sprite_frame, _scroll_arrow_down_x, _scroll_arrow_down_y);
+  draw_sprite(_scroll_bar_sprite, _scroll_bar_sprite_frame, _scroll_bar_x, _scroll_bar_y);
 }

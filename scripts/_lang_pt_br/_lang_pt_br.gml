@@ -131,8 +131,8 @@ lang_add("PT-BR", {
   maker_orderby_name_desc: "nome (decrescente)",
   maker_orderby_author_asc: "autor (crescente)",
   maker_orderby_author_desc: "autor (decrescente)",
-  maker_orderby_rank_desc: "rank (maior -> menor)",
   maker_orderby_rank_asc: "rank (menor -> maior)",
+  maker_orderby_rank_desc: "rank (maior -> menor)",
 
 	//			d888888b d8b   db d888888b d8888b.  .d88b.  
 	//			  `88'   888o  88 `~~88~~' 88  `8D .8P  Y8. 

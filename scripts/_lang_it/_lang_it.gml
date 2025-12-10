@@ -130,6 +130,21 @@ lang_add("IT", {
   maker_object_oMagicOrb: "Sfera magica",
   maker_object_oStarFly: "Stella volante",
   maker_object_oSolidInv: "Blocco solido invisibile",
+  maker_levels: "livelli: ",
+  maker_rank_title: "classifica",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "ordina per: ",
+  maker_orderby_name_asc: "nome (crescente)",
+  maker_orderby_name_desc: "nome (decrescente)",
+  maker_orderby_author_asc: "autore (crescente)",
+  maker_orderby_author_desc: "autore (decrescente)",
+  maker_orderby_rank_asc: "classifica (crescente)",
+  maker_orderby_rank_desc: "classifica (decrescente)",
 
 
     //          .88b  d88. d88888b d8b   db db    db 

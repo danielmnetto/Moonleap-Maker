@@ -141,6 +141,21 @@ lang_add("ZH", {
   maker_object_oMagicOrb: "魔术球",
   maker_object_oStarFly: "飞星",
   maker_object_oSolidInv: "隐形实心块",
+  maker_levels: "关卡: ",
+  maker_rank_title: "排名",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "排序方式：",
+  maker_orderby_name_asc: "名称（升序）",
+  maker_orderby_name_desc: "名称（升序）",
+  maker_orderby_author_asc: "作者（升序）",
+  maker_orderby_author_desc: "作者（升序）",
+  maker_orderby_rank_desc: "排名（从高到低）",
+  maker_orderby_rank_asc: "排名（从低到高）",
 
 
 	

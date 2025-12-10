@@ -120,6 +120,21 @@ lang_add("EN", {
   maker_object_oMagicOrb: "Magic orb",
   maker_object_oStarFly: "Flying star",
   maker_object_oSolidInv: "Invisible solid block",
+  maker_levels: "levels: ",
+  maker_rank_title: "rank",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "sort by: ",
+  maker_orderby_name_asc: "name (ascending)",
+  maker_orderby_name_desc: "name (descending)",
+  maker_orderby_author_asc: "author (ascending)",
+  maker_orderby_author_desc: "author (descending)",
+  maker_orderby_rank_asc: "rank (lowest to highest)",
+  maker_orderby_rank_desc: "rank (highest to lowest)",
 
 	//			d888888b d8b   db d888888b d8888b.  .d88b.  
 	//			  `88'   888o  88 `~~88~~' 88  `8D .8P  Y8. 

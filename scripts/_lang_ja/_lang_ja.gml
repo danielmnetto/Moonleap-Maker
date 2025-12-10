@@ -136,6 +136,22 @@ lang_add("JA", {
   maker_object_oMagicOrb: "魔法のオーブ",
   maker_object_oStarFly: "フライングスター",
   maker_object_oSolidInv: "目に見えないソリッドブロック",
+  maker_levels: "レベル: ",
+  maker_rank_title: "ランク",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "並び替え: ",
+  maker_orderby_name_asc: "名前（昇順）",
+  maker_orderby_name_desc: "名前（降順）",
+  maker_orderby_author_asc: "作者（昇順）",
+  maker_orderby_author_desc: "作者（降順）",
+  maker_orderby_rank_asc: "ランク（低い → 高い）",
+  maker_orderby_rank_desc: "ランク（高い → 低い）",
+  
 
 
 //          .88b  d88. d88888b d8b   db db    db 
