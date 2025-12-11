@@ -48,10 +48,10 @@ if _input_nav_up and current_option_index > 0 {
       current_option_index = 0;
       _option.run_action();
     }
+  } else if is_instanceof(_option, MenuOptionCloseMenu) {
+    _option.run_action();
+    instance_destroy();
   } else if is_instanceof(_option, MenuOptionActionCall) {
     _option.run_action();
-  } else if is_instanceof(_option, MenuOptionCloseMenu) {
-    instance_destroy();
-    _option.run_action();
-  }
+  } 
 }

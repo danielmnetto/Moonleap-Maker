@@ -7,7 +7,7 @@
 
 pause=0
 
-skip_rooms = [RoomMenu, RoomMenu2, RoomProgress, RoomCredits, RoomCreditsAlves, Room100, RoomMaker0];
+skip_rooms = [RoomMenu, RoomMenu2, RoomMakerMenu, RoomMaker0, RoomProgress, RoomCredits, RoomCreditsAlves, Room100];
 
 enum states { OUT, IN };
 

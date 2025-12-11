@@ -2,7 +2,7 @@ scr_inputget();
 
 var _levels = levels_get_orderedby(),
     _levels_length = array_length(_levels),
-    _level = _levels[max(0, current_level_index)],
+    _level = _levels_length == 0 ? undefined : _levels[max(0, current_level_index)],
 
     _input_nav_up = key_up or (key_up_axis_pressed and not key_axis_pressed),
     _input_nav_down = key_down or (key_down_axis_pressed and not key_axis_pressed),
@@ -35,9 +35,9 @@ if _input_nav_up and current_level_index > -2 {
   switch(current_level_index) {
     // Go back
     case -2:
-      play_transition_sound();
-      show_debug_message("Go back.");
-    break;
+      menu_call_layer(menus_get_maker(), "main", "Instances");
+      instance_destroy();
+    exit;
 
     // Order by
     case -1:
@@ -50,7 +50,9 @@ if _input_nav_up and current_level_index > -2 {
     // Levels
     default:
       play_transition_sound();
-      show_debug_message($"Level: {_level.name}");
+      var _data_trasition = instance_create_layer(0, 0, "Instances", oMakerLevelDataTransition);
+      _data_trasition.level_filename = _level.filename;
+      room_transit(RoomMaker0, "Instances");
     break;
   }
 }

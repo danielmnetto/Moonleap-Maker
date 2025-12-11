@@ -496,7 +496,7 @@ set_game_paused = function() {
 	or vsp != 0 
 	or hsp != 0
 	or instance_exists_any([oPauseMenu, oMenuController])
-	or room_is([RoomMenu, RoomMenu2]) {
+	or room_is([RoomMenu, RoomMenu2, RoomMaker0, RoomMakerMenu]) {
 		return;
 	}
 
@@ -507,6 +507,7 @@ set_game_paused = function() {
       _fill_background = true,
       _show_game_version = false,
       _show_title = true,
+      _use_alt_colors = true,
     
       // Pause sound effect
       _pause_sound = sndUiChange,
@@ -525,7 +526,8 @@ set_game_paused = function() {
     _layer,
     _fill_background,
     _show_game_version,
-    _show_title
+    _show_title,
+    _use_alt_colors
   );
 }
 

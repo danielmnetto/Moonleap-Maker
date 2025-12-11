@@ -10,7 +10,7 @@
   "compression":1,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.266667,
+  "duration":1.2666667,
   "exportDir":"",
   "name":"sndUiChange",
   "parent":{

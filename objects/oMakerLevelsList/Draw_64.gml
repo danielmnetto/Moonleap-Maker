@@ -65,6 +65,12 @@ var _levels = levels_get_orderedby(),
     _label_levelnumber_halign = fa_left,
     _label_levelnumber_valign = fa_top,
 
+    _label_nolevels_x = GUI_W / 2,
+    _label_nolevels_y = GUI_H / 2,
+    _label_nolevels_text = $"{LANG.maker_nolevels}",
+    _label_nolevels_halign = fa_center,
+    _label_nolevels_valign = fa_middle,
+
     _scroll_arrow_up_sprite = sLevelScrollArrowUp,
     _scroll_arrow_up_sprite_width = sprite_get_width(_scroll_arrow_up_sprite),
     _scroll_arrow_up_sprite_height = sprite_get_height(_scroll_arrow_up_sprite),
@@ -116,19 +122,36 @@ draw_text_nox(
   _text_alpha
 );
 
-draw_set_color(_text_color_default);
-draw_set_halign(_label_levelnumber_halign);
-draw_set_valign(_label_levelnumber_valign);
-draw_text_nox(
-  _label_levelnumber_x,
-  _label_levelnumber_y,
-  _label_levelnumber_text,
-  _text_letters_distance,
-  _text_line_distance,
-  _text_line_width,
-  _text_break_on_space,
-  _text_alpha
-);
+if _levels_length > 0 {
+  draw_set_color(_text_color_default);
+  draw_set_halign(_label_levelnumber_halign);
+  draw_set_valign(_label_levelnumber_valign);
+  draw_text_nox(
+    _label_levelnumber_x,
+    _label_levelnumber_y,
+    _label_levelnumber_text,
+    _text_letters_distance,
+    _text_line_distance,
+    _text_line_width,
+    _text_break_on_space,
+    _text_alpha
+  );
+} else {
+  draw_set_color(_text_color_default);
+  draw_set_halign(_label_nolevels_halign);
+  draw_set_valign(_label_nolevels_valign);
+  draw_text_nox(
+    _label_nolevels_x,
+    _label_nolevels_y,
+    _label_nolevels_text,
+    _text_letters_distance,
+    _text_line_distance,
+    _text_line_width,
+    _text_break_on_space,
+    _text_alpha
+  );
+}
+
 
 draw_set_color(_label_orderby_color);
 draw_set_halign(_label_orderby_halign);

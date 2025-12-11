@@ -131,8 +131,8 @@ function draw_text_shadow(_x, _y, _text, _shadow_offset_x, _shadow_offset_y, _sh
 
 /// @description Calls the transition effects and redirects to the room target.
 /// @param {Asset.GMRoom} room_target The room to transit.
-function room_transit(_room_target) {
-	var _transition = instance_create_layer(0, 0, layer, oTransition);
+function room_transit(_room_target, _layer = layer) {
+	var _transition = instance_create_layer(0, 0, _layer, oTransition);
 	_transition.target_room = _room_target;
 }
 

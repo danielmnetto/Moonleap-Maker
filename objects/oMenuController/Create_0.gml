@@ -18,6 +18,7 @@ fill_background = false;
 show_game_version = false;
 show_title = false;
 is_disabled = false;
+use_alt_colors = false;
 
 // DO NOT EDIT THESE VARIABLES BELOW!
 current_option_index = 0;
@@ -81,18 +82,15 @@ get_title = function() {
   	return " ";
   }
 
-  var name = " ";
-
   if room_is(RoomMaker0) {
-  	name = LANG.maker_name;
-
-    if not is_string(name) then name = " ";
-    return name;
+    return LANG.maker_name;
   }
 
-  name = LANG[$ room_get_name(room)];
-  if not is_string(name) then name = " ";
-  return name;
+  var _title = LANG[$ room_get_name(room)];
+  if not is_string(_title) {
+    return " ";
+  }
+  return _title;
 };
 
 update_touch_controls_alpha();

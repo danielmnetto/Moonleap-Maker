@@ -94,7 +94,7 @@ function level_maker_save(_level_name) {
         style: selected_style,
         objects: _objects_data,
         tiles: _tiles_data
-      } 
+      }
     };
 		
     // Write on file

@@ -19,13 +19,22 @@ levels_orderby = LEVELS_ORDERBY.NAME_ASC;
 
 randomize();
 
-repeat(25) {
+repeat(3) {
   var _name = choose("Moonchild Forest Path","Twilight Thorn Woods","Starlit Grove Run","Spinebrush Clearing","Snailspike Hollow","Lunarsong Canopy","Cloudstep Ascent","Skytrail Drift","GiantLadybug Watch","Batborne Crossing","Softpetal Meadow","Bloomwhisper Field","Starbud Garden","Crackfall Platforms","Moonchild Skyline","Nebula Petal Route","Astral Grove Loop","Aurora Cloud Rise","Starcatcher Bloomway","Lunar Drift Expanse","Moonchild Starwalk","Cosmic Snail Outpost","Voidthorn Passage","Astroblossom Ridge","Galaxywing Crossing","Stellar Bloom Plains","Nebula Spike Trail","Moonveil Orbit Run","Starhaven Heights","Cosmic Bloom Path","Orbitshatter Road","Stellafield Horizon");
   var _author = choose("AeroNova","PixelDrake","LumaShift","CodeRidge","VantaCore","Solunex","RiftMender","HexaTrail","NebulaForge","JadeRunner","ProtoDash","SilentFlux","VoxLancer","NyxStride","IronVale","SkyLumen","LunarCode","EchoNexus","FluxRider","NovaThread","PrimeLynx","TerraPulse","MiraVortex","ZenoCraft","ArgoBlade","CodaSpark","ZenTrail","HyperBrim","RuneShift","MetaHollow","AstraMend","ZephyrArc");
-  var _player_score = irandom_range(-1, 20);
+  var _player_score = irandom_range(-1, 10);
   var _perfect_score = irandom_range(1, 5);
   
-  array_push(levels, new MakerLevel(_name, _author, _player_score, _perfect_score));
+  array_push(levels, new MakerLevel(undefined, _name, _author, _player_score, _perfect_score));
+}
+
+// If there are no levels available, set 'order by' option selected.
+if array_length(levels) == 0 {
+  current_level_index = -1;
+}
+
+if layer_exists("MakerLogo") {
+  layer_set_visible("MakerLogo", false);
 }
 
 scr_inputcreate();
@@ -180,17 +189,4 @@ level_get_rank_letter = function(_player_score, _perfect_score) {
   }
   
   return _letter;
-  //if _player_score <= 0 {
-    //return "-"
-  //} else if _player_score <= _perfect_score {
-    //return "S"; //return LANG.maker_rank_S;
-  //} else if _player_score <= _perfect_score + 3 {
-    //return "A"; //return LANG.maker_rank_A;
-  //} else if _player_score <= _perfect_score + 6 {
-    //return "B"; //return LANG.maker_rank_B;
-  //} else if _player_score <= _perfect_score + 9 {
-    //return "C"; //return LANG.maker_rank_c;
-  //} else {
-    //return "D"; //return LANG.maker_rank_D;
-  //} 
 }
