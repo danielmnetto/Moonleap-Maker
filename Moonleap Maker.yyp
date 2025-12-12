@@ -583,7 +583,6 @@
     {"id":{"name":"scr_changeskin","path":"scripts/scr_changeskin/scr_changeskin.yy",},},
     {"id":{"name":"scr_colors","path":"scripts/scr_colors/scr_colors.yy",},},
     {"id":{"name":"scr_hubchange","path":"scripts/scr_hubchange/scr_hubchange.yy",},},
-    {"id":{"name":"scr_input","path":"scripts/scr_input/scr_input.yy",},},
     {"id":{"name":"scr_inputcreate","path":"scripts/scr_inputcreate/scr_inputcreate.yy",},},
     {"id":{"name":"scr_inputget","path":"scripts/scr_inputget/scr_inputget.yy",},},
     {"id":{"name":"scr_lang","path":"scripts/scr_lang/scr_lang.yy",},},

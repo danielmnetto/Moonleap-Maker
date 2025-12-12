@@ -407,7 +407,6 @@
     {"name":"scr_changeskin","order":34,"path":"scripts/scr_changeskin/scr_changeskin.yy",},
     {"name":"scr_colors","order":41,"path":"scripts/scr_colors/scr_colors.yy",},
     {"name":"scr_hubchange","order":25,"path":"scripts/scr_hubchange/scr_hubchange.yy",},
-    {"name":"scr_input","order":50,"path":"scripts/scr_input/scr_input.yy",},
     {"name":"scr_inputcreate","order":24,"path":"scripts/scr_inputcreate/scr_inputcreate.yy",},
     {"name":"scr_inputget","order":23,"path":"scripts/scr_inputget/scr_inputget.yy",},
     {"name":"scr_lang","order":12,"path":"scripts/scr_lang/scr_lang.yy",},
