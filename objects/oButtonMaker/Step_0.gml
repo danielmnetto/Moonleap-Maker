@@ -32,7 +32,7 @@ if image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL {
 		image_yscale = image_xscale;
 	}
 } else if not level_maker_is_editing()
-  or instance_exists_any([oPauseMenu, oMakerWarning]) {
+  or instance_exists(oPauseUI) {
   exit;
 }
 

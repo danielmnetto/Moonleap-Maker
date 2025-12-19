@@ -21,7 +21,7 @@ mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 level_name = "";
 level_author_name = "";
 use_night_music = false;
-max_changes_for_s_rank = 1;
+perfect_score = 0;
 
 // Grid-related
 tile_size = 8;

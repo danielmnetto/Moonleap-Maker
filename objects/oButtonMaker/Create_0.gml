@@ -51,7 +51,7 @@ play_sound_on_page_change = function() {
       _gain = -20,
       _pitch = 13;
 
-  audio_play_sfx(snd_morcego_02, false, -20, 13);
+  audio_play_sfx(_sound, _can_loop, _gain, _pitch);
 };
 
 change_style = function() {
@@ -180,7 +180,24 @@ action_items_page_down = function() {
 
 action_menu = function() {
   play_sound_on_press();
-	instance_create_layer(-16, -16, "Instances_2", oPauseMenu);
+  
+  var _menu_list = menus_get_level_editor(),
+      _first_menu_name = "main",
+      _layer_name = "Instances",
+      _fill_background = true,
+      _show_game_version = false,
+      _show_title = true,
+      _use_alt_colors = true;
+  
+	menu_call_layer(
+    _menu_list,
+    _first_menu_name,
+    _layer_name,
+    _fill_background,
+    _show_game_version,
+    _show_title,
+    _use_alt_colors
+  );
 };
 
 action_save_level = function() {

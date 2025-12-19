@@ -1,7 +1,7 @@
 draw_set_font(oCamera.font);
 draw_set_color(color.nice_white);
 
-if not level_maker_is_editing() or instance_exists(oPauseMenu) {
+if not level_maker_is_editing() or instance_exists(oPauseUI) {
 	draw_sprite_ext(sPauseMaker,0,0,0,1,1,0,c_white,0.5)
 }
 

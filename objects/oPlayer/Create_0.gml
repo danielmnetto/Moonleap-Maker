@@ -314,7 +314,7 @@ set_movement_and_gravity = function() {
 		alarm[11] = game_get_speed(gamespeed_fps) * 30;
 	}
     
-	if is_at_hub() or instance_exists_any([oPauseMenu, oMenuController]) {
+	if is_at_hub() or instance_exists(oPauseUI) {
 		alarm[11] += 1;
 	}
     
@@ -495,7 +495,7 @@ set_game_paused = function() {
 	if not key_start
 	or vsp != 0 
 	or hsp != 0
-	or instance_exists_any([oPauseMenu, oMenuController])
+	or instance_exists(oPauseUI)
 	or room_is([RoomMenu, RoomMenu2, RoomMaker0, RoomMakerMenu]) {
 		return;
 	}
@@ -592,7 +592,7 @@ set_rope_swinging = function() {
 check_destroy_itself = function() {
 	if debug_mode
 	or state.state_is("win")
-	or instance_exists_any([oMenu, oPauseMenu, oMenuController, oIntro, oTransition])
+	or instance_exists_any([oPauseUI, oIntro, oTransition])
 	or room_is([RoomMenu, RoomMenu2, RoomFinal, RoomCredits, RoomCreditsAlves, RoomProgress]) {
 	   return;
 	}
@@ -711,7 +711,7 @@ perform_win = function() {
 
 check_controls_disabling = function() {
     if not state.state_is("win")
-    and not instance_exists_any([oPauseMenu, oMenuController])
+    and not instance_exists(oPauseUI)
     and numb <= 0
     and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub())) {
     	return;

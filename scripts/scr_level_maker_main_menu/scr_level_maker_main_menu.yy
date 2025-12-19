@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_level_maker_menu",
+  "%Name":"scr_level_maker_main_menu",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_level_maker_menu",
+  "name":"scr_level_maker_main_menu",
   "parent":{
     "name":"Level Maker",
     "path":"folders/Scripts/Level Maker.yy",

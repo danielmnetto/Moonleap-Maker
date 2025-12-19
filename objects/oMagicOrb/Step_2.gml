@@ -21,7 +21,7 @@ if change and instance_exists(oPlayer) and cooldown == 0 {
   night = not oPlayer.night;
 }
 
-if instance_exists(oPauseMenu) 
+if instance_exists(oPauseUI)
 or instance_exists(oDead)
 or (instance_exists(oTransition) and oTransition.wait != 0)
 or (instance_exists(oPlayer) and oPlayer.state.state_is("win")) {
