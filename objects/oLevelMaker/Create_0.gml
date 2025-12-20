@@ -766,12 +766,12 @@ object_of_type_exists_in_editor = function(_object_index) {
 }
 
 start_level = function() {
-	var has_player_in_level =
+	var _has_player_in_level =
 		object_of_type_exists_in_editor(oPlayer) 
 		or object_of_type_exists_in_editor(oPlayerDir) 
 		or object_of_type_exists_in_editor(oPlayerNeutral);
 			
-	var has_star_in_level = 
+	var _has_star_in_level = 
 		object_of_type_exists_in_editor(oStar) 
 		or object_of_type_exists_in_editor(oStarColor) 
 		or object_of_type_exists_in_editor(oStarRunning) 
@@ -779,18 +779,24 @@ start_level = function() {
 		or object_of_type_exists_in_editor(oStarFly) 
 		or object_of_type_exists_in_editor(oStarColorNight);
 	
-	if not (has_player_in_level and has_star_in_level) {
-		var _msg = "";
+	if not (_has_player_in_level and _has_star_in_level) {
+		var _msg = "",
+        _duration = 60;
 		
-		if not has_player_in_level then _msg += $"- {LANG.maker_noplayer}\n";
-		if not has_star_in_level then _msg += $"- {LANG.maker_noestar}\n";
+		if not _has_player_in_level {
+      _msg += $"- {LANG.maker_noplayer}\n";
+      _duration += 60;
+    } 
+		if not _has_star_in_level {
+      _msg += $"- {LANG.maker_noestar}\n";
+      _duration += 60;
+    }
 		
-		show_message_async(_msg);
+    call_message_popup(_msg, _duration, layer);
 		return;
 	}
 	
   mode = LEVEL_MAKER_EDITOR_MODE.TESTING;
-	//instance_destroy(oPause);
 	audio_play_sfx(sndStarGame, false, -18.3, 1);
 	
 	// =========================
