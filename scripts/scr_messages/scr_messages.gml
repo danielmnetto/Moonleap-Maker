@@ -9,3 +9,12 @@ function call_message_popup(_message, _duration_frames = undefined, _layer = "In
     _message_popup.duration_frames = _duration_frames;  
   }
 }
+
+function call_message_info(_message, _layer = "Instances") {
+  if instance_exists(oMessageInfo) {
+    return;
+  }
+  var _message_info = instance_create_layer(0, 0, _layer, oMessageInfo);
+  
+  _message_info.message = _message;
+}

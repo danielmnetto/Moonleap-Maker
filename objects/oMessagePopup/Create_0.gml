@@ -3,10 +3,6 @@ message = "";
 box_margin = {
   left: 32,
   right: 32,
-};
-box_padding = {
-  left: 8,
-  right: 8,
   top: 8,
   bottom: 8
 };

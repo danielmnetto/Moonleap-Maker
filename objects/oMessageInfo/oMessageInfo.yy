@@ -1,17 +1,22 @@
 {
   "$GMObject":"",
-  "%Name":"oPauseUI",
+  "%Name":"oMessageInfo",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":74,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oPauseUI",
+  "name":"oMessageInfo",
   "overriddenProperties":[],
   "parent":{
     "name":"UI&HUB",
     "path":"folders/Objects/UI&HUB.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"oPauseUI",
+    "path":"objects/oPauseUI/oPauseUI.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

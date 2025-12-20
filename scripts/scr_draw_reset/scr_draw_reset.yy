@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_message_popup",
+  "%Name":"scr_draw_reset",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_message_popup",
+  "name":"scr_draw_reset",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
