@@ -76,6 +76,18 @@ lang_add("JA", {
   maker_menu_play: "プレイする",
   maker_menu_make: "作成する",
   maker_menu_import: "インポートする",
+  
+  text_input_description: "キーボードで入力し、ENTER を押して完了します",
+  maker_level_options: "レベルオプション",
+  maker_edit_level_name: "レベル名を編集",
+  maker_edit_level_author: "レベル作者名を編集",
+  maker_perfect_score: "パーフェクトスコア: ",
+  maker_night_music: "ナイトミュージックを使用: ",
+  maker_back_to_editor: "エディターに戻る",
+  maker_perfect_score_help: "最高ランクを達成するためにプレイヤーが変更できる最大回数",
+  maker_minimum: "最小: ",
+  maker_chars: "文字数: ",
+  
   maker_levels: "レベル: ",
   maker_nolevels: "表示できるレベルがありません",
   maker_rank_title: "ランク",

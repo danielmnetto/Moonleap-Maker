@@ -18,8 +18,8 @@ scr_inputcreate()
 mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 
 // User Level Config
-level_name = "";
-level_author_name = "";
+level_name = "my level";
+level_author_name = "my name";
 use_night_music = false;
 perfect_score = 0;
 

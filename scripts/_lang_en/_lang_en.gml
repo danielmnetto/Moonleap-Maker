@@ -38,18 +38,18 @@ lang_add("EN", {
   //      88b  d88   dPYb   88odP  88__   88__dP 
   //      88YbdP88  dP__Yb  88"Yb  88""   88"Yb  
   //      88 YY 88 dP""""Yb 88  Yb 888888 88  Yb 
-
+  
   maker_name: "level editor",
   maker_play: "Test the Level",
   maker_load: "Load Level",
   maker_savemenu: "Save Level",
-  maker_menu: "Maker Menu",
+  maker_menu: "Maker menu",
   maker_change_up: "Change Type (Up)",
   maker_change_down: "Change Type (Down)",
   maker_help: "Help",
-  maker_change_level_style: "Change Level Style",
+  maker_change_level_style: "Change level style",
   maker_eraser: "Eraser",
-  maker_erase_level: "Erase the Level (Hold)",
+  maker_erase_level: "Erase the Level (hold)",
   maker_change_layer: "Change Layer",
   maker_grassstyle: "Grass",
   maker_cloudstyle: "Cloud",
@@ -60,6 +60,18 @@ lang_add("EN", {
   maker_menu_play: "play",
   maker_menu_make: "make",
   maker_menu_import: "import",
+  
+  text_input_description: "use the keyboard to type and press ENTER to finish",
+  maker_level_options: "level options",
+  maker_edit_level_name: "edit level name",
+  maker_edit_level_author: "edit level author name",
+  maker_perfect_score: "perfect score: ",
+  maker_night_music: "use night music: ",
+  maker_back_to_editor: "back to editor",
+  maker_perfect_score_help: "the maximum number of times the player can change to achieve the best rank",
+  maker_minimum: "minimum: ",
+  maker_chars: "characters: ",
+  
   maker_levels: "levels: ",
   maker_nolevels: "there are no levels to display",
   maker_rank_title: "rank",

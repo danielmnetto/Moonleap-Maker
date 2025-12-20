@@ -1,18 +1,13 @@
 user_input = "";
 input_string_min = 3;
 input_string_max = 20;
-title = "title test uwu";
-description = "pressione ENTER para finalizar.";
-on_enter = -1;
+title = "";
 on_finish = -1;
 
 state_machine = new SnowState("input");
 
 state_machine.add("input", {
   enter: function() {
-    if is_method(on_enter) {
-      on_enter();
-    }
     keyboard_string = "";
   },
   step: function() {

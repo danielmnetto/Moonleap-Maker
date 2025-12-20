@@ -81,6 +81,18 @@ lang_add("ZH", {
   maker_menu_play: "玩",
   maker_menu_make: "创建",
   maker_menu_import: "导入",
+  
+  text_input_description: "使用键盘输入并按 ENTER 完成",
+  maker_level_options: "关卡选项",
+  maker_edit_level_name: "编辑关卡名称",
+  maker_edit_level_author: "编辑关卡作者名称",
+  maker_perfect_score: "完美分数: ",
+  maker_night_music: "使用夜晚音乐: ",
+  maker_back_to_editor: "返回编辑器",
+  maker_perfect_score_help: "玩家为获得最高等级可更改的最大次数",
+  maker_minimum: "最小: ",
+  maker_chars: "字符数: ",
+  
   maker_levels: "关卡: ",
   maker_nolevels: "没有可显示的关卡",
   maker_rank_title: "排名",

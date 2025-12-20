@@ -35,18 +35,18 @@ lang_add("PT-BR", {
   //      88b  d88   dPYb   88odP  88__   88__dP 
   //      88YbdP88  dP__Yb  88"Yb  88""   88"Yb  
   //      88 YY 88 dP""""Yb 88  Yb 888888 88  Yb 
-
+  
   maker_name: "criador de fases",
-  maker_play: "Testar o Nível",
-  maker_load: "Carregar Nível",
-  maker_savemenu: "Salvar Nível",
-  maker_menu: "Menu do Criador",
-  maker_change_up: "Mudar Tipo (Cima)",
-  maker_change_down: "Mudar Tipo (Baixo)",
+  maker_play: "Testar fase",
+  maker_load: "Carregar fase",
+  maker_savemenu: "Salvar fase",
+  maker_menu: "Menu do criador",
+  maker_change_up: "Mudar tipo (Cima)",
+  maker_change_down: "Mudar tipo (Baixo)",
   maker_help: "Ajuda",
-  maker_change_level_style: "Mudar Estilo do Nível",
+  maker_change_level_style: "Mudar estilo da fase",
   maker_eraser: "Borracha",
-  maker_erase_level: "Apagar o Nível (Segure)",
+  maker_erase_level: "Apagar a fase (segure)",
   maker_change_layer: "Mudar de camada",
   maker_grassstyle: "Grama",
   maker_cloudstyle: "Nuvem",
@@ -57,6 +57,18 @@ lang_add("PT-BR", {
   maker_menu_play: "jogar",
   maker_menu_make: "criar",
   maker_menu_import: "importar",
+  
+  text_input_description: "utilize o teclado para escrever e pressione ENTER para finalizar",
+  maker_level_options: "opções da fase",
+  maker_edit_level_name: "editar nome da fase",
+  maker_edit_level_author: "editar nome do autor da fase",
+  maker_perfect_score: "pontuação perfeita: ",
+  maker_night_music: "usar música da noite: ",
+  maker_back_to_editor: "voltar ao editor",
+  maker_perfect_score_help: "o máximo de vezes que o jogador pode mudar para conseguir o melhor rank",
+  maker_minimum: "mínimo: ",
+  maker_chars: "caracteres: ",
+  
   maker_levels: "fases: ",
   maker_nolevels: "não há fases para exibir",
   maker_rank_title: "rank",
