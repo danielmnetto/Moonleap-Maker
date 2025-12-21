@@ -1,6 +1,7 @@
-#macro LEVEL_MAKER_SAVE_SYSTEM_VERSION "1.3"
+#macro LEVEL_MAKER_SAVE_SYSTEM_VERSION "1.4"
 
-function level_maker_save(_level_name) {
+/// @desc Saves the current Moonleap Maker level into a file with a given name.
+function level_maker_save(_level_file_name) {
 	with(oLevelMaker) {
 
     // Get all objects information
@@ -86,20 +87,20 @@ function level_maker_save(_level_name) {
     ds_list_destroy(_draft_list);
 
 		// Set level information
-    var _save = {
+    var _save_data = {
       version: LEVEL_MAKER_SAVE_SYSTEM_VERSION,
       name: level_name,
       author: level_author_name,
-      level_data: {
-        style: selected_style,
-        objects: _objects_data,
-        tiles: _tiles_data
-      }
+      perfect_score: perfect_score,
+      use_night_music: use_night_music,
+      style: selected_style,
+      objects: _objects_data,
+      tiles: _tiles_data
     };
 		
     // Write on file
-		var _file_name = string(_level_name);
-		var _json = json_stringify(_save);
+		var _file_name = string(_level_file_name);
+		var _json = json_stringify(_save_data);
 		
 		if file_exists(_file_name) {
 			file_delete(_file_name)
@@ -112,8 +113,9 @@ function level_maker_save(_level_name) {
 	}
 }
 
-function level_maker_load(_level_name) {
-	var _file_name = string(_level_name)
+/// @desc Loads a Moonleap Maker level to the editor from a file.
+function level_maker_load(_level_file_name) {
+	var _file_name = string(_level_file_name)
 	
 	if not file_exists(_file_name) {
 		show_message(_file_name + " does not exist.");
@@ -136,18 +138,20 @@ function level_maker_load(_level_name) {
 		return;
 	}
 
-    var _level_data = struct_read(_loaded_data, "level_data", undefined);
-    
-    if is_undefined(_level_data) {
-        show_message("THIS SAVE FILE IS MISSING LEVEL DATA AND CANNOT BE LOADED.");
-        return;
-    }
+  //var _level_data = struct_read(_loaded_data, "level_data", undefined);
+  //
+  //if is_undefined(_level_data) {
+      //show_message("THIS SAVE FILE IS MISSING LEVEL DATA AND CANNOT BE LOADED.");
+      //return;
+  //}
 	
 	with(oLevelMaker) {
-		var _level_style = struct_read(_level_data, "style", LEVEL_MAKER_STYLE.GRASS);
-    var _level_objects = struct_read(_level_data, "objects", []);
-    var _level_tiles = struct_read(_level_data, "tiles", []);
+		var _level_style = struct_read(_loaded_data, "style", LEVEL_MAKER_STYLE.GRASS);
+    var _level_objects = struct_read(_loaded_data, "objects", []);
+    var _level_tiles = struct_read(_loaded_data, "tiles", []);
 
+    is_level_file_saved_local = true;
+    level_file_name = _level_file_name;
 		selected_style = _level_style;
     update_tilesets_by_style();
 		reset_level_objects_grid();

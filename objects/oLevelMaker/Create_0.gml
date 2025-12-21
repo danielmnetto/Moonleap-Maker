@@ -22,6 +22,8 @@ level_name = "my level";
 level_author_name = "my name";
 use_night_music = false;
 perfect_score = 0;
+is_level_file_saved_local = false;
+level_file_name = "";
 
 // Grid-related
 tile_size = 8;
