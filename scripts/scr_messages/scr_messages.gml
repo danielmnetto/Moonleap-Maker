@@ -10,11 +10,11 @@ function call_message_popup(_message, _duration_frames = undefined, _layer = "In
   }
 }
 
-function call_message_info(_message, _layer = "Instances") {
+function call_message_info(_messages, _layer = "Instances") {
   if instance_exists(oMessageInfo) {
     return;
   }
   var _message_info = instance_create_layer(0, 0, _layer, oMessageInfo);
   
-  _message_info.message = _message;
+  _message_info.messages = _messages;
 }

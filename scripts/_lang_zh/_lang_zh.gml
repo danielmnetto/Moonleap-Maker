@@ -115,6 +115,10 @@ lang_add("ZH", {
   
   maker_help_text: "欢迎来到 Moonleap Maker！\n点击对象并将它们放置在关卡中\n\n键盘：\nZ - 旋转对象\nX - 镜像对象\nWASD 或方向键 - 在对象列表中导航\nF5 - 测试关卡\n\n鼠标：\n左键 - 放置对象\n右键 - 删除对象\n滚轮 - 更改对象列表中的类型\n建议将屏幕循环限制为仅限玩家\n其他对象可能无法按预期运行",
   
+  maker_help_page1: "欢迎来到 Moonleap Maker！\n\n点击对象并将它们放置在关卡中。\n其他对象可能无法正常工作。\n建议只有玩家在屏幕上循环。",
+  maker_help_page2: "快捷键 1：\n\nZ 键 - 旋转选中的对象\nX 键 - 翻转选中的对象\nWASD/方向键 - 浏览对象列表\nF5 键 - 测试关卡或返回编辑器",
+  maker_help_page3: "快捷键 2：\n\n鼠标左键 - 放置或移动对象\n鼠标右键 - 删除对象\n鼠标滚轮 - 更改对象列表中的类型",
+  
   maker_intro: "欢迎来到 Moonleap Maker！此编辑器处于测试版",
   
   maker_foreground: "1: 前景（装饰）",

@@ -91,13 +91,17 @@ lang_add("PT-BR", {
   
   maker_help_text: "Bem-vindo ao Moonleap Maker!\nClique nos objetos e posicione-os na fase\n\nTeclado: \nZ - Rotaciona o objeto \nX - Espelha o objeto \nWASD ou Setas - Navegam pela lista de objetos \nF5 - Testa o Nível \n\nMouse: \nBotão Esquerdo - Coloca o Objeto \nBotão Direito - Apaga Objetos \nScroll - Muda o tipo na lista de objetos\n\nRecomendamos que somente o player loope pela tela\nOutros objetos podem não funcionar corretamente",
   
+  maker_help_page1: "Bem-vindo ao Moonleap Maker!\n\nClique nos objetos e posicione-os na fase.\nOutros objetos podem não funcionar corretamente.\nÉ recomendado que somente o Jogador faça loop na tela.",
+  maker_help_page2: "Atalhos 1:\n\nTecla Z - Rotaciona o objeto selecionado\nTecla X - Espelha o objeto selecionado\nTeclas WASD/setas - Navegam pela lista de objetos\nTecla F5 - Testa a fase ou volta pro editor",
+  maker_help_page3: "Atalhos 2:\n\nBotão esquerdo do mouse - Coloca ou move objetos\nBotão direito do mouse - Apaga objetos \nScroll do mouse - Muda o tipo na lista de objetos",
+  
   maker_intro: "Bem-vindo ao Moonleap Maker! Este editor está em beta",
   
   
-  maker_foreground: "1: Frente (Decoração)",
+  maker_foreground: "1: Frente (decoração)",
   maker_objects: "2: Objetos",
-  maker_background: "3: Fundo (Decoração)",
-  maker_far_background: "4: Fundo Distante (Decoração)",
+  maker_background: "3: Fundo (decoração)",
+  maker_far_background: "4: Fundo distante (decoração)",
 
   maker_warning_change_style: "Atenção! Ao trocar de estilo, os ladrilhos de decoração existentes no nível serão apagados. Você tem certeza que deseja trocar de estilo?",
   maker_warning_confirm: "Sim",

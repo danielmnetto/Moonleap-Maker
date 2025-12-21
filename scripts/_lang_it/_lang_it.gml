@@ -105,6 +105,10 @@ lang_add("IT", {
   
   maker_help_text: "Benvenuto in Moonleap Maker!\nClicca sugli oggetti e posizionali nel livello\n\nTastiera: \nZ - Ruota l'oggetto \nX - Specchia l'oggetto \nWASD o Frecce - Naviga nella lista degli oggetti \nF5 - Testa il Livello \n\nMouse: \nTasto Sinistro - Posiziona l'Oggetto \nTasto Destro - Cancella Oggetti \nScroll - Cambia il tipo nella lista degli oggetti \nConsigliamo di limitare il loop dello schermo solo al giocatore\nAltri oggetti potrebbero non comportarsi come previsto",
   
+  maker_help_page1: "Benvenuto in Moonleap Maker!\n\nClicca sugli oggetti e posizionali nel livello.\nAltri oggetti potrebbero non funzionare correttamente.\nSi consiglia che solo il Giocatore faccia loop sullo schermo.",
+  maker_help_page2: "Scorciatoie 1:\n\nTasto Z - Ruota l’oggetto selezionato\nTasto X - Capovolge l’oggetto selezionato\nTasti WASD/frecce - Navigano nell’elenco degli oggetti\nTasto F5 - Testa il livello o torna all’editor",
+  maker_help_page3: "Scorciatoie 2:\n\nTasto sinistro del mouse - Posiziona o muove oggetti\nTasto destro del mouse - Cancella oggetti\nScroll del mouse - Cambia il tipo nell’elenco degli oggetti",
+  
   maker_intro: "Benvenuto in Moonleap Maker! Questo editor è in beta",
   
   maker_foreground: "1: Primo piano (Decorazione)",

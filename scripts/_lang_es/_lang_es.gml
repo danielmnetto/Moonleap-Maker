@@ -74,6 +74,10 @@ text_poem8: "consuelo y dulzura de la paz",
   
   maker_help_text: "¡Bienvenido a Moonleap Maker!\nHaz clic en los objetos y colócalos en el nivel\n\nTeclado: \nZ - Rotar el objeto \nX - Espejar el objeto \nWASD o Flechas - Navegar por la lista de objetos \nF5 - Probar el Nivel \n\nMouse: \nBotón Izquierdo - Colocar el Objeto \nBotón Derecho - Borrar Objetos \nScroll - Cambiar el tipo en la lista de objetos \nSugerimos limitar el bucle de la pantalla solo al jugador\nOtros objetos pueden no comportarse como se espera",
   
+  maker_help_page1: "¡Bienvenido a Moonleap Maker!\n\nHaz clic en los objetos y colócalos en el nivel.\nOtros objetos pueden no funcionar correctamente.\nSe recomienda que solo el Jugador haga loop en la pantalla.",
+  maker_help_page2: "Atajos 1:\n\nTecla Z - Gira el objeto seleccionado\nTecla X - Voltea el objeto seleccionado\nTeclas WASD/flechas - Navegan por la lista de objetos\nTecla F5 - Prueba el nivel o vuelve al editor",
+  maker_help_page3: "Atajos 2:\n\nBotón izquierdo del mouse - Coloca o mueve objetos\nBotón derecho del mouse - Borra objetos\nScroll del mouse - Cambia el tipo en la lista de objetos",
+  
   maker_intro: "¡Bienvenido a Moonleap Maker! Este editor está en beta",
   
   maker_foreground: "1: Frente (Decoración)",

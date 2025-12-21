@@ -236,8 +236,12 @@ action_test_level = function() {
 
 action_help = function() {
   play_sound_on_press();
-  //call_message_info(LANG.maker_help_text, "Instances_2");
-	show_message_async(LANG.maker_help_text);
+  call_message_info([
+    LANG.maker_help_page1,
+    LANG.maker_help_page2,
+    LANG.maker_help_page3 
+  ], "Instances_2");
+	//show_message_async(LANG.maker_help_text);
 };
 
 action_change_style = function() {

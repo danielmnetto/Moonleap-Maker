@@ -94,6 +94,10 @@ lang_add("EN", {
   
   maker_help_text: "Welcome to Moonleap Maker!\nClick on the objects and place them on the level\n\nKeyboard: \nZ - Rotate the object \nX - Mirror the object \nWASD or Arrow Keys - Navigate through the Object list \nF5 - Test the Level \n\nMouse: \nLeft Button - Place the Object \nRight Button - Erase Objects \nScroll - Change the type in the object list \nWe suggest limiting the screen loop to the player only\nOther objects may not behave as expected",
   
+  maker_help_page1: "Welcome to Moonleap Maker!\n\nClick on objects and place them on the level.\nOther objects may not work correctly.\nIt is recommended that only the Player loops on the screen.",
+  maker_help_page2: "Shortcuts 1:\n\nZ key - Rotates the selected object\nX key - Flips the selected object\nWASD/arrow keys - Navigate through the object list\nF5 key - Tests the level or returns to the editor",
+  maker_help_page3: "Shortcuts 2:\n\nLeft mouse button - Places or moves objects\nRight mouse button - Erases objects\nMouse scroll - Changes the type in the object list",
+  
   maker_intro: "Welcome to Moonleap Maker! This editor is in beta",
   
   maker_foreground: "1: Foreground (Decoration)",
