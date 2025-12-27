@@ -50,7 +50,8 @@ if _input_nav_up and current_level_index > -2 {
     // Levels
     default:
       play_transition_sound();
-      var _data_trasition = instance_create_layer(0, 0, "Instances", oMakerLevelDataTransition);
+      var _data_trasition = instance_create_layer(-16, -16, "Instances", oMakerLevelDataTransition);
+      
       _data_trasition.level_filename = _level.filename;
       room_transit(RoomMaker0, "Instances");
     break;

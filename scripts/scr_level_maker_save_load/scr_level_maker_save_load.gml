@@ -93,7 +93,7 @@ function level_maker_save(_path_filename) {
       version: LEVEL_MAKER_SAVE_SYSTEM_VERSION,
       name: level_name,
       author: level_author_name,
-      player_score: 0,
+      player_score: -1,
       perfect_score: perfect_score,
       use_night_music: use_night_music,
       style: selected_style,
@@ -153,6 +153,7 @@ function level_maker_load(_path_filename) {
     use_night_music = _loaded_data.use_night_music;
     perfect_score = _loaded_data.perfect_score;
 		selected_style = _level_style;
+    
     update_tilesets_by_style();
 		reset_level_objects_grid();
     reset_level_tiles_grid();
@@ -255,3 +256,4 @@ function level_maker_load(_path_filename) {
     } 
   }
 }
+
