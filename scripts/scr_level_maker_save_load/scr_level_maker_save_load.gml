@@ -1,7 +1,9 @@
 #macro LEVEL_MAKER_SAVE_SYSTEM_VERSION "1.4"
+#macro LEVEL_MAKER_LEVELS_FOLDER_NAME "custom_levels"
+#macro LEVEL_MAKER_LEVELS_FOLDER_PATH $"{working_directory}/{LEVEL_MAKER_LEVELS_FOLDER_NAME}"
 
 /// @desc Saves the current Moonleap Maker level into a file with a given name.
-function level_maker_save(_level_file_name) {
+function level_maker_save(_path_filename) {
 	with(oLevelMaker) {
 
     // Get all objects information
@@ -91,6 +93,7 @@ function level_maker_save(_level_file_name) {
       version: LEVEL_MAKER_SAVE_SYSTEM_VERSION,
       name: level_name,
       author: level_author_name,
+      player_score: 0,
       perfect_score: perfect_score,
       use_night_music: use_night_music,
       style: selected_style,
@@ -99,7 +102,7 @@ function level_maker_save(_level_file_name) {
     };
 		
     // Write on file
-		var _file_name = string(_level_file_name);
+		var _file_name = _path_filename;
 		var _json = json_stringify(_save_data);
 		
 		if file_exists(_file_name) {
@@ -114,11 +117,11 @@ function level_maker_save(_level_file_name) {
 }
 
 /// @desc Loads a Moonleap Maker level to the editor from a file.
-function level_maker_load(_level_file_name) {
-	var _file_name = string(_level_file_name)
+function level_maker_load(_path_filename) {
+	var _file_name = _path_filename;
 	
 	if not file_exists(_file_name) {
-		show_message(_file_name + " does not exist.");
+    call_message_popup(LANG.maker_level_file_invalid, 180, "Instances");
 		return;
 	}
 	
@@ -134,16 +137,9 @@ function level_maker_load(_level_file_name) {
 	var _loaded_data = json_parse(_json_string);
 		
 	if _loaded_data.version != LEVEL_MAKER_SAVE_SYSTEM_VERSION {
-		show_message("THIS SAVE FILE HAS A DIFFERENT SAVE VERSION AND CANNOT BE LOADED.");
+    call_message_popup(LANG.maker_level_file_oldversion, 180, "Instances");
 		return;
 	}
-
-  //var _level_data = struct_read(_loaded_data, "level_data", undefined);
-  //
-  //if is_undefined(_level_data) {
-      //show_message("THIS SAVE FILE IS MISSING LEVEL DATA AND CANNOT BE LOADED.");
-      //return;
-  //}
 	
 	with(oLevelMaker) {
 		var _level_style = struct_read(_loaded_data, "style", LEVEL_MAKER_STYLE.GRASS);
@@ -151,7 +147,11 @@ function level_maker_load(_level_file_name) {
     var _level_tiles = struct_read(_loaded_data, "tiles", []);
 
     is_level_file_saved_local = true;
-    level_file_name = _level_file_name;
+    level_file_name = _path_filename;
+    level_name = _loaded_data.name;
+    level_author_name = _loaded_data.author;
+    use_night_music = _loaded_data.use_night_music;
+    perfect_score = _loaded_data.perfect_score;
 		selected_style = _level_style;
     update_tilesets_by_style();
 		reset_level_objects_grid();
@@ -218,15 +218,15 @@ function level_maker_load(_level_file_name) {
         var _tile = undefined;
 
         for (var t = 0; t < array_length(_tilelist) and is_undefined(_tile); t++) {
-            var _type = _tilelist[t];
-            for (var p = 0; p < array_length(_type) and is_undefined(_tile); p++) {
-                var _tile_from_list = array_get(_type, p);
-                var _tile_id = _tile_from_list.original_tile_id;
+          var _type = _tilelist[t];
+          for (var p = 0; p < array_length(_type) and is_undefined(_tile); p++) {
+            var _tile_from_list = array_get(_type, p);
+            var _tile_id = _tile_from_list.original_tile_id;
 
-                if _tile_id == _tid {
-                    _tile = _tile_from_list;
-                }
+            if _tile_id == _tid {
+                _tile = _tile_from_list;
             }
+          }
         }
 
         if is_undefined(_tile) then continue;

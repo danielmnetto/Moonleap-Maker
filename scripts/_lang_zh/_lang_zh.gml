@@ -119,6 +119,16 @@ lang_add("ZH", {
   maker_help_page2: "快捷键 1：\n\nZ 键 - 旋转选中的对象\nX 键 - 翻转选中的对象\nWASD/方向键 - 浏览对象列表\nF5 键 - 测试关卡或返回编辑器",
   maker_help_page3: "快捷键 2：\n\n鼠标左键 - 放置或移动对象\n鼠标右键 - 删除对象\n鼠标滚轮 - 更改对象列表中的类型",
   
+  maker_level_file_oldversion: "此关卡文件来自旧版本的关卡编辑器，无法加载",
+  maker_level_file_invalid: "此关卡文件无效，无法加载",
+  maker_level_file_notfound: "未找到该关卡文件。",
+  maker_level_overwrite: "打开此关卡文件将覆盖当前关卡。确定要继续吗？",
+  maker_level_save: "保存...",
+  maker_level_save_as: "另存为...",
+  maker_level_upload_success: "关卡导入成功！",
+  maker_level_save_success: "关卡文件保存成功！",
+  maker_level_save_error: "尝试保存关卡文件时发生错误，无法保存。",
+
   maker_intro: "欢迎来到 Moonleap Maker！此编辑器处于测试版",
   
   maker_foreground: "1: 前景（装饰）",

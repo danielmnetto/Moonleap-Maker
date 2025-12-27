@@ -114,6 +114,16 @@ lang_add("JA", {
   maker_help_page2: "ショートカット 1:\n\nZキー - 選択中のオブジェクトを回転\nXキー - 選択中のオブジェクトを反転\nWASD/矢印キー - オブジェクトリストを移動\nF5キー - レベルをテスト、またはエディターに戻る",
   maker_help_page3: "ショートカット 2:\n\nマウス左ボタン - オブジェクトを設置または移動\nマウス右ボタン - オブジェクトを削除\nマウススクロール - オブジェクトリストのタイプを変更",
   
+  maker_level_file_oldversion: "このレベルファイルは古いバージョンのレベルエディターで作成されたため、読み込むことができませんでした",
+  maker_level_file_invalid: "このレベルファイルは無効なため、読み込むことができませんでした",
+  maker_level_file_notfound: "このレベルのファイルが見つかりませんでした。",
+  maker_level_overwrite: "このレベルファイルを開くと現在のレベルが上書きされます。本当に続行しますか？",
+  maker_level_save: "保存...",
+  maker_level_save_as: "名前を付けて保存...",
+  maker_level_upload_success: "レベルのインポートに成功しました！",
+  maker_level_save_success: "レベルファイルが正常に保存されました！",
+  maker_level_save_error: "レベルファイルの保存中にエラーが発生し、保存できませんでした。",
+
   maker_intro: "Moonleap Makerへようこそ！このエディターはベータ版です",
   
   maker_foreground: "1: 前景（かざり）",

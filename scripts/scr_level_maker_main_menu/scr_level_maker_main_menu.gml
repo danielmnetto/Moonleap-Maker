@@ -16,12 +16,12 @@ function menus_get_maker() {
 function menu_maker_get_main() {
   var _menu_maker_main = [
     // Play a level
-    //new MenuOptionCloseMenu(
-      //function() { return LANG.maker_menu_play; },
-      //function() {
-        //instance_create_layer(0, 0, "Instances", oMakerLevelsList);
-      //}
-    //),
+    new MenuOptionCloseMenu(
+      function() { return LANG.maker_menu_play; },
+      function() {
+        instance_create_layer(0, 0, "Instances", oMakerLevelsList);
+      }
+    ),
 
     // Create a level
     new MenuOptionActionCall(
@@ -35,7 +35,24 @@ function menu_maker_get_main() {
     // Import a level
     //new MenuOptionActionCall(
       //function() { return LANG.maker_menu_import; },
-      //function() {},
+      //function() {
+        //try {
+        	//var _level_filename = get_open_filename("*.moonlevel", "mylevelname");
+//
+          //if (_level_filename != "") {
+            //if not directory_exists(LEVEL_MAKER_LEVELS_FOLDER_PATH) {
+              //directory_create(LEVEL_MAKER_LEVELS_FOLDER_PATH);
+            //}
+            //
+            //file_copy(_level_filename, _level_filename);
+            //call_message_popup(LANG.maker_level_upload_success, 120, "Instances");
+          //}
+        //}
+        //catch (_error) { 
+          //call_message_popup(LANG.maker_level_save_error, 180, "Instances");
+          //show_debug_message($"{_error}");
+        //}
+      //},
     //),
   ];
 

@@ -109,6 +109,16 @@ lang_add("IT", {
   maker_help_page2: "Scorciatoie 1:\n\nTasto Z - Ruota l’oggetto selezionato\nTasto X - Capovolge l’oggetto selezionato\nTasti WASD/frecce - Navigano nell’elenco degli oggetti\nTasto F5 - Testa il livello o torna all’editor",
   maker_help_page3: "Scorciatoie 2:\n\nTasto sinistro del mouse - Posiziona o muove oggetti\nTasto destro del mouse - Cancella oggetti\nScroll del mouse - Cambia il tipo nell’elenco degli oggetti",
   
+  maker_level_file_oldversion: "Questo file di livello proviene da una versione precedente dell’editor di livelli e non può essere caricato.",
+  maker_level_file_invalid: "Questo file di livello non è valido e non può essere caricato",
+  maker_level_file_notfound: "Il file di livello non è stato trovato.",
+  maker_level_overwrite: "L’apertura di questo file di livello sovrascriverà il livello attuale. Sei sicuro di voler procedere?",
+  maker_level_save: "salva...",
+  maker_level_save_as: "salva come...",
+  maker_level_upload_success: "Livello importato con successo!",
+  maker_level_save_success: "Il file di livello è stato salvato con successo!",
+  maker_level_save_error: "Si è verificato un errore durante il salvataggio del file di livello e non è stato possibile salvarlo.",
+
   maker_intro: "Benvenuto in Moonleap Maker! Questo editor è in beta",
   
   maker_foreground: "1: Primo piano (Decorazione)",

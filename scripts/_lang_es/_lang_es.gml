@@ -78,6 +78,16 @@ text_poem8: "consuelo y dulzura de la paz",
   maker_help_page2: "Atajos 1:\n\nTecla Z - Gira el objeto seleccionado\nTecla X - Voltea el objeto seleccionado\nTeclas WASD/flechas - Navegan por la lista de objetos\nTecla F5 - Prueba el nivel o vuelve al editor",
   maker_help_page3: "Atajos 2:\n\nBotón izquierdo del mouse - Coloca o mueve objetos\nBotón derecho del mouse - Borra objetos\nScroll del mouse - Cambia el tipo en la lista de objetos",
   
+  maker_level_file_oldversion: "Este archivo de nivel es de una versión anterior del editor de niveles y no se pudo cargar.",
+  maker_level_file_invalid: "Este archivo de nivel es inválido y no se pudo cargar",
+  maker_level_file_notfound: "No se encontró el archivo de nivel.",
+  maker_level_overwrite: "Abrir este archivo de nivel sobrescribirá el nivel actual. ¿Estás seguro de que deseas continuar?",
+  maker_level_save: "Guardar...",
+  maker_level_save_as: "Guardar como...",
+  maker_level_upload_success: "¡Nivel importado con éxito!",
+  maker_level_save_success: "¡El archivo de nivel se guardó correctamente!", 
+  maker_level_save_error: "Ocurrió un error al intentar guardar el archivo de nivel y no fue posible guardarlo.",
+
   maker_intro: "¡Bienvenido a Moonleap Maker! Este editor está en beta",
   
   maker_foreground: "1: Frente (Decoración)",

@@ -98,6 +98,16 @@ lang_add("EN", {
   maker_help_page2: "Shortcuts 1:\n\nZ key - Rotates the selected object\nX key - Flips the selected object\nWASD/arrow keys - Navigate through the object list\nF5 key - Tests the level or returns to the editor",
   maker_help_page3: "Shortcuts 2:\n\nLeft mouse button - Places or moves objects\nRight mouse button - Erases objects\nMouse scroll - Changes the type in the object list",
   
+  maker_level_file_oldversion: "This level file is from an older version of the level editor and could not be loaded.",
+  maker_level_file_invalid: "This level file is invalid and could not be loaded",
+  maker_level_file_notfound: "The level file was not found.",
+  maker_level_overwrite: "Opening this level file will overwrite the current level. Are you sure you want to proceed?",
+  maker_level_save: "save...",
+  maker_level_save_as: "save as...",
+  maker_level_upload_success: "Level imported successfully!",
+  maker_level_save_success: "Level file saved successfully!",
+  maker_level_save_error: "An error occurred while trying to save the level file and it could not be saved.",
+
   maker_intro: "Welcome to Moonleap Maker! This editor is in beta",
   
   maker_foreground: "1: Foreground (Decoration)",

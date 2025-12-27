@@ -202,11 +202,12 @@ action_menu = function() {
 
 action_save_level = function() {
   play_sound_on_press();
-  var _level_file_name = get_save_filename("*.moonlevel", "mylevelname");
-
-  if (_level_file_name != "") {
-    level_maker_save(_level_file_name);
-  } 
+  menu_call_layer(menus_get_save_level(), "main", "Instances", true, false, false, true);
+  //var _level_file_name = get_save_filename("*.moonlevel", "mylevelname");
+//
+  //if (_level_file_name != "") {
+    //level_maker_save(_level_file_name);
+  //} 
 };
 
 action_load_level = function() {

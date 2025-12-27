@@ -17,16 +17,16 @@ level_display_range_end = levels_to_display - 1;
 
 levels_orderby = LEVELS_ORDERBY.NAME_ASC;
 
-randomize();
-
-repeat(3) {
-  var _name = choose("Moonchild Forest Path","Twilight Thorn Woods","Starlit Grove Run","Spinebrush Clearing","Snailspike Hollow","Lunarsong Canopy","Cloudstep Ascent","Skytrail Drift","GiantLadybug Watch","Batborne Crossing","Softpetal Meadow","Bloomwhisper Field","Starbud Garden","Crackfall Platforms","Moonchild Skyline","Nebula Petal Route","Astral Grove Loop","Aurora Cloud Rise","Starcatcher Bloomway","Lunar Drift Expanse","Moonchild Starwalk","Cosmic Snail Outpost","Voidthorn Passage","Astroblossom Ridge","Galaxywing Crossing","Stellar Bloom Plains","Nebula Spike Trail","Moonveil Orbit Run","Starhaven Heights","Cosmic Bloom Path","Orbitshatter Road","Stellafield Horizon");
-  var _author = choose("AeroNova","PixelDrake","LumaShift","CodeRidge","VantaCore","Solunex","RiftMender","HexaTrail","NebulaForge","JadeRunner","ProtoDash","SilentFlux","VoxLancer","NyxStride","IronVale","SkyLumen","LunarCode","EchoNexus","FluxRider","NovaThread","PrimeLynx","TerraPulse","MiraVortex","ZenoCraft","ArgoBlade","CodaSpark","ZenTrail","HyperBrim","RuneShift","MetaHollow","AstraMend","ZephyrArc");
-  var _player_score = irandom_range(-1, 10);
-  var _perfect_score = irandom_range(1, 5);
-  
-  array_push(levels, new MakerLevel(undefined, _name, _author, _player_score, _perfect_score));
-}
+//randomize();
+//
+//repeat(3) {
+  //var _name = choose("Moonchild Forest Path","Twilight Thorn Woods","Starlit Grove Run","Spinebrush Clearing","Snailspike Hollow","Lunarsong Canopy","Cloudstep Ascent","Skytrail Drift","GiantLadybug Watch","Batborne Crossing","Softpetal Meadow","Bloomwhisper Field","Starbud Garden","Crackfall Platforms","Moonchild Skyline","Nebula Petal Route","Astral Grove Loop","Aurora Cloud Rise","Starcatcher Bloomway","Lunar Drift Expanse","Moonchild Starwalk","Cosmic Snail Outpost","Voidthorn Passage","Astroblossom Ridge","Galaxywing Crossing","Stellar Bloom Plains","Nebula Spike Trail","Moonveil Orbit Run","Starhaven Heights","Cosmic Bloom Path","Orbitshatter Road","Stellafield Horizon");
+  //var _author = choose("AeroNova","PixelDrake","LumaShift","CodeRidge","VantaCore","Solunex","RiftMender","HexaTrail","NebulaForge","JadeRunner","ProtoDash","SilentFlux","VoxLancer","NyxStride","IronVale","SkyLumen","LunarCode","EchoNexus","FluxRider","NovaThread","PrimeLynx","TerraPulse","MiraVortex","ZenoCraft","ArgoBlade","CodaSpark","ZenTrail","HyperBrim","RuneShift","MetaHollow","AstraMend","ZephyrArc");
+  //var _player_score = irandom_range(-1, 10);
+  //var _perfect_score = irandom_range(1, 5);
+  //
+  //array_push(levels, new MakerLevel(undefined, _name, _author, _player_score, _perfect_score));
+//}
 
 // If there are no levels available, set 'order by' option selected.
 if array_length(levels) == 0 {
@@ -190,3 +190,40 @@ level_get_rank_letter = function(_player_score, _perfect_score) {
   
   return _letter;
 }
+
+import_levels_from_levels_folder = function() {
+  levels = [];
+  
+  var _level_files = [];
+  var _file_pattern = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}\\*.*";
+  var _level_filename = file_find_first(_file_pattern, fa_none);
+  
+  show_debug_message($"file pattern: {_file_pattern}");
+  while _level_filename != "" {
+    show_debug_message($"level carregado: {_level_filename}");
+    
+    var _level_file = file_text_open_read($"custom_levels/{_level_filename}");
+    var _level_json = "";
+    
+    while not file_text_eof(_level_file) {
+      _level_json += file_text_read_string(_level_file);
+    }
+    file_text_close(_level_file);
+    
+    _level_json = json_parse(_level_json);
+    
+    array_push(levels, new MakerLevel(
+      _level_filename,
+      _level_json.name,
+      _level_json.author,
+      _level_json.player_score,
+      _level_json.perfect_score
+    ));
+    
+    _level_filename = file_find_next();
+  }
+  
+  file_find_close();
+};
+
+import_levels_from_levels_folder();

@@ -95,8 +95,16 @@ lang_add("PT-BR", {
   maker_help_page2: "Atalhos 1:\n\nTecla Z - Rotaciona o objeto selecionado\nTecla X - Espelha o objeto selecionado\nTeclas WASD/setas - Navegam pela lista de objetos\nTecla F5 - Testa a fase ou volta pro editor",
   maker_help_page3: "Atalhos 2:\n\nBotão esquerdo do mouse - Coloca ou move objetos\nBotão direito do mouse - Apaga objetos \nScroll do mouse - Muda o tipo na lista de objetos",
   
+  maker_level_file_oldversion: "Este arquivo de fase é de versão antiga do editor de fases e não pôde ser carregado.",
+  maker_level_file_invalid: "Este arquivo de fase é inválido e não pôde ser carregado",
+  maker_level_file_notfound: "O arquivo desta fase não foi encontrado.",
+  maker_level_overwrite: "Abrir este arquivo de fase vai sobrescrever a fase atual. Tem certeza que deseja prosseguir?",
+  maker_level_save: "salvar...",
+  maker_level_save_as: "salvar como...",
+  maker_level_upload_success: "Fase importada com sucesso!",
+  maker_level_save_success: "Arquivo da fase salvo com sucesso!",
+  maker_level_save_error: "Ocorreu um erro ao tentar salvar o arquivo da fase e não foi possível salvá-lo.",
   maker_intro: "Bem-vindo ao Moonleap Maker! Este editor está em beta",
-  
   
   maker_foreground: "1: Frente (decoração)",
   maker_objects: "2: Objetos",

@@ -598,6 +598,7 @@
     {"id":{"name":"scr_level_maker_main_menu","path":"scripts/scr_level_maker_main_menu/scr_level_maker_main_menu.yy",},},
     {"id":{"name":"scr_level_maker_objects","path":"scripts/scr_level_maker_objects/scr_level_maker_objects.yy",},},
     {"id":{"name":"scr_level_maker_save_load","path":"scripts/scr_level_maker_save_load/scr_level_maker_save_load.yy",},},
+    {"id":{"name":"scr_level_maker_save_menu","path":"scripts/scr_level_maker_save_menu/scr_level_maker_save_menu.yy",},},
     {"id":{"name":"scr_level_maker_tiles","path":"scripts/scr_level_maker_tiles/scr_level_maker_tiles.yy",},},
     {"id":{"name":"scr_menu_constructors","path":"scripts/scr_menu_constructors/scr_menu_constructors.yy",},},
     {"id":{"name":"scr_menu_functions","path":"scripts/scr_menu_functions/scr_menu_functions.yy",},},

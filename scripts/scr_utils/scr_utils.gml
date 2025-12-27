@@ -136,14 +136,49 @@ function room_transit(_room_target, _layer = layer) {
 	_transition.target_room = _room_target;
 }
 
+/// @desc Gets the object's sprite horizontal center regardless the sprite origin.
+/// @param {Asset.GMObject} _object The object to find the sprite's center.
 function object_get_sprite_center_x(_object) {
   with(_object) {
     return x - sprite_xoffset + sprite_width / 2;
   }
 }
 
+/// @desc Gets the object's sprite vertical center regardless the sprite origin.
+/// @param {Asset.GMObject} _object The object to find the sprite's center.
 function object_get_sprite_center_y(_object) {
   with(_object) {
     return y - sprite_yoffset + sprite_height / 2;
   }
+}
+
+/// @desc Formats a string to be compatible to files' names.
+/// @param {string} _str String to be formatted.
+function string_filename_create(_str) {
+  var _new_name = _str;
+  
+  // Removes the start and end spaces.
+  _new_name = string_trim(_new_name);
+  
+  // The inner spaces are replaced by underscores.
+  _new_name = string_replace_all(_new_name, " ", "_"); 
+  
+  // Lowercase to all letters.
+  _new_name = string_lower(_new_name);
+  
+  // Removes all symbols from the name
+  for (var i = 32; i <= 255; i++) {
+    if (i >= 48 and i <= 57)
+    or (i >= 65 and i <= 90)
+    or (i == 95)
+    or (i >= 97 and i <= 122)
+    or (i >= 192 and i <= 214)
+    or (i >= 216 and i <= 246)
+    or (i >= 248 and i <= 255) {
+      continue;
+    }
+    _new_name = string_replace_all(_new_name, chr(i), "");
+  }
+  
+  return _new_name;
 }
