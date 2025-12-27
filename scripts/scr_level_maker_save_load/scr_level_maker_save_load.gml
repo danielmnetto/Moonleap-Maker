@@ -1,4 +1,5 @@
 #macro LEVEL_MAKER_SAVE_SYSTEM_VERSION "1.4"
+
 #macro LEVEL_MAKER_LEVELS_FOLDER_NAME "custom_levels"
 #macro LEVEL_MAKER_LEVELS_FOLDER_PATH $"{working_directory}/{LEVEL_MAKER_LEVELS_FOLDER_NAME}"
 
@@ -257,3 +258,12 @@ function level_maker_load(_path_filename) {
   }
 }
 
+/// @desc Creates a folder for custom Moonleap levels in game's directory if not existed yet.
+function custom_levels_directory_create() {
+  var _directory = LEVEL_MAKER_LEVELS_FOLDER_PATH;
+  
+  if directory_exists(_directory) {
+    return;
+  }
+  directory_create(_directory);
+};

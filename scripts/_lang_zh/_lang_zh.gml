@@ -123,9 +123,10 @@ lang_add("ZH", {
   maker_level_file_invalid: "此关卡文件无效，无法加载",
   maker_level_file_notfound: "未找到该关卡文件。",
   maker_level_overwrite: "打开此关卡文件将覆盖当前关卡。确定要继续吗？",
-  maker_level_save: "保存...",
+  maker_level_save: "保存",
   maker_level_save_as: "另存为...",
   maker_level_upload_success: "关卡导入成功！",
+  maker_level_upload_error: "导入关卡文件时发生错误，无法完成该操作。",
   maker_level_save_success: "关卡文件保存成功！",
   maker_level_save_error: "尝试保存关卡文件时发生错误，无法保存。",
 

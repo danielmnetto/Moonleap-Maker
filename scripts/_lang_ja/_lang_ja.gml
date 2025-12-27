@@ -118,9 +118,10 @@ lang_add("JA", {
   maker_level_file_invalid: "このレベルファイルは無効なため、読み込むことができませんでした",
   maker_level_file_notfound: "このレベルのファイルが見つかりませんでした。",
   maker_level_overwrite: "このレベルファイルを開くと現在のレベルが上書きされます。本当に続行しますか？",
-  maker_level_save: "保存...",
+  maker_level_save: "保存",
   maker_level_save_as: "名前を付けて保存...",
   maker_level_upload_success: "レベルのインポートに成功しました！",
+  maker_level_upload_error: "レベルファイルのインポート中にエラーが発生し、操作を完了できませんでした。",
   maker_level_save_success: "レベルファイルが正常に保存されました！",
   maker_level_save_error: "レベルファイルの保存中にエラーが発生し、保存できませんでした。",
 

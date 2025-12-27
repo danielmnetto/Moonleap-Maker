@@ -1,5 +1,6 @@
 duration_frames = 120;
 message = "";
+show_on_draw_gui = false;
 box_margin = {
   left: 32,
   right: 32,

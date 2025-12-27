@@ -21,10 +21,9 @@ function menu_save_level_get_main() {
         var _path = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{_filename}";
         
         try {
-          if not directory_exists(LEVEL_MAKER_LEVELS_FOLDER_PATH) {
-            directory_create(LEVEL_MAKER_LEVELS_FOLDER_PATH);
-          }
+          custom_levels_directory_create();
           level_maker_save(_path);
+          audio_play_sfx(sndStarGame, false, -6, 0);
           call_message_popup(LANG.maker_level_save_success);
         } catch (_error) {
           show_debug_message($"SAVE LEVEL ERROR: {_error}");
@@ -40,9 +39,10 @@ function menu_save_level_get_main() {
         var _path = get_save_filename("*.moonlevel", $"{string_filename_create(oLevelMaker.level_name)}.moonlevel");
         if (_path == "") {
           return;
-        } 
+        }
         try {
           level_maker_save(_path);
+          audio_play_sfx(sndStarGame, false, -6, 0);
           call_message_popup(LANG.maker_level_save_success);
         } catch (_error) {
           show_debug_message($"SAVE LEVEL ERROR: {_error}");

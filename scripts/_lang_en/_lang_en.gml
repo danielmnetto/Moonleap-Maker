@@ -102,9 +102,10 @@ lang_add("EN", {
   maker_level_file_invalid: "This level file is invalid and could not be loaded",
   maker_level_file_notfound: "The level file was not found.",
   maker_level_overwrite: "Opening this level file will overwrite the current level. Are you sure you want to proceed?",
-  maker_level_save: "save...",
+  maker_level_save: "save",
   maker_level_save_as: "save as...",
   maker_level_upload_success: "Level imported successfully!",
+  maker_level_upload_error: "An error occurred while importing the level file and the action could not be completed.",
   maker_level_save_success: "Level file saved successfully!",
   maker_level_save_error: "An error occurred while trying to save the level file and it could not be saved.",
 

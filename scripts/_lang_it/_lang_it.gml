@@ -113,9 +113,10 @@ lang_add("IT", {
   maker_level_file_invalid: "Questo file di livello non è valido e non può essere caricato",
   maker_level_file_notfound: "Il file di livello non è stato trovato.",
   maker_level_overwrite: "L’apertura di questo file di livello sovrascriverà il livello attuale. Sei sicuro di voler procedere?",
-  maker_level_save: "salva...",
+  maker_level_save: "salva",
   maker_level_save_as: "salva come...",
   maker_level_upload_success: "Livello importato con successo!",
+  maker_level_upload_error: "Si è verificato un errore durante l'importazione del file del livello e non è stato possibile completare l'azione.",
   maker_level_save_success: "Il file di livello è stato salvato con successo!",
   maker_level_save_error: "Si è verificato un errore durante il salvataggio del file di livello e non è stato possibile salvarlo.",
 
