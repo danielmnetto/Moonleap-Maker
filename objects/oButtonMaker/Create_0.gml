@@ -276,6 +276,8 @@ action_clear_level = function() {
 				has_cleared_level = true;
 				audio_play_sfx(sfx_luano_death_pause_01, false, -8.79, 5);
 				with(oLevelMaker) {
+          selected_object_type = 0;
+          selected_object_position = 0;
 					clear_level();
 					set_sample_level();
 				}

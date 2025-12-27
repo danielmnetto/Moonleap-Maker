@@ -119,11 +119,11 @@ set_list_navigation = function() {
 }
 
 update_selected_object = function() {
-    selected_object = array_get(obj[selected_object_type], selected_object_position);
+  selected_object = array_get(obj[selected_object_type], selected_object_position);
 }
 
 update_selected_tile = function() {
-    selected_tile = variable_clone(array_get(tiles[selected_object_type], selected_object_position));
+  selected_tile = variable_clone(array_get(tiles[selected_object_type], selected_object_position));
 }
 
 update_current_item = function() {
