@@ -740,11 +740,12 @@ remove_orb_from_grid = function() {
 			var _object_index = _object_grid.object;
 			
 			if is_struct(_object_grid)
-				and _top_left_x == _x
-				and _top_left_y == _y
-				and (_object_grid.object.index == oMagicOrb 
-					or _object_grid.object.index == oGrayOrb)
-			{
+      and _top_left_x == _x
+      and _top_left_y == _y
+      and (
+        _object_grid.object.index == oMagicOrb 
+        or _object_grid.object.index == oGrayOrb
+      ) {
 				remove_object_from_grid(_object_grid);
 			}
 		}
@@ -783,17 +784,19 @@ start_level = function() {
 	
 	if not (_has_player_in_level and _has_star_in_level) {
 		var _msg = "",
+        _msg_count = 0, // used to add line break
         _duration = 60;
 		
 		if not _has_player_in_level {
-      _msg += $"- {LANG.maker_noplayer}\n";
-      _duration += 60;
-    } 
-		if not _has_star_in_level {
-      _msg += $"- {LANG.maker_noestar}\n";
+      _msg += $"- {LANG.maker_noplayer}";
+      _msg_count += 1;
       _duration += 60;
     }
-		
+		if not _has_star_in_level {
+      if _msg_count > 0 then _msg += "\n";
+      _msg += $"- {LANG.maker_noestar}";
+      _duration += 60;
+    }
     call_message_popup(_msg, _duration, layer);
 		return;
 	}
@@ -807,28 +810,32 @@ start_level = function() {
 	switch (selected_style) {
 		case LEVEL_MAKER_STYLE.GRASS:	
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_grass_song_night : o_grass_song);
-			break;
+    break;
+  
 		case LEVEL_MAKER_STYLE.CLOUDS:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_cloud_song_night : o_cloud_song);
-			break;
+    break;
+  
 		case LEVEL_MAKER_STYLE.FLOWERS:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_flower_song_night : o_flower_song);
-			break;
+    break;
+  
 		case LEVEL_MAKER_STYLE.SPACE:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_space_song_night : o_space_song);
-			break;
+    break;
+  
 		case LEVEL_MAKER_STYLE.DUNGEON:
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_dungeon_song_night : o_dungeon_song);
-			break;
+    break;
 	}
 	
 	// =========================
 	// ANIMATED TILES PLACEMENT
 	// =========================
 	//change_tiles_to_animated_sprites();
-    with(oMakerEditorTileDraft) {
-        set_in_room();
-    }
+  with(oMakerEditorTileDraft) {
+    set_in_room();
+  }
 	
 	// =========================
 	// OBJECTS PLACEMENT
@@ -888,7 +895,7 @@ start_level = function() {
 					case oPlayerDir:
 					case oPlayerNeutral:
 						_priority = 0;
-						break;
+          break;
 						
 					case oStar:
 					case oStarColor:
@@ -910,12 +917,12 @@ start_level = function() {
 					case oLadyVer:
 					case oLadyGray:
 						_priority = 1;
-						break;
+          break;
 						
 					default:
 						_layer_name = "Gimmick_Instances";
 						_priority = 10;
-						break;
+          break;
 				}
 				
 				var _object_var_struct = {
@@ -982,21 +989,21 @@ delete_all_objects_from_level = function() {
 			instance_destroy(object.index, false);
 		}
 	}
-}
+};
 
 stop_all_music = function() {
 	instance_destroy(o_music);
 	audio_stop_all();
-}
+};
 
 end_level_and_return_to_editor = function() {
 	//destroy the "song"
 	stop_all_music();
 	
 	delete_all_objects_from_level();
-    with(oMakerEditorTileDraft) {
-        remove_from_room();
-    }
+  with(oMakerEditorTileDraft) {
+      remove_from_room();
+  }
 
     mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 	//instance_create_layer(-16, -16, layer, oPause);

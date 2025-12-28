@@ -50,19 +50,19 @@ play_sound_on_select_option = function() {
 
 play_transition_sound = function() {
   menu_play_redirect_option_sound();
-}
+};
 
 /// @desc Updates the level display range (start and end). Use this command when you change `levels_to_display` value.
 update_level_display_range = function() {
   level_display_range_start = 0;
   level_display_range_end = levels_to_display - 1;
-}
+};
 
 level_name_get_length_width = function() {
   var _txt = ""
   repeat(32) _txt += "A";
   return string_width(_txt);
-}
+};
 
 orderby_option_get_text = function() {
   switch(levels_orderby) {
@@ -73,7 +73,7 @@ orderby_option_get_text = function() {
     case LEVELS_ORDERBY.RANK_ASC: return LANG.maker_orderby_rank_asc;
     case LEVELS_ORDERBY.RANK_DESC: return LANG.maker_orderby_rank_desc;
   }
-}
+};
 
 levels_get_orderedby = function() {
   var _new_levels_arr = [];
@@ -155,7 +155,7 @@ levels_get_orderedby = function() {
   }
 
   return _new_levels_arr;
-}
+};
 
 
 level_get_rank_letter = function(_player_score, _perfect_score) {
@@ -178,29 +178,24 @@ level_get_rank_letter = function(_player_score, _perfect_score) {
   }
   
   return _letter;
-}
+};
 
 import_levels_from_levels_folder = function() {
   levels = [];
   
-  var _level_files = [];
-  var _file_pattern = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/*.moonlevel";
-  var _level_filename = file_find_first(_file_pattern, fa_none);
+  var _level_files = [],
+      _file_pattern = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/*.moonlevel",
+      _level_filename = file_find_first(_file_pattern, fa_none);
   
-  show_debug_message($"file pattern: {_file_pattern}");
   while _level_filename != "" {
-    show_debug_message($"level carregado: {_level_filename}");
-    
-    var _level_file = file_text_open_read($"{LEVEL_MAKER_LEVELS_FOLDER_NAME}/{_level_filename}");
-    var _level_json = "";
+    var _level_file = file_text_open_read($"{LEVEL_MAKER_LEVELS_FOLDER_NAME}/{_level_filename}"),
+        _level_json = "";
     
     while not file_text_eof(_level_file) {
       _level_json += file_text_read_string(_level_file);
     }
     file_text_close(_level_file);
-    
     _level_json = json_parse(_level_json);
-    
     array_push(levels, new MakerLevel(
       $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{_level_filename}",
       _level_json.name,
@@ -208,7 +203,6 @@ import_levels_from_levels_folder = function() {
       _level_json.player_score,
       _level_json.perfect_score
     ));
-    
     _level_filename = file_find_next();
   }
   
