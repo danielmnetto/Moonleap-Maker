@@ -26,8 +26,8 @@ is_level_file_saved_local = false;
 level_file_name = "";
 
 // Objects Grid-related
-tile_size = 8;
-room_tile_width =  room_width div tile_size;
+tile_size = LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE;
+room_tile_width = room_width div tile_size;
 room_tile_height = (room_height div tile_size) + tile_size;
 objects_grid = []; // Grid where the objects inserted by player are.
 
@@ -65,7 +65,7 @@ list_positions_length = 16;
 tiles = level_maker_get_tiles_list(selected_style);
 selected_tile = undefined;
 cursor_tile_hovering = undefined;
-tileset_size = 16;
+tileset_size = LEVEL_MAKER_GRID_TILESETS_TILE_SIZE;
 
 // Objects-related
 obj = level_maker_get_objects_list();

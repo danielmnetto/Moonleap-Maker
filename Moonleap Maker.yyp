@@ -151,7 +151,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.213",
+    "IDEVersion":"2024.14.3.217",
   },
   "name":"Moonleap Maker",
   "resources":[
@@ -348,6 +348,7 @@
     {"id":{"name":"oMakerEditorTileDraft","path":"objects/oMakerEditorTileDraft/oMakerEditorTileDraft.yy",},},
     {"id":{"name":"oMakerLevelDataTransition","path":"objects/oMakerLevelDataTransition/oMakerLevelDataTransition.yy",},},
     {"id":{"name":"oMakerLevelsList","path":"objects/oMakerLevelsList/oMakerLevelsList.yy",},},
+    {"id":{"name":"oMakerTransition","path":"objects/oMakerTransition/oMakerTransition.yy",},},
     {"id":{"name":"oMakerWarning","path":"objects/oMakerWarning/oMakerWarning.yy",},},
     {"id":{"name":"oMb2","path":"objects/oMb2/oMb2.yy",},},
     {"id":{"name":"oMenu","path":"objects/oMenu/oMenu.yy",},},
@@ -591,6 +592,7 @@
     {"id":{"name":"scr_inputcreate","path":"scripts/scr_inputcreate/scr_inputcreate.yy",},},
     {"id":{"name":"scr_inputget","path":"scripts/scr_inputget/scr_inputget.yy",},},
     {"id":{"name":"scr_lang","path":"scripts/scr_lang/scr_lang.yy",},},
+    {"id":{"name":"scr_level_maker_commands","path":"scripts/scr_level_maker_commands/scr_level_maker_commands.yy",},},
     {"id":{"name":"scr_level_maker_editor_menu","path":"scripts/scr_level_maker_editor_menu/scr_level_maker_editor_menu.yy",},},
     {"id":{"name":"scr_level_maker_editor","path":"scripts/scr_level_maker_editor/scr_level_maker_editor.yy",},},
     {"id":{"name":"scr_level_maker_layers","path":"scripts/scr_level_maker_layers/scr_level_maker_layers.yy",},},

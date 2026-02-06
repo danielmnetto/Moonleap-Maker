@@ -84,8 +84,14 @@ and keyboard_check_pressed(vk_f5) {
 // BUTTON ACTIONS BY PRESSING IT
 // ===================================
 
-if image_index == LEVEL_MAKER_BUTTON_TYPE.CLEAR_LEVEL {
-	action_clear_level();
+switch(image_index) {
+  case LEVEL_MAKER_BUTTON_TYPE.CLEAR_LEVEL:
+    action_clear_level();
+  break;
+
+  case LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL:
+    action_test_level();
+  break;
 }
 
 if _has_left_pressed and _is_mouse_hover {
@@ -108,10 +114,6 @@ if _has_left_pressed and _is_mouse_hover {
 
     case LEVEL_MAKER_BUTTON_TYPE.LOAD_LEVEL:
       action_load_level();
-    break;
-
-    case LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL:
-      action_test_level();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.HELP:
