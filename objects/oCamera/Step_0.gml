@@ -51,7 +51,6 @@ if (shaketime == 0) {
 	}
 }
 
-// QUESTION: Pra que isso?
 if !instance_exists(oPlayer) and not room_is([RoomCreditsAlves, RoomProgress, RoomMaker0, RoomMakerMenu]) {
   if !instance_exists(oTransition) { 
     var trans = instance_create_layer(x,y,layer,oTransition);

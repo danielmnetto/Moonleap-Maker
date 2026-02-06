@@ -1,3 +1,8 @@
+if oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+  instance_destroy();
+  exit;
+}
+
 scr_inputget();
 
 var _is_left_pressing = mouse_check_button(mb_left),
@@ -88,12 +93,9 @@ switch(image_index) {
   case LEVEL_MAKER_BUTTON_TYPE.CLEAR_LEVEL:
     action_clear_level();
   break;
-
-  case LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL:
-    action_test_level();
-  break;
 }
 
+// Buttons on pressing once.
 if _has_left_pressed and _is_mouse_hover {
   switch(image_index) {
     case LEVEL_MAKER_BUTTON_TYPE.PAGE_UP:
@@ -114,6 +116,10 @@ if _has_left_pressed and _is_mouse_hover {
 
     case LEVEL_MAKER_BUTTON_TYPE.LOAD_LEVEL:
       action_load_level();
+    break;
+  
+    case LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL:
+      action_test_level();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.HELP:

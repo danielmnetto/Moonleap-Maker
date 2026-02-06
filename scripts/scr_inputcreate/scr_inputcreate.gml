@@ -9,6 +9,7 @@ function scr_inputcreate() {
 	key_jump_pressed = 0;
 	key_jump = 0;
 	key_start = 0;
+  key_reset = 0;
 	key_down_axis_pressed = 0;
 	key_up_axis_pressed = 0;
 	key_axis_pressed = 0;

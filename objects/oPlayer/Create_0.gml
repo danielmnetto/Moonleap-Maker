@@ -496,7 +496,8 @@ set_game_paused = function() {
 	or vsp != 0 
 	or hsp != 0
 	or instance_exists(oPauseUI)
-	or room_is([RoomMenu, RoomMenu2, RoomMaker0, RoomMakerMenu]) {
+	or room_is([RoomMenu, RoomMenu2, RoomMakerMenu])
+  or (room_is(RoomMaker0) and oLevelMaker.mode != LEVEL_MAKER_EDITOR_MODE.PLAYING) {
 		return;
 	}
 

@@ -2,6 +2,7 @@ show_title = false;
 title = "";
 room_target = noone;
 transition_background_color = COLOR_NICE_BLACK;
+on_end_fade_out = undefined;
 
 transition_sprite_index = sTrans;
 transition_sprite_blend = transition_background_color;
@@ -34,6 +35,11 @@ state_machine.add("fade_out", {
   },
   draw_gui: function() {
     draw_transition_animation();
+  },
+  leave: function() {
+    if is_method(on_end_fade_out) {
+      on_end_fade_out();
+    }
   }
 });
 
@@ -53,7 +59,6 @@ state_machine.add("display_title", {
 
 state_machine.add("fade_in", {
   step: function() {
-    title_easeout_effect_frame = approach(title_easeout_effect_frame, 0, title_easeout_effect_frame_step);
     transition_animation_current_frame -= transition_animation_frame_increment;
     if transition_animation_current_frame <= 0 {	
       instance_destroy();
@@ -91,7 +96,7 @@ draw_title = function() {
       _title_valign = fa_middle,
       _title_x = GUI_W / 2,
       _title_y = GUI_H / 2,
-      _title_text = LANG[$ room_get_name(room)],
+      _title_text = title,
       _title_color = COLOR_NICE_WHITE,
       _title_letters_distance = 0,
       _title_line_distance = 12,

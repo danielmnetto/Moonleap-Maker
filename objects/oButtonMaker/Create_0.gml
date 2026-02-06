@@ -224,38 +224,14 @@ action_load_level = function() {
 };
 
 action_test_level = function() {
-  var _is_pressing_left_click = mouse_check_button(mb_left);
-  var _has_released_left_click = mouse_check_button_released(mb_left);
-  
-  if _is_pressing_left_click
-  and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.EDITING {
-    test_level_button_frames = min(
-      test_level_button_frames + test_level_button_step_frames,
-      test_level_button_max_frames
-    );
-  }
-  
-  if test_level_button_frames == test_level_button_max_frames
-  and not test_level_button_reached_max {
-    play_sound_on_press();
-    show_debug_message("True test level triggered.");
-    test_level_button_reached_max = true;
-  }
-  
-  if _has_released_left_click {
-    if test_level_button_frames < test_level_button_max_frames {
-      play_sound_on_press();
-      with(oLevelMaker) {
-        if level_maker_is_editing() {
-          start_level();
-        } else {
-          oLevelMaker.item_place_disable_timer.reset();
-          oLevelMaker.end_level_and_return_to_editor();
-        }
-      }
+  with(oLevelMaker) {
+    if level_maker_is_editing() {
+      start_level();
+      audio_play_sfx(sndStarGame, false, -18.3, 1);
+    } else {
+      oLevelMaker.item_place_disable_timer.reset();
+      oLevelMaker.end_level();
     }
-    test_level_button_frames = 0;
-    test_level_button_reached_max = false;
   }
 };
 

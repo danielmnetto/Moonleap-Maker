@@ -135,7 +135,11 @@ update_current_item = function() {
 }
 
 check_return_to_editor_timer = function() {
-  if level_maker_is_editing() 
+  if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    return;
+  }
+  
+  if level_maker_is_editing()
     or (not level_maker_is_editing() 
       and instance_exists(oPlayer)
       and not oPlayer.has_collected_all_stars()) {
@@ -146,18 +150,23 @@ check_return_to_editor_timer = function() {
   return_to_editor_timer.count();
   
   if return_to_editor_timer.has_timed_out() {
-    end_level_and_return_to_editor();
+    end_level();
   }
 }
 
 cursor_set_position = function() {
 	var _in_level_editor = level_maker_is_editing();
 
-	camera_current_interpolation += _in_level_editor ? -0.07 : 0.07;
+  if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    camera_current_interpolation = 1;
+  } else {
+    camera_current_interpolation += _in_level_editor ? -0.07 : 0.07;
+  }
 	camera_current_interpolation = clamp(camera_current_interpolation, 0, 1);
 
-	// Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application surface to keep it pixel perfect
-	// this is instead of using the actual camera cause then it would look ugly zoomed in
+	// Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application
+  // surface to keep it pixel perfect this is instead of using the actual camera cause then it
+  // would look ugly zoomed in.
 
 	var _cam_offset_x = camera_get_view_x(view_camera[0]);
 	var _cam_offset_y = camera_get_view_y(view_camera[0]);
@@ -173,7 +182,7 @@ cursor_set_position = function() {
 
 	global.level_maker_mouse_x = (mouse_x - _app_surface_x) / _gui_scale_x;
 	global.level_maker_mouse_y = (mouse_y - _app_surface_y) / _gui_scale_y;
-}
+};
 
 cursor_get_object_from_grid = function() {
 	if not is_cursor_inside_level
@@ -801,30 +810,36 @@ start_level = function() {
 		return;
 	}
 	
-  mode = LEVEL_MAKER_EDITOR_MODE.TESTING;
-	audio_play_sfx(sndStarGame, false, -18.3, 1);
+  if mode != LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    mode = LEVEL_MAKER_EDITOR_MODE.TESTING;
+  }
 	
 	// =========================
 	// MUSIC SETTING
 	// =========================
 	switch (selected_style) {
-		case LEVEL_MAKER_STYLE.GRASS:	
+		case LEVEL_MAKER_STYLE.GRASS:
+      if instance_exists_any([o_grass_song_night, o_grass_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_grass_song_night : o_grass_song);
     break;
   
 		case LEVEL_MAKER_STYLE.CLOUDS:
+      if instance_exists_any([o_cloud_song_night, o_cloud_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_cloud_song_night : o_cloud_song);
     break;
   
 		case LEVEL_MAKER_STYLE.FLOWERS:
+      if instance_exists_any([o_flower_song_night, o_flower_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_flower_song_night : o_flower_song);
     break;
   
 		case LEVEL_MAKER_STYLE.SPACE:
+      if instance_exists_any([o_space_song_night, o_space_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_space_song_night : o_space_song);
     break;
   
 		case LEVEL_MAKER_STYLE.DUNGEON:
+      if instance_exists_any([o_dungeon_song_night, o_dungeon_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_dungeon_song_night : o_dungeon_song);
     break;
 	}
@@ -967,18 +982,20 @@ start_level = function() {
     
   layer_set_visible(_fx_dust, true);
 
-  //if selected_style == LEVEL_MAKER_STYLE.DUNGEON then
-  //    instance_create_layer(0, 0, "Instances_2", oFog);
-	
   level_maker_change_fx();
 
 	with(oBrokenStone) {
-		brokenright = instance_place(x+1,y,oBrokenStone)
-		brokenleft = instance_place(x-1,y,oBrokenStone)
-		brokenup = instance_place(x,y-1,oBrokenStone)
-		brokendown = instance_place(x,y+1,oBrokenStone)
+		brokenright = instance_place(x + 1, y, oBrokenStone);
+		brokenleft = instance_place(x - 1, y, oBrokenStone);
+		brokenup = instance_place(x, y - 1, oBrokenStone);
+		brokendown = instance_place(x, y + 1, oBrokenStone);
 	}
-}
+};
+
+reset_level = function() {
+  end_level();
+  start_level();
+};
 
 delete_all_objects_from_level = function() {
 	for (var yy = list_positions_length - 1; yy>=0; yy-=1) {
@@ -996,28 +1013,26 @@ stop_all_music = function() {
 	audio_stop_all();
 };
 
-end_level_and_return_to_editor = function() {
-	//destroy the "song"
-	stop_all_music();
-	
+destroy_level_gimmicks = function() {
+  instance_destroy(oNeutralFlag);
+	instance_destroy(oKeyFollow, false);
+	instance_destroy(oKeyFollow2, false);
+	instance_destroy(oKeyFollow3, false);
+	instance_destroy(oFogMaker);
+}
+
+end_level = function() {
 	delete_all_objects_from_level();
   with(oMakerEditorTileDraft) {
-      remove_from_room();
+    remove_from_room();
   }
-
-    mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
-	//instance_create_layer(-16, -16, layer, oPause);
 	
 	// Reset day/night state
 	if instance_exists(oCamera) then
 		oCamera.night = false;
 	
 	// Destroy gimmicks that would persist on level editor after playtest
-	instance_destroy(oNeutralFlag);
-	instance_destroy(oKeyFollow, false);
-	instance_destroy(oKeyFollow2, false);
-	instance_destroy(oKeyFollow3, false);
-	instance_destroy(oFogMaker);
+	destroy_level_gimmicks();
 	
   // Disable layer effects
   var _fx_dust = layer_get_id("FX_Dust");
@@ -1025,7 +1040,16 @@ end_level_and_return_to_editor = function() {
   layer_set_visible(_fx_dust, false);
   
   level_maker_change_fx();
+  
+  if mode != LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    return_to_the_editor_mode();
+  }
+}
+
+return_to_the_editor_mode = function() {
+  stop_all_music();
   audio_play_sfx(snd_bump, false, 1, 1);
+  mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 	just_entered_level_editor = true;
 }
 

@@ -1,3 +1,15 @@
+if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+  if not instance_exists(oPlayer) and not instance_exists(oMakerTransition) {
+    show_debug_message("rodando reset...");
+    var _transition = maker_transition_start(room);
+    
+    _transition.on_end_fade_out = function() {
+      oLevelMaker.reset_level();
+    };
+  }
+  exit;
+}
+
 item_preview_offset_y = smooth_approach(item_preview_offset_y, 0, 0.25);
 item_preview_offset_x = smooth_approach(item_preview_offset_x, 0, 0.25);
 

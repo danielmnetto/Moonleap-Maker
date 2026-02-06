@@ -38,7 +38,10 @@ if mode == LEVEL_MAKER_EDITOR_MODE.EDITING and hover_text != "" {
 
 // CURSOR
 draw_set_halign(fa_left)
-draw_sprite(sCursor, cursor, global.level_maker_mouse_x, global.level_maker_mouse_y);
+
+if mode != LEVEL_MAKER_EDITOR_MODE.PLAYING {
+  draw_sprite(sCursor, cursor, global.level_maker_mouse_x, global.level_maker_mouse_y);  
+}
 
 draw_set_color(-1);
 draw_set_halign(-1);
