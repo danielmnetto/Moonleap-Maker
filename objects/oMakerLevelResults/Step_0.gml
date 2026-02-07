@@ -4,12 +4,12 @@ if instance_exists_any([oTransition, oMakerTransition]) {
   exit;
 }
 
-var _input_nav = key_down - key_up
 
-current_option += _input_nav;
-current_option = clamp(current_option, 0, LEVEL_MAKER_RESULT_OPTION.LENGTH - 1);
-
-if _input_nav != 0 {
+if key_down and current_option == LEVEL_MAKER_RESULT_OPTION.TRY_AGAIN {
+  current_option += 1;
+  play_sound_on_navigate();
+} else if key_up and current_option == LEVEL_MAKER_RESULT_OPTION.QUIT {
+  current_option -= 1;
   play_sound_on_navigate();
 }
 
