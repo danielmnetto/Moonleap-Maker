@@ -9,3 +9,7 @@ function maker_transition_start(_room_target, _title = "", _subtitle = "", _back
   
   return _transition;
 }
+
+function maker_transition_is_running() {
+  return instance_exists(oMakerTransition) and not oMakerTransition.state_machine.state_is("fade_in")
+}

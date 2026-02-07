@@ -728,20 +728,20 @@ perform_win = function() {
 }
 
 check_controls_disabling = function() {
-    if not state.state_is("win")
-    and not instance_exists(oPauseUI)
-    and numb <= 0
-    and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub()))
-    and not (instance_exists(oMakerTransition) and oMakerTransition.state_machine.get_current_state() != "fade_in") 
-    {
-    	return;
-    }
+  if not state.state_is("win")
+  and not instance_exists(oPauseUI)
+  and numb <= 0
+  and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub()))
+  and not maker_transition_is_running()
+  {
+    return;
+  }
 
-    key_right = 0;
-    key_left = 0;
-    key_jump_pressed = 0;
-    key_jump = 0;
-    key_start = 0;
+  key_right = 0;
+  key_left = 0;
+  key_jump_pressed = 0;
+  key_jump = 0;
+  key_start = 0;
 }
 
 check_on_landing = function() {

@@ -116,3 +116,73 @@ draw_text_nox(
   _time_played_break_on_space,
   _time_played_alpha
 );
+
+var _text_wave_height = 2.25,
+    _text_wave_time = 0.75,
+    _text_wave_length = 1,
+    _text_wave_char = "~";
+
+nox_set_wave(
+  _text_wave_height,
+  _text_wave_time,
+  _text_wave_length,
+  _text_wave_char
+);
+
+var _option1_halign = fa_center,
+    _option1_valign = fa_middle,
+    _option1_text = current_option == 0 ? $"~{LANG.maker_level_try_again}~" : $"{LANG.maker_level_try_again}",
+    _option1_height = string_height(_option1_text),
+    _option1_x = GUI_W / 2,
+    _option1_y = GUI_H / 1.5 + _option1_height,
+    _option1_color = current_option == 0 ? COLOR_NICE_WHITE : COLOR_NICE_BLUE,
+    _option1_letters_distance = 0,
+    _option1_line_distance = 12,
+    _option1_line_width = GUI_W,
+    _option1_break_on_space = false,
+    _option1_alpha = 1;
+
+draw_set_halign(_option1_halign);
+draw_set_valign(_option1_valign);
+draw_set_color(_option1_color);
+
+draw_text_nox(
+  _option1_x,
+  _option1_y,
+  _option1_text,
+  _option1_letters_distance,
+  _option1_line_distance,
+  _option1_line_width,
+  _option1_break_on_space,
+  _option1_alpha
+);
+
+var _option2_halign = fa_center,
+    _option2_valign = fa_middle,
+    _option2_text = current_option == 1 ? $"~{LANG.text_exit}~" : $"{LANG.text_exit}",
+    _option2_height = string_height(_option2_text),
+    _option2_x = GUI_W / 2,
+    _option2_y = GUI_H / 1.5 + _option2_height * 2,
+    _option2_color = current_option == 1 ? COLOR_NICE_WHITE : COLOR_NICE_BLUE,
+    _option2_letters_distance = 0,
+    _option2_line_distance = 12,
+    _option2_line_width = GUI_W,
+    _option2_break_on_space = false,
+    _option2_alpha = 1;
+
+draw_set_halign(_option2_halign);
+draw_set_valign(_option2_valign);
+draw_set_color(_option2_color);
+
+draw_text_nox(
+  _option2_x,
+  _option2_y,
+  _option2_text,
+  _option2_letters_distance,
+  _option2_line_distance,
+  _option2_line_width,
+  _option2_break_on_space,
+  _option2_alpha
+);
+
+draw_reset();
