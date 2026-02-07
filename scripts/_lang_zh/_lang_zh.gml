@@ -140,6 +140,10 @@ lang_add("ZH", {
   maker_warning_change_style: "注意！更换样式时，关卡中已有的装饰瓷砖将会被删除。你确定要更换样式吗？",
   maker_warning_confirm: "是",
   maker_warning_cancel: "否",
+  
+  maker_level_time_played: "游玩时间: ",
+  maker_level_result: "结果: ",
+  maker_level_try_again: "再试一次",
 
   maker_object_oPlayer: "球员",
   maker_object_oSolid: "实心块",

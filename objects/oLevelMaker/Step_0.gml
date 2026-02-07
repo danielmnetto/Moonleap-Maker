@@ -1,6 +1,12 @@
 if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+  if (instance_exists(oPlayer) and not oPlayer.state.state_is("win"))
+  and not instance_exists(oPauseUI)
+  and not (instance_exists(oMakerTransition) and not oMakerTransition.state_machine.state_is("fade_in")) {
+    time_played_timer.count();
+    show_debug_message($"Tempo de fase: {time_played_timer.get_time()}");
+  }
+  
   if not instance_exists(oPlayer) and not instance_exists(oMakerTransition) {
-    show_debug_message("rodando reset...");
     var _transition = maker_transition_start(room);
     
     _transition.on_end_fade_out = function() {

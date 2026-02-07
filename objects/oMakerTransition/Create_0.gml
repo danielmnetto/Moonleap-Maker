@@ -1,5 +1,6 @@
 show_title = false;
 title = "";
+subtitle = "";
 room_target = noone;
 transition_background_color = COLOR_NICE_BLACK;
 on_end_fade_out = undefined;
@@ -54,6 +55,7 @@ state_machine.add("display_title", {
   draw_gui: function() {
     draw_background();
     draw_title();
+    draw_subtitle();
   }
 });
 
@@ -94,8 +96,9 @@ draw_transition_animation = function() {
 draw_title = function() {
   var _title_halign = fa_center,
       _title_valign = fa_middle,
+      _title_height = string_height(title),
       _title_x = GUI_W / 2,
-      _title_y = GUI_H / 2,
+      _title_y = GUI_H / 2 - _title_height / 2,
       _title_text = title,
       _title_color = COLOR_NICE_WHITE,
       _title_letters_distance = 0,
@@ -118,6 +121,39 @@ draw_title = function() {
     _title_line_width,
     _title_break_on_space,
     _title_alpha
+  );
+  
+  draw_reset();
+};
+
+draw_subtitle = function() {
+  var _subtitle_halign = fa_center,
+      _subtitle_valign = fa_middle,
+      _subtitle_height = string_height(subtitle),
+      _subtitle_x = GUI_W / 2,
+      _subtitle_y = GUI_H / 2 + _subtitle_height / 2,
+      _subtitle_text = subtitle,
+      _subtitle_color = COLOR_NICE_WHITE,
+      _subtitle_letters_distance = 0,
+      _subtitle_line_distance = 12,
+      _subtitle_line_width = GUI_W,
+      _subtitle_break_on_space = false,
+      _subtitle_alpha = 1;
+  
+	draw_set_halign(_subtitle_halign);
+	draw_set_valign(_subtitle_valign);
+  draw_set_color(_subtitle_color);
+  draw_set_font(oCamera.font);
+
+	draw_text_nox(
+    _subtitle_x,
+    _subtitle_y,
+    _subtitle_text,
+    _subtitle_letters_distance,
+    _subtitle_line_distance,
+    _subtitle_line_width,
+    _subtitle_break_on_space,
+    _subtitle_alpha
   );
   
   draw_reset();

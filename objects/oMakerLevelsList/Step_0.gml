@@ -50,11 +50,14 @@ if _input_nav_up and current_level_index > -2 {
     // Levels
     default:
       play_transition_sound();
-      var _data_trasition = instance_create_layer(-16, -16, "Instances", oMakerLevelDataTransition);
+      var _data_trasition = instance_create_layer(-16, -16, "Instances", oMakerLevelDataTransition),
+          _transition_title = _level.name,
+          _transition_subtitle = _level.author;
+      
       _data_trasition.level_filename = _level.filename;
       _data_trasition.is_true_test = true;
       
-      maker_transition_start(RoomMaker0, _level.name);
+      maker_transition_start(RoomMaker0, _transition_title, _transition_subtitle);
     break;
   }
 }

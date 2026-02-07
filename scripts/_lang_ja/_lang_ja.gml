@@ -135,6 +135,10 @@ lang_add("JA", {
   maker_warning_change_style: "注意！スタイルを変更すると、レベル内にある装飾タイルは削除されます。本当にスタイルを変更してもよろしいですか？",
   maker_warning_confirm: "はい",
   maker_warning_cancel: "いいえ",
+  
+  maker_level_time_played: "プレイ時間: ",
+  maker_level_result: "結果: ",
+  maker_level_try_again: "もう一度試す",
 
   maker_object_oPlayer: "プレーヤー",
   maker_object_oSolid: "ソリッドブロック",

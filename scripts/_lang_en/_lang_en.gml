@@ -119,6 +119,10 @@ lang_add("EN", {
   maker_warning_change_style: "Warning! When changing the style, the existing decoration tiles in the level will be erased. Are you sure you want to change the style?",
   maker_warning_confirm: "Yes",
   maker_warning_cancel: "No",
+  
+  maker_level_time_played: "time played: ",
+  maker_level_result: "result: ",
+  maker_level_try_again: "try again",
 
   maker_object_oPlayer: "Player",
   maker_object_oSolid: "Solid block",

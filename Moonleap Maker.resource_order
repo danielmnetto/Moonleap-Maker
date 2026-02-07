@@ -1,6 +1,7 @@
 {
   "FolderOrderSettings":[
     {"name":"Libraries","order":1,"path":"folders/Libraries.yy",},
+    {"name":"DTLion Stopwatch","order":9,"path":"folders/Libraries/DTLion Stopwatch.yy",},
     {"name":"GooglePlayServices Demo","order":1,"path":"folders/Libraries/GooglePlayServices Demo.yy",},
     {"name":"GooglePlayServices","order":2,"path":"folders/Libraries/GooglePlayServices.yy",},
     {"name":"SnowState","order":7,"path":"folders/Libraries/SnowState.yy",},
@@ -194,6 +195,7 @@
     {"name":"oMakerBack","order":26,"path":"objects/oMakerBack/oMakerBack.yy",},
     {"name":"oMakerEditorTileDraft","order":7,"path":"objects/oMakerEditorTileDraft/oMakerEditorTileDraft.yy",},
     {"name":"oMakerLevelDataTransition","order":9,"path":"objects/oMakerLevelDataTransition/oMakerLevelDataTransition.yy",},
+    {"name":"oMakerLevelResults","order":12,"path":"objects/oMakerLevelResults/oMakerLevelResults.yy",},
     {"name":"oMakerLevelsList","order":8,"path":"objects/oMakerLevelsList/oMakerLevelsList.yy",},
     {"name":"oMakerTransition","order":11,"path":"objects/oMakerTransition/oMakerTransition.yy",},
     {"name":"oMakerWarning","order":3,"path":"objects/oMakerWarning/oMakerWarning.yy",},
@@ -430,6 +432,7 @@
     {"name":"scr_messages","order":50,"path":"scripts/scr_messages/scr_messages.yy",},
     {"name":"scr_movement_collision","order":38,"path":"scripts/scr_movement_collision/scr_movement_collision.yy",},
     {"name":"scr_moving_plat","order":32,"path":"scripts/scr_moving_plat/scr_moving_plat.yy",},
+    {"name":"scr_rank","order":52,"path":"scripts/scr_rank/scr_rank.yy",},
     {"name":"scr_restartgame","order":14,"path":"scripts/scr_restartgame/scr_restartgame.yy",},
     {"name":"scr_retro_pal_swapper_utilities","order":1,"path":"scripts/scr_retro_pal_swapper_utilities/scr_retro_pal_swapper_utilities.yy",},
     {"name":"scr_salva_dados","order":30,"path":"scripts/scr_salva_dados/scr_salva_dados.yy",},

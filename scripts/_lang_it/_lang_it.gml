@@ -131,6 +131,10 @@ lang_add("IT", {
   maker_warning_confirm: "Sì",
   maker_warning_cancel: "No",
 
+  maker_level_time_played: "tempo giocato: ",
+  maker_level_result: "risultato: ",
+  maker_level_try_again: "riprovare",
+  
   maker_object_oPlayer: "Giocatore",
   maker_object_oSolid: "Blocco solido",
   maker_object_oBrokenStone: "Pietra rotta",

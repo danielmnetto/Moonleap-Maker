@@ -99,6 +99,10 @@ text_poem8: "consuelo y dulzura de la paz",
   maker_warning_change_style: "¡Atención! Al cambiar de estilo, los azulejos de decoración existentes en el nivel se borrarán. ¿Estás seguro de que deseas cambiar el estilo?",
   maker_warning_confirm: "Sí",
   maker_warning_cancel: "No",
+  
+  maker_level_time_played: "tiempo jugado: ",
+  maker_level_result: "resultado: ",
+  maker_level_try_again: "intentar de nuevo",
 
   maker_object_oPlayer: "Jugador",
   maker_object_oSolid: "Bloque sólido",

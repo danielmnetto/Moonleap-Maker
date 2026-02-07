@@ -115,6 +115,10 @@ lang_add("PT-BR", {
   maker_warning_change_style: "Atenção! Ao trocar de estilo, os ladrilhos de decoração existentes no nível serão apagados. Você tem certeza que deseja trocar de estilo?",
   maker_warning_confirm: "Sim",
   maker_warning_cancel: "Não",
+  
+  maker_level_time_played: "tempo jogado: ",
+  maker_level_result: "resultado: ",
+  maker_level_try_again: "tentar novamente",
 
   maker_object_oPlayer: "Jogador",
   maker_object_oSolid: "Bloco sólido",

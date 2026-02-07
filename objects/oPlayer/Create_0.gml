@@ -641,14 +641,31 @@ check_change_by_direction = function() {
 
 perform_win = function() {
   winwait = max(winwait - 1, -1);
+  
+  if winwait > 0 or winwait <= -1 {
+    return;
+  }
 
-  if winwait >= 0
-  or room == RoomMaker0
-  or instance_exists(oTransition) {
+  if (room_is(RoomMaker0) and oLevelMaker.mode != LEVEL_MAKER_EDITOR_MODE.PLAYING)
+  or instance_exists_any([oTransition, oMakerTransition]) {
     return;
   }
 
   audio_play_sfx(sndStgClear, false, -14.4, 0);
+  
+  if winwait == 0 and room_is(RoomMaker0) and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    var _maker_transition = maker_transition_start(room);
+    _maker_transition.on_end_fade_out = function() {
+      var _results = instance_create_layer(-16, -16, "Instances", oMakerLevelResults);
+      
+      _results.level_name = oLevelMaker.level_name;
+      _results.level_author = oLevelMaker.level_author_name;
+      _results.player_score = changecount;
+      _results.perfect_score = oLevelMaker.perfect_score;
+      _results.time_played = oLevelMaker.time_played_timer.get_time();
+    }
+    return;
+  }
       
   if changecount == 0 then changecount = 1;
   
@@ -714,7 +731,9 @@ check_controls_disabling = function() {
     if not state.state_is("win")
     and not instance_exists(oPauseUI)
     and numb <= 0
-    and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub())) {
+    and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub()))
+    and not (instance_exists(oMakerTransition) and oMakerTransition.state_machine.get_current_state() != "fade_in") 
+    {
     	return;
     }
 
