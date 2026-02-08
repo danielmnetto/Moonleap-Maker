@@ -77,19 +77,25 @@ function menu_get_level_pause() {
       function() { return LANG.text_options; },
       "options",
     ),
-
-    // Change level
-    new MenuOptionActionCall(
-      function() { return LANG.text_changelevel; },
-      function() { 
-        if not instance_exists(oTransition) {
-          audio_play_sfx(sndStarGame, false, -6.2, 0);  
-          room_transit(Room100);
+  ];
+  
+  // Change level
+  if not room_is(RoomMaker0) {
+    array_push(_menu_pause, 
+      new MenuOptionActionCall(
+        function() { return LANG.text_changelevel; },
+        function() { 
+          if not instance_exists(oTransition) {
+            audio_play_sfx(sndStarGame, false, -6.2, 0);  
+            room_transit(Room100);
+          }
         }
-      }
-    ),
-
-    // Give up
+      ),
+    );
+  }
+  
+  // Give up
+  array_push(_menu_pause, 
     new MenuOptionActionCall(
       function() { return LANG.text_giveup; },
       function() { 
@@ -100,11 +106,11 @@ function menu_get_level_pause() {
           audio_sound_gain(bgm_hub_03, 0, 1000);
           audio_sound_gain(bgm_hub_04, 0, 1000);
           audio_play_sfx(sndStarGame, false, -6.2, 0);
-          room_transit(RoomMenu);
+          room_transit(room_is(RoomMaker0) ? RoomMakerMenu : RoomMenu);
         }
       }
-    ),
-  ];
+    ), 
+  );
   
   return _menu_pause;
 }

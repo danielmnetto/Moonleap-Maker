@@ -593,7 +593,7 @@ set_rope_swinging = function() {
 check_destroy_itself = function() {
 	if debug_mode
 	or state.state_is("win")
-	or instance_exists_any([oPauseUI, oIntro, oTransition])
+	or instance_exists_any([oPauseUI, oIntro, oTransition, oMakerTransition])
 	or room_is([RoomMenu, RoomMenu2, RoomFinal, RoomCredits, RoomCreditsAlves, RoomProgress]) {
 	   return;
 	}
