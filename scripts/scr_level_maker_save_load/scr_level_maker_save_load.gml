@@ -135,11 +135,16 @@ function level_maker_load(_level_file_path) {
 	// All level info parsed
 	var _loaded_data = json_parse(_json_string);
 		
+  if not maker_level_data_is_valid(_loaded_data) {
+    call_message_popup(LANG.maker_level_file_invalid, 180, "Instances");
+    return;
+  }
+  
 	if _loaded_data.version != LEVEL_MAKER_SAVE_SYSTEM_VERSION {
     call_message_popup(LANG.maker_level_file_oldversion, 180, "Instances");
 		return;
 	}
-	
+  
 	with(oLevelMaker) {
 		var _level_style = struct_read(_loaded_data, "style", LEVEL_MAKER_STYLE.GRASS);
     var _level_objects = struct_read(_loaded_data, "objects", []);
@@ -265,4 +270,19 @@ function custom_levels_directory_create() {
     return;
   }
   directory_create(_directory);
+};
+
+/// @desc Checks whether the maker level data is valid. Returns `true` if so.
+function maker_level_data_is_valid(_level_data) {
+  return not (
+    (not struct_exists(_level_data, "version")          or not is_string(_level_data.version))
+    or (not struct_exists(_level_data, "name")             or not is_string(_level_data.name))
+    or (not struct_exists(_level_data, "author")           or not is_string(_level_data.author))
+    or (not struct_exists(_level_data, "use_night_music")  or not is_bool  (_level_data.use_night_music))
+    or (not struct_exists(_level_data, "style")            or not is_real  (_level_data.style))
+    or (not struct_exists(_level_data, "player_score")     or not is_real  (_level_data.player_score))
+    or (not struct_exists(_level_data, "perfect_score")    or not is_real  (_level_data.perfect_score))
+    or (not struct_exists(_level_data, "tiles")            or not is_array (_level_data.tiles))
+    or (not struct_exists(_level_data, "objects")          or not is_array (_level_data.objects))
+  );
 };

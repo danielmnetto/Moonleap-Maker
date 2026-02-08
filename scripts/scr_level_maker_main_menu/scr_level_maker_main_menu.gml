@@ -53,6 +53,20 @@ function menu_maker_get_main() {
           }
           file_text_close(_file);
           
+          var _loaded_level_data = json_parse(_level_json);
+          
+          if not maker_level_data_is_valid(_loaded_level_data) {
+            audio_play_sfx(snd_bump, false, -5, 13);
+            call_message_popup(LANG.maker_level_file_invalid, 180, "Instances", true);
+            return;
+          }
+          
+          if _loaded_level_data.version != LEVEL_MAKER_SAVE_SYSTEM_VERSION {
+            audio_play_sfx(snd_bump, false, -5, 13);
+            call_message_popup(LANG.maker_level_file_oldversion, 240, "Instances", true);
+        		return;
+        	}
+          
           // Paste all level information to the new file.
           custom_levels_directory_create();
           
@@ -68,6 +82,7 @@ function menu_maker_get_main() {
           audio_play_sfx(sndStarGame, false, -6, 0);
           call_message_popup(LANG.maker_level_upload_success, 120, "Instances", true);
         } catch (_error) {
+          audio_play_sfx(snd_bump, false, -5, 13);
           call_message_popup(LANG.maker_level_upload_error, 180, "Instances", true);
           show_debug_message($"{_error}");
         }
