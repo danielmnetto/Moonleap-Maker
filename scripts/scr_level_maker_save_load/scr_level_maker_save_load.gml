@@ -4,7 +4,7 @@
 #macro LEVEL_MAKER_LEVELS_FOLDER_PATH $"{working_directory}/{LEVEL_MAKER_LEVELS_FOLDER_NAME}"
 
 /// @desc Saves the current Moonleap Maker level into a file with a given name.
-function level_maker_save(_path_filename) {
+function level_maker_save(_level_file_path) {
 	with(oLevelMaker) {
 
     // Get all objects information
@@ -103,7 +103,7 @@ function level_maker_save(_path_filename) {
     };
 		
     // Write on file
-		var _file_name = _path_filename;
+		var _file_name = _level_file_path;
 		var _json = json_stringify(_save_data);
 		
 		if file_exists(_file_name) {
@@ -118,17 +118,15 @@ function level_maker_save(_path_filename) {
 }
 
 /// @desc Loads a Moonleap Maker level to the editor from a file.
-function level_maker_load(_path_filename) {
-	var _file_name = _path_filename;
-	
-	if not file_exists(_file_name) {
+function level_maker_load(_level_file_path) {
+	if not file_exists(_level_file_path) {
     call_message_popup(LANG.maker_level_file_invalid, 180, "Instances");
 		return;
 	}
 	
 	// Read json from file
 	var _json_string = "";
-	var _file = file_text_open_read(_file_name);
+	var _file = file_text_open_read(_level_file_path);
 	while not file_text_eof(_file) {
 		_json_string += file_text_read_string(_file);
 	}
@@ -148,12 +146,13 @@ function level_maker_load(_path_filename) {
     var _level_tiles = struct_read(_loaded_data, "tiles", []);
 
     is_level_file_saved_local = true;
-    level_file_name = _path_filename;
+    level_file_name = _level_file_path;
     level_name = _loaded_data.name;
     level_author_name = _loaded_data.author;
     use_night_music = _loaded_data.use_night_music;
     perfect_score = _loaded_data.perfect_score;
 		selected_style = _level_style;
+    current_player_score = _loaded_data.player_score;
     
     update_tilesets_by_style();
 		reset_level_objects_grid();

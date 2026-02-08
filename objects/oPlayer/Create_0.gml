@@ -653,8 +653,16 @@ perform_win = function() {
 
   audio_play_sfx(sndStgClear, false, -14.4, 0);
   
-  if winwait == 0 and room_is(RoomMaker0) and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+  if winwait == 0
+  and room_is(RoomMaker0)
+  and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    if (oLevelMaker.current_player_score < 0 or changecount < oLevelMaker.current_player_score)
+    and not instance_exists(oBird) {
+      level_maker_save_update_player_score(oLevelMaker.level_file_name, changecount);
+    }
+    
     var _maker_transition = maker_transition_start(room);
+    
     _maker_transition.on_end_fade_out = function() {
       var _results = instance_create_layer(-16, -16, "Instances", oMakerLevelResults);
       
