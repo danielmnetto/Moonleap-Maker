@@ -201,7 +201,8 @@ import_levels_from_levels_folder = function() {
       _level_json.name,
       _level_json.author,
       _level_json.player_score,
-      _level_json.perfect_score
+      _level_json.perfect_score,
+      _level_json.style
     ));
     _level_filename = file_find_next();
   }

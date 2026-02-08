@@ -24,6 +24,10 @@ if key_jump or key_start {
         oLevelMaker.reset_level();
         instance_destroy(oMakerLevelResults);
       }
+      maker_transition_set_background_color_by_level_style(
+        _maker_transition,
+        oLevelMaker.selected_style
+      );
     break;
   
     case LEVEL_MAKER_RESULT_OPTION.QUIT:

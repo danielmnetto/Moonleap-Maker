@@ -6,7 +6,6 @@ transition_background_color = COLOR_NICE_BLACK;
 on_end_fade_out = undefined;
 
 transition_sprite_index = sTrans;
-transition_sprite_blend = transition_background_color;
 transition_sprite_width = sprite_get_width(transition_sprite_index);
 transition_sprite_height = sprite_get_height(transition_sprite_index);
 transition_sprite_frames_count = sprite_get_number(transition_sprite_index);
@@ -85,7 +84,7 @@ draw_transition_animation = function() {
           _xscale = 1,
           _yscale = 1,
           _angle = 0,
-          _color = transition_sprite_blend,
+          _color = transition_background_color,
           _alpha = 1;
       
   		draw_sprite_ext(_sprite, _frame, _x, _y, _xscale, _yscale, _angle, _color, _alpha)

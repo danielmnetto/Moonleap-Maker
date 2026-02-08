@@ -43,6 +43,10 @@ if image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL {
 
 update_hover_text();
 
+if instance_exists(oMessagePopup) {
+  exit;
+}
+
 if _is_mouse_hover and _is_left_pressing { 
   drawplus = 2;
 } else {

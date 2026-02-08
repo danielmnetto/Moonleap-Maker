@@ -8,6 +8,12 @@ if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
   if not instance_exists(oPlayer) and not instance_exists(oMakerTransition) {
     var _transition = maker_transition_start(room);
     
+    if selected_style == LEVEL_MAKER_STYLE.FLOWERS
+    or selected_style == LEVEL_MAKER_STYLE.SPACE
+    or selected_style == LEVEL_MAKER_STYLE.DUNGEON {
+      _transition.transition_background_color = c_black;
+    }
+    
     _transition.on_end_fade_out = function() {
       oLevelMaker.reset_level();
     };

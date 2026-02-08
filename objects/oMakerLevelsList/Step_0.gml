@@ -57,7 +57,13 @@ if _input_nav_up and current_level_index > -2 {
       _data_trasition.level_filename = _level.filename;
       _data_trasition.is_true_test = true;
       
-      maker_transition_start(RoomMaker0, _transition_title, _transition_subtitle);
+      var _transition = maker_transition_start(
+        RoomMaker0,
+        _transition_title,
+        _transition_subtitle,
+      );
+      
+      maker_transition_set_background_color_by_level_style(_transition, _level.style);
     break;
   }
 }
