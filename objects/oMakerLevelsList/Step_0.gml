@@ -63,7 +63,6 @@ if _input_nav_up and current_level_index > -2 {
         _transition_subtitle,
       );
       
-      maker_transition_set_background_color_by_level_style(_transition, _level.style);
     break;
   }
 }

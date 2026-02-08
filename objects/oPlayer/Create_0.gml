@@ -664,8 +664,6 @@ perform_win = function() {
     var _maker_transition = maker_transition_start(room),
         _maker_level_style = oLevelMaker.selected_style;
     
-    maker_transition_set_background_color_by_level_style(_maker_transition, _maker_level_style);
-    
     _maker_transition.on_end_fade_out = function() {
       if instance_exists(oFogMaker) {
         instance_destroy(oFogMaker);

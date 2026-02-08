@@ -1,13 +1,6 @@
 draw_set_font(oCamera.font);
 
-var _background_color = COLOR_NICE_BLACK,
-    _level_style = oLevelMaker.selected_style;
-
-if _level_style == LEVEL_MAKER_STYLE.FLOWERS
-or _level_style == LEVEL_MAKER_STYLE.SPACE
-or _level_style == LEVEL_MAKER_STYLE.DUNGEON {
-  _background_color = c_black;
-}
+var _background_color = COLOR_NICE_BLACK;
 
 draw_clear(_background_color);
 
