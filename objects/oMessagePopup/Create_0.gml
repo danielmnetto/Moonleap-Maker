@@ -12,3 +12,5 @@ message_color = COLOR_NICE_YELLOW;
 
 alpha = 1;
 alpha_fade_speed = 0.02;
+
+scr_inputcreate();
