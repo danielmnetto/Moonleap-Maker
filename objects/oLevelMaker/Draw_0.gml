@@ -2,8 +2,8 @@
 if level_maker_is_editing() and not instance_exists(oPauseUI) {
 	for(var _x = 0; _x < room_tile_width; _x++) {
 		for(var _y = 0; _y < room_tile_height; _y++) {
-			var _xx = _x * 8;
-			var _yy = _y * 8;
+			var _xx = _x * LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE;
+			var _yy = _y * LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE;
 			var _object_grid = objects_grid[_x, _y];
 			
 			if _object_grid == -1 then continue;
@@ -43,8 +43,8 @@ if level_maker_is_editing() and not instance_exists(oPauseUI) {
 				var _new_image_index = 0;
 				var _new_x_scale = _xscale;
 				var _new_y_scale = _yscale;
-				var _preview_index_horizontal = _object.preview_image_index_horizontal;
-				var _preview_index_vertical = _object.preview_image_index_vertical;
+				var _preview_index_horizontal = _object.preview_sprite_frame_flip_h;
+				var _preview_index_vertical = _object.preview_sprite_frame_flip_v;
 				
 				if not is_undefined(_preview_index_horizontal) {
 					_new_image_index = _xscale == -1 ? _preview_index_horizontal : 0;
@@ -116,21 +116,21 @@ if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
 	and not instance_exists(oPauseUI)
 	and not is_undefined(cursor_object_hovering) //sprite_exists(sprite_index)
 	and not has_object_below_cursor {
-		var _new_image_index = 0;
-		var _new_x_scale = image_xscale;
-		var _new_y_scale = image_yscale;
-    var _object = cursor_object_hovering.index;
-		var _sprite = object_get_sprite(_object);
-		var _preview_index_horizontal = cursor_object_hovering.preview_image_index_horizontal;
-		var _preview_index_vertical = cursor_object_hovering.preview_image_index_vertical;
+		var _new_image_index = 0,
+		    _new_x_scale = image_xscale,
+		    _new_y_scale = image_yscale,
+        _object = cursor_object_hovering.index,
+		    _sprite = object_get_sprite(_object),
+		    _preview_sprite_frame_flip_h = cursor_object_hovering.preview_sprite_frame_flip_h,
+		    _preview_sprite_frame_flip_v = cursor_object_hovering.preview_sprite_frame_flip_v;
 				
-		if not is_undefined(_preview_index_horizontal) {
-			_new_image_index = image_xscale == -1 ? _preview_index_horizontal : 0;
+		if not is_undefined(_preview_sprite_frame_flip_h) {
+			_new_image_index = image_xscale == -1 ? _preview_sprite_frame_flip_h : 0;
 			_new_x_scale = 1;
 		}
 				
-		if not is_undefined(_preview_index_vertical) {
-			_new_image_index = image_yscale == -1 ? _preview_index_vertical : 0;
+		if not is_undefined(_preview_sprite_frame_flip_v) {
+			_new_image_index = image_yscale == -1 ? _preview_sprite_frame_flip_v : 0;
 			_new_y_scale = 1;
 		}
     

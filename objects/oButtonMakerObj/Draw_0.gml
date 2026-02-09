@@ -6,32 +6,13 @@ draw_sprite(button_sprite, 0, xstart, ystart + drawplus);
 // Draw object/tile
 switch (oLevelMaker.current_layer) {
 	case LEVEL_MAKER_LAYERS.OBJECTS:
-		if not is_undefined(object) and not is_undefined(object.sprite_button_sprite_index) then
-			object.draw_sprite_button_part(xx, yy + drawplus);
-		else if sprite_exists(sprite_index) {
+		if not is_undefined(object)
+    and not is_undefined(object.button_sprite_sprite_index) {
+      object.draw_sprite_button(xx, yy + drawplus);
+    } else if sprite_exists(sprite_index) {
       var _object = object.index;
       var _sprite = sprite_index;
       var _frame = 0;
-      
-      if _object == oSolidDay {
-        switch(oLevelMaker.selected_style) {
-          case LEVEL_MAKER_STYLE.GRASS:
-            _sprite = sGrassGre;
-          break;
-          case LEVEL_MAKER_STYLE.CLOUDS:
-            _sprite = sCloudDay;
-          break;
-          case LEVEL_MAKER_STYLE.FLOWERS:
-            _sprite = sFlowerDay;
-          break;
-          case LEVEL_MAKER_STYLE.SPACE:
-            _sprite = sSpaceGre;
-          break;
-          case LEVEL_MAKER_STYLE.DUNGEON:
-            _sprite = sDunDay;
-          break;
-        }
-      }
 
       if _object == oSolidNight {
         switch(oLevelMaker.selected_style) {
