@@ -10,39 +10,11 @@ switch (oLevelMaker.current_layer) {
     and not is_undefined(object.button_sprite_sprite_index) {
       object.draw_sprite_button(xx, yy + drawplus);
     } else if sprite_exists(sprite_index) {
-      var _object = object.index;
-      var _sprite = sprite_index;
-      var _frame = 0;
+      var _object = object.index,
+          _sprite = sprite_index,
+          _frame = 0;
 
-      if _object == oSolidNight {
-        switch(oLevelMaker.selected_style) {
-          case LEVEL_MAKER_STYLE.GRASS:
-            _sprite = sGrassOre;
-          break;
-          case LEVEL_MAKER_STYLE.CLOUDS:
-            _sprite = sCloudNight;
-          break;
-          case LEVEL_MAKER_STYLE.FLOWERS:
-            _sprite = sFlowerNight;
-          break;
-          case LEVEL_MAKER_STYLE.SPACE:
-            _sprite = sSpacePurple;
-          break;
-          case LEVEL_MAKER_STYLE.DUNGEON:
-            _sprite = sDunNight;
-          break;
-        }
-      }
-      
-      if _object == oSolidDay or _object == oSolidNight {
-        var _sprite_nineslice = sprite_get_nineslice(_sprite);
-        
-        _sprite_nineslice.enabled = false;
-        draw_sprite_part_ext(_sprite, _frame, 8, 8, 16, 16, xx, yy + drawplus, scale, scale, image_blend, 1);
-        _sprite_nineslice.enabled = true;
-      } else {
-        draw_sprite_ext(_sprite, _frame, xx, yy + drawplus, scale, scale, image_angle, image_blend, 1);
-      }
+      draw_sprite_ext(_sprite, _frame, xx, yy + drawplus, scale, scale, image_angle, image_blend, 1);
     }
 		
 		if global.settings.filter and object.can_change then
