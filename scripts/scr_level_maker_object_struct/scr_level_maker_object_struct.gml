@@ -122,6 +122,29 @@ function LMObject(_object_index) constructor {
     }
 	};
   
+  static draw_cursor_preview_sprite = function(_x, _y, _xscale, _yscale, _angle, _blend, _alpha) {
+    var _sprite = object_get_sprite(index),
+        _frame = 0;
+    
+    if is_method(on_begin_draw_preview_sprite) {
+      var _new_config = on_begin_draw_preview_sprite(_xscale, _yscale, _angle);
+      
+      if not is_undefined(_new_config) {
+        if struct_exists(_new_config, "sprite") then _sprite = _new_config.sprite;
+        if struct_exists(_new_config, "frame")  then _frame = _new_config.frame;
+        if struct_exists(_new_config, "xscale") then _xscale = _new_config.xscale;
+        if struct_exists(_new_config, "yscale") then _yscale = _new_config.yscale;
+        if struct_exists(_new_config, "angle")  then _angle = _new_config.angle;
+      }
+    }
+    
+    draw_sprite_ext(_sprite, _frame, _x, _y, _xscale, _yscale, _angle, _blend, _alpha);
+    
+    if is_method(on_end_draw_preview_sprite) {
+      on_end_draw_preview_sprite();
+    }
+  };
+  
   static draw_preview_sprite = function(_x, _y, _xscale, _yscale, _angle) {
     var _sprite = object_get_sprite(index),
         _object_width = 1,
@@ -147,60 +170,13 @@ function LMObject(_object_index) constructor {
     _sprite_offset_y = _new_offset.sprite_y_offset;
     
     var _frame = 0,
+        _blend = c_white,
+        _alpha = 1,
         _final_xscale = _xscale,
         _final_yscale = _yscale,
         _preview_index_horizontal = preview_sprite_frame_flip_h,
         _preview_index_vertical = preview_sprite_frame_flip_v;
-    
-    //if not is_undefined(_preview_index_horizontal) {
-      //_frame = _xscale == -1 ? _preview_index_horizontal : 0;
-      //_final_xscale = 1;
-    //} else if not is_undefined(_preview_index_vertical) {
-      //_frame = _yscale == -1 ? _preview_index_vertical : 0;
-      //_final_yscale = 1;
-    //}
-    
-    //if index == oSolidDay {
-      //switch(oLevelMaker.selected_style) {
-        //case LEVEL_MAKER_STYLE.GRASS:
-          //_sprite = sGrassGre;
-        //break;
-        //case LEVEL_MAKER_STYLE.CLOUDS:
-          //_sprite = sCloudDay;
-        //break;
-        //case LEVEL_MAKER_STYLE.FLOWERS:
-          //_sprite = sFlowerDay;
-        //break;
-        //case LEVEL_MAKER_STYLE.SPACE:
-          //_sprite = sSpaceGre;
-        //break;
-        //case LEVEL_MAKER_STYLE.DUNGEON:
-          //_sprite = sDunDay;
-        //break;
-      //}
-    //}
-    //
-    //if index == oSolidNight {
-      //switch(oLevelMaker.selected_style) {
-        //case LEVEL_MAKER_STYLE.GRASS:
-          //_sprite = sGrassOre;
-        //break;
-        //case LEVEL_MAKER_STYLE.CLOUDS:
-          //_sprite = sCloudNight;
-        //break;
-        //case LEVEL_MAKER_STYLE.FLOWERS:
-          //_sprite = sFlowerNight;
-        //break;
-        //case LEVEL_MAKER_STYLE.SPACE:
-          //_sprite = sSpacePurple;
-        //break;
-        //case LEVEL_MAKER_STYLE.DUNGEON:
-          //_sprite = sDunNight;
-        //break;
-      //}
-      //_frame = 2;
-    //}
-    
+
     if is_method(on_begin_draw_preview_sprite) {
       var _new_config = on_begin_draw_preview_sprite(_xscale, _yscale, _angle);
       
@@ -221,8 +197,8 @@ function LMObject(_object_index) constructor {
       _xscale,
       _yscale,
       _angle,
-      c_white,
-      1
+      _blend,
+      _alpha
     );
     
     if is_method(on_end_draw_preview_sprite) {
