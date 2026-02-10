@@ -104,12 +104,12 @@ function level_maker_get_objects_list() {
     var _frame = 0;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _frame = 1;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _frame = 1;
+      break;
+    }
     
     return {
       frame: _frame
@@ -138,12 +138,12 @@ function level_maker_get_objects_list() {
     var _frame = 0;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _frame = 1;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _frame = 1;
+      break;
+    }
     
     return {
       frame: _frame
@@ -173,12 +173,12 @@ function level_maker_get_objects_list() {
     var _frame = 0;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _frame = 8;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _frame = 8;
+      break;
+    }
     
     return {
       frame: _frame
@@ -524,12 +524,12 @@ function level_maker_get_objects_list() {
         _is_surface = false;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 2;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 2;
+      break;
+    }
     
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
@@ -609,37 +609,37 @@ function level_maker_get_objects_list() {
     .set_size(16, 16)
     .set_button_sprite_draw_config(sLadderNeutral, 0, 0, 0, 0, 0);
   _objects[1, 03].on_begin_draw_button_sprite = function() {
-      var _palette = sLadderPal,
-          _palette_index = 0,
-          _is_surface = false;
+    var _palette = sLadderPal,
+        _palette_index = 0,
+        _is_surface = false;
+  
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 8;
+      break;
+    }
     
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 8;
-        break;
-      }
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 03].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
   _objects[1, 03].on_begin_draw_preview_sprite = function() {
     var _palette = sLadderPal,
-          _palette_index = 0,
-          _is_surface = false;
+        _palette_index = 0,
+        _is_surface = false;
+  
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 8;
+      break;
+    }
     
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 8;
-        break;
-      }
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
+    pal_swap_set(_palette, _palette_index, _is_surface);
   };
   _objects[1, 03].on_end_draw_preview_sprite = function() {
     pal_swap_reset();
@@ -657,20 +657,20 @@ function level_maker_get_objects_list() {
     .add_tag("can_spin")
     .set_button_sprite_draw_config(sSuperMush, 0, 0, 0, 0, 0);
 	_objects[1, 06].on_begin_draw_button_sprite = function() {
-      var _palette = sPlayerPal,
-          _palette_index = 0,
-          _is_surface = false;
-      
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 2;
-        break;
-      }
+    var _palette = sPlayerPal,
+        _palette_index = 0,
+        _is_surface = false;
     
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 2;
+      break;
+    }
+  
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 06].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -680,12 +680,12 @@ function level_maker_get_objects_list() {
         _is_surface = false;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 2;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 2;
+      break;
+    }
     
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
@@ -699,20 +699,20 @@ function level_maker_get_objects_list() {
     .add_tag("can_spin")
     .set_button_sprite_draw_config(sMushGrayUI, 0, 0, 0, 0, 0);
   _objects[1, 07].on_begin_draw_button_sprite = function() {
-      var _palette = sPlayerPal,
-          _palette_index = 0,
-          _is_surface = false;
+    var _palette = sPlayerPal,
+        _palette_index = 0,
+        _is_surface = false;
+  
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 5;
+      break;
+    }
     
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 5;
-        break;
-      }
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 07].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -722,12 +722,12 @@ function level_maker_get_objects_list() {
         _is_surface = false;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 5;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 5;
+      break;
+    }
     
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
@@ -741,20 +741,20 @@ function level_maker_get_objects_list() {
     .add_tag("can_flip")
     .set_button_sprite_draw_config(sSnalGrayMask, 0, 0, 0, -13, -2, 26, 18);
   _objects[1, 08].on_begin_draw_button_sprite = function() {
-      var _palette = sSnailPal,
-          _palette_index = 6,
-          _is_surface = false;
+    var _palette = sSnailPal,
+        _palette_index = 6,
+        _is_surface = false;
+  
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 7;
+      break;
+    }
     
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 7;
-        break;
-      }
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 08].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -764,12 +764,12 @@ function level_maker_get_objects_list() {
         _is_surface = false;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 7;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 7;
+      break;
+    }
     
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
@@ -783,20 +783,20 @@ function level_maker_get_objects_list() {
     .add_tag("can_flip")
     .set_button_sprite_draw_config(sLadyGrayUI, 0, 3, 0, -8, -8);
   _objects[1, 09].on_begin_draw_button_sprite = function() {
-      var _palette = sSnailPal,
-          _palette_index = 6,
-          _is_surface = false;
+    var _palette = sSnailPal,
+        _palette_index = 6,
+        _is_surface = false;
+  
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 7;
+      break;
+    }
     
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 7;
-        break;
-      }
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 09].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -806,12 +806,12 @@ function level_maker_get_objects_list() {
         _is_surface = false;
     
     switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 7;
-        break;
-      }
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 7;
+      break;
+    }
     
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
@@ -892,12 +892,12 @@ function level_maker_get_objects_list() {
     .set_preview_sprite_frame_flip_h(1)
     .set_button_sprite_draw_config(sLadyGiant4, 0, 14, 1, -8, -8);
   _objects[1, 12].on_begin_draw_button_sprite = function() {
-      var _palette = sSnailPal,
-          _palette_index = oLevelMaker.selected_style,
-          _is_surface = false;
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    var _palette = sSnailPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+    
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 12].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -925,12 +925,12 @@ function level_maker_get_objects_list() {
     .set_preview_sprite_frame_flip_v(1)
     .set_button_sprite_draw_config(sBatDown, 0, 10, 4, -7, -8);
   _objects[1, 13].on_begin_draw_button_sprite = function() {
-      var _palette = sSnailPal,
-          _palette_index = oLevelMaker.selected_style,
-          _is_surface = false;
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    var _palette = sSnailPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+    
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[1, 13].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -1022,6 +1022,16 @@ function level_maker_get_objects_list() {
   _objects[2, 00].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
+  _objects[2, 00].on_begin_draw_preview_sprite = function() {
+    var _palette = sPlayerPal,
+        _palette_index = 5,
+        _is_surface = false;
+    
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 00].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[2, 01] =	new LMObject(oBird)
     .set_size(16, 16)
@@ -1041,6 +1051,16 @@ function level_maker_get_objects_list() {
   _objects[2, 02].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
+  _objects[2, 02].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 02].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[2, 03] =	new LMObject(oKeyDoor)
     .set_size(16, 16)
@@ -1053,6 +1073,16 @@ function level_maker_get_objects_list() {
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
   _objects[2, 03].on_end_draw_button_sprite = function() {
+    pal_swap_reset();
+  };
+  _objects[2, 03].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 03].on_end_draw_preview_sprite = function() {
     pal_swap_reset();
   };
   
@@ -1069,6 +1099,16 @@ function level_maker_get_objects_list() {
   _objects[2, 04].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
+  _objects[2, 04].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 04].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[2, 05] =	new LMObject(oKeyDoorTall)
     .set_size(16, 32)
@@ -1081,6 +1121,16 @@ function level_maker_get_objects_list() {
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
   _objects[2, 05].on_end_draw_button_sprite = function() {
+    pal_swap_reset();
+  };
+  _objects[2, 05].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 05].on_end_draw_preview_sprite = function() {
     pal_swap_reset();
   };
   
@@ -1097,6 +1147,16 @@ function level_maker_get_objects_list() {
   _objects[2, 06].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
+  _objects[2, 06].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 06].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[2, 07] =	new LMObject(oKeyDoorWide)
     .set_size(32, 16)
@@ -1109,6 +1169,16 @@ function level_maker_get_objects_list() {
     pal_swap_set(_palette, _palette_index, _is_surface);
   };
   _objects[2, 07].on_end_draw_button_sprite = function() {
+    pal_swap_reset();
+  };
+  _objects[2, 07].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 07].on_end_draw_preview_sprite = function() {
     pal_swap_reset();
   };
   
@@ -1125,6 +1195,16 @@ function level_maker_get_objects_list() {
   _objects[2, 08].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
+  _objects[2, 08].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 08].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[2, 09] =	new LMObject(oKeyDoorTallWide)
     .set_size(32, 32)
@@ -1139,6 +1219,16 @@ function level_maker_get_objects_list() {
   _objects[2, 09].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
+  _objects[2, 09].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 09].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[2, 10] =	new LMObject(oMagicOrb)
     .set_size(16, 16)
@@ -1146,21 +1236,39 @@ function level_maker_get_objects_list() {
     .add_tag("is_unique", "is_orb")
     .set_button_sprite_draw_config(sGemFly, 0, 0, 0, -7, -6, 15, 19);
   _objects[2, 10].on_begin_draw_button_sprite = function() {
-      var _palette = sPlayerPal,
-          _palette_index = 0,
-          _is_surface = false;
-      
-      switch(oLevelMaker.selected_style) {
-        case LEVEL_MAKER_STYLE.FLOWERS:
-        case LEVEL_MAKER_STYLE.SPACE:
-        case LEVEL_MAKER_STYLE.DUNGEON:
-          _palette_index = 2;
-        break;
-      }
+    var _palette = sPlayerPal,
+        _palette_index = 0,
+        _is_surface = false;
     
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 2;
+      break;
+    }
+  
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[2, 10].on_end_draw_button_sprite = function() {
+    pal_swap_reset();
+  };
+  _objects[2, 10].on_begin_draw_preview_sprite = function() {
+    var _palette = sLadderPal,
+        _palette_index = 0,
+        _is_surface = false;
+    
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _palette_index = 2;
+      break;
+    }
+
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
+  _objects[2, 10].on_end_draw_preview_sprite = function() {
     pal_swap_reset();
   };
   
