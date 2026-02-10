@@ -540,25 +540,6 @@ get_x_y_from_object_index = function(_object) {
 	}
 }
 
-rotate_object_offset = function(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle){
-	var _half_width_object = (_object_width * tile_size) div 2;
-	var _half_height_object = (_object_height * tile_size) div 2;
-	
-	_sprite_offset_x -= _half_width_object;
-	_sprite_offset_y -= _half_height_object;
-	
-	var _dist = point_distance(0,0,_sprite_offset_x,_sprite_offset_y);
-	var _dir = point_direction(0,0,_sprite_offset_x,_sprite_offset_y);
-	
-	_sprite_offset_x = lengthdir_x(_dist,_dir+_angle);
-	_sprite_offset_y = lengthdir_y(_dist,_dir+_angle);
-	
-	_sprite_offset_x += _half_width_object;
-	_sprite_offset_y += _half_height_object;
-	
-	return [_sprite_offset_x,_sprite_offset_y];
-}
-
 get_grid_object_hovering = function(_mouse_x, _mouse_y){
 	for(var _x = 0; _x < room_tile_width; _x++){
 		for(var _y = 0; _y < room_tile_height; _y++){
@@ -608,10 +589,10 @@ place_object_in_object_grid = function(_top_left_x, _top_left_y, _object, _xscal
 	var _object_width = 1;
 	var _object_height = 1;
 
-	var _tiled_size = _object.get_size(tile_size);
+	var _tiled_size = _object.get_tiled_size_and_sprite_offset(tile_size);
 
-	_object_width = _tiled_size[0];
-	_object_height = _tiled_size[1];
+	_object_width = _tiled_size.tiled_width;
+	_object_height = _tiled_size.tiled_height;
 	
 	// Create object grid struct
 	var _object_grid = new LMObjectGrid(
@@ -655,10 +636,10 @@ check_for_objects_in_grid_position = function(_top_left_x, _top_left_y, _object)
 	
 	var _object_width = 1;
 	var _object_height = 1;
-	var _size = _object.get_size(tile_size);
+	var _size = _object.get_tiled_size_and_sprite_offset(tile_size);
 
-	_object_width = _size[0];
-	_object_height = _size[1];
+	_object_width = _size.tiled_width;
+	_object_height = _size.tiled_height;
 	
 	//make sure the object stays inside the grid
 	_top_left_x = clamp(_top_left_x,0, room_tile_width - _object_width);
@@ -867,46 +848,46 @@ start_level = function() {
 	// Instantiate all objects on the level
 	for(var _x = 0; _x < room_tile_width; _x++) {
 		for(var _y = 0; _y < room_tile_height; _y++) {
-			var _object_grid = objects_grid[_x,_y];
+			var _object_grid = objects_grid[_x, _y];
 			
-			if _object_grid == -1 then continue;
+			if _object_grid == -1 {
+        continue;
+      }
 			
-			var _top_left_x = _object_grid.top_left_x;
-			var _top_left_y = _object_grid.top_left_y;
+			var _obj_x = _object_grid.top_left_x,
+			    _obj_y = _object_grid.top_left_y;
 			
-			if is_struct(_object_grid)
-			and _top_left_x == _x 
-			and _top_left_y == _y {
-				var _object = _object_grid.object;
-				var _xscale = _object_grid.xscale;
-				var _yscale = _object_grid.yscale;
-				var _angle = _object_grid.angle;
+			if is_struct(_object_grid) and _obj_x == _x and _obj_y == _y {
+				var _object = _object_grid.object,
+				    _xscale = _object_grid.xscale,
+				    _yscale = _object_grid.yscale,
+				    _angle = _object_grid.angle,
 				
-				var _sprite = object_get_sprite(_object.index);
-				var _object_width = 1;
-				var _object_height = 1;
-				var _sprite_offset_x = sprite_get_xoffset(_sprite);
-				var _sprite_offset_y = sprite_get_yoffset(_sprite);
-				var _size = _object.get_size(tile_size);
+				    _sprite = object_get_sprite(_object.index),
+				    _object_width = 1,
+				    _object_height = 1,
+				    _sprite_offset_x = sprite_get_xoffset(_sprite),
+				    _sprite_offset_y = sprite_get_yoffset(_sprite),
+				    _size = _object.get_tiled_size_and_sprite_offset(tile_size);
 
-				_object_width = _size[0];
-				_object_height = _size[1];
-				_sprite_offset_x = _size[2];
-				_sprite_offset_y = _size[3];
+				_object_width = _size.tiled_width;
+				_object_height = _size.tiled_height;
+				_sprite_offset_x = _size.sprite_x_offset;
+				_sprite_offset_y = _size.sprite_y_offset;
 			
-				var _new_offset = rotate_object_offset(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle);
+				var _new_offset = _object.rotate_object_offset(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle);
 				
-				_sprite_offset_x = _new_offset[0];
-				_sprite_offset_y = _new_offset[1];
+				_sprite_offset_x = _new_offset.sprite_x_offset;
+				_sprite_offset_y = _new_offset.sprite_y_offset;
 
-				var _in_world_x = _x * tile_size + _sprite_offset_x;
-				var _in_world_y = _y * tile_size + _sprite_offset_y;
+				var _in_world_x = _x * tile_size + _sprite_offset_x,
+				    _in_world_y = _y * tile_size + _sprite_offset_y;
 				
 				_in_world_x = round(_in_world_x);
 				_in_world_y = round(_in_world_y);
 				
-				var _priority = 0;
-				var _layer_name = "Player_Instances";
+				var _priority = 0,
+				    _layer_name = "Player_Instances";
 				
 				switch(_object.index) {
 					// THEY MUST BE THE LAST TO BE CREATED IN ROOM TO NOT BREAK THE STAR COUNTING.

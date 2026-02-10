@@ -8,7 +8,7 @@ switch (oLevelMaker.current_layer) {
 	case LEVEL_MAKER_LAYERS.OBJECTS:
 		if not is_undefined(object)
     and not is_undefined(object.button_sprite_sprite_index) {
-      object.draw_sprite_button(xx, yy + drawplus);
+      object.draw_button_sprite(xx, yy + drawplus);
     } else if sprite_exists(sprite_index) {
       var _object = object.index,
           _sprite = sprite_index,

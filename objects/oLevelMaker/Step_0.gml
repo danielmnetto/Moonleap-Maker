@@ -100,35 +100,46 @@ is_cursor_inside_level = global.level_maker_mouse_x > 0
 	and global.level_maker_mouse_y > 0
 	and global.level_maker_mouse_y < 180;
 
-var _selected_object_sprite = -1;
-var _tile_scale = not is_undefined(selected_object) and selected_object.has_tag("grid_16") ? 2 : 1;
+var _selected_object_sprite = -1,
+    _tile_scale = not is_undefined(selected_object) and selected_object.has_tag("grid_16") ? 2 : 1;
 
 if not is_undefined(selected_object) {
     _selected_object_sprite = object_get_sprite(selected_object.index);
 }
 
-var _object_width = 1;
-var _object_height = 1;
-var _sprite_offset_x = _selected_object_sprite == -1 ? 0 : sprite_get_xoffset(_selected_object_sprite);
-var _sprite_offset_y = _selected_object_sprite == -1 ? 0 : sprite_get_yoffset(_selected_object_sprite);
+var _object_width = 1,
+    _object_height = 1,
+    _sprite_offset_x = _selected_object_sprite == -1 ? 0 : sprite_get_xoffset(_selected_object_sprite),
+    _sprite_offset_y = _selected_object_sprite == -1 ? 0 : sprite_get_yoffset(_selected_object_sprite);
 
-var _size = is_undefined(selected_object) ? [1, 1, 0, 0] : selected_object.get_size(tile_size, _object_width, _object_height);
+if is_undefined(selected_object) {
+  _sprite_offset_x = 0;
+  _sprite_offset_y = 0;
+} else {
+  var _size = selected_object.get_tiled_size_and_sprite_offset(tile_size, _object_width, _object_height);
+  
+  _object_width = _size.tiled_width;
+  _object_height = _size.tiled_height;
+  _sprite_offset_x = _size.sprite_x_offset;
+  _sprite_offset_y = _size.sprite_y_offset;
+}
 
-_object_width = _size[0];
-_object_height = _size[1];
-_sprite_offset_x = _size[2];
-_sprite_offset_y = _size[3];
-
-var _selected_object_mouse_tile_x = round((global.level_maker_mouse_x - _object_width * tile_size / 2) / (_tile_scale * tile_size)) * _tile_scale;
-var _selected_object_mouse_tile_y = round((global.level_maker_mouse_y - _object_height * tile_size / 2) / (_tile_scale * tile_size)) * _tile_scale;
+var _selected_object_mouse_tile_x = round((global.level_maker_mouse_x - _object_width * tile_size / 2) / (_tile_scale * tile_size)) * _tile_scale,
+    _selected_object_mouse_tile_y = round((global.level_maker_mouse_y - _object_height * tile_size / 2) / (_tile_scale * tile_size)) * _tile_scale;
 
 _selected_object_mouse_tile_x = clamp(_selected_object_mouse_tile_x,0, room_tile_width - _object_width);
 _selected_object_mouse_tile_y = clamp(_selected_object_mouse_tile_y,0, room_tile_height - _object_height);
 
-var _new_offset = rotate_object_offset(_object_width,_object_height,_sprite_offset_x,_sprite_offset_y,image_angle);
+var _new_offset = selected_object.rotate_object_offset(
+  _object_width,
+  _object_height,
+  _sprite_offset_x,
+  _sprite_offset_y,
+  image_angle
+);
 
-_sprite_offset_x = _new_offset[0];
-_sprite_offset_y = _new_offset[1];
+_sprite_offset_x = _new_offset.sprite_x_offset;
+_sprite_offset_y = _new_offset.sprite_y_offset;
 
 //placing objects with centered visuals
 x = _selected_object_mouse_tile_x * tile_size + _sprite_offset_x;
