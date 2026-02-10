@@ -159,9 +159,12 @@ function level_maker_load(_level_file_path) {
 		selected_style = _level_style;
     current_player_score = _loaded_data.player_score;
     
-    update_tilesets_by_style();
 		reset_level_objects_grid();
     reset_level_tiles_grid();
+    update_tilesets_by_style();
+    tiles = level_maker_get_tiles_list(selected_style);
+    selected_object_type = 0;
+    selected_object_position = 0;
 		
     if array_length(_level_objects) > 0 {
       for(var _x = 0; _x < room_tile_width; _x++) {

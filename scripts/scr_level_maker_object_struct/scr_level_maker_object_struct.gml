@@ -295,11 +295,11 @@ function LMObject(_object_index) constructor {
     _sprite_offset_x -= _half_width_object;
     _sprite_offset_y -= _half_height_object;
     
-    var _dist = point_distance(0,0,_sprite_offset_x,_sprite_offset_y);
-    var _dir = point_direction(0,0,_sprite_offset_x,_sprite_offset_y);
+    var _dist = point_distance(0, 0, _sprite_offset_x, _sprite_offset_y);
+    var _dir = point_direction(0, 0, _sprite_offset_x, _sprite_offset_y);
     
-    _sprite_offset_x = lengthdir_x(_dist,_dir+_angle);
-    _sprite_offset_y = lengthdir_y(_dist,_dir+_angle);
+    _sprite_offset_x = lengthdir_x(_dist, _dir + _angle);
+    _sprite_offset_y = lengthdir_y(_dist, _dir + _angle);
     
     _sprite_offset_x += _half_width_object;
     _sprite_offset_y += _half_height_object;

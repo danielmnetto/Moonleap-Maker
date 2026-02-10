@@ -374,6 +374,28 @@ cursor_remove_tile_from_grid = function() {
       instance_create_layer(x, y, "Instances_2", oBigSmoke);
     }
 	}
+};
+
+rotate_object_offset = function(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle){
+  var _half_width_object = (_object_width * LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE) div 2;
+  var _half_height_object = (_object_height * LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE) div 2;
+  
+  _sprite_offset_x -= _half_width_object;
+  _sprite_offset_y -= _half_height_object;
+  
+  var _dist = point_distance(0, 0, _sprite_offset_x, _sprite_offset_y);
+  var _dir = point_direction(0, 0, _sprite_offset_x, _sprite_offset_y);
+  
+  _sprite_offset_x = lengthdir_x(_dist, _dir + _angle);
+  _sprite_offset_y = lengthdir_y(_dist, _dir + _angle);
+  
+  _sprite_offset_x += _half_width_object;
+  _sprite_offset_y += _half_height_object;
+  
+  return {
+    sprite_x_offset: _sprite_offset_x,
+    sprite_y_offset: _sprite_offset_y
+  };
 }
 
 update_tilesets_by_style = function() {

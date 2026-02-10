@@ -130,7 +130,7 @@ var _selected_object_mouse_tile_x = round((global.level_maker_mouse_x - _object_
 _selected_object_mouse_tile_x = clamp(_selected_object_mouse_tile_x,0, room_tile_width - _object_width);
 _selected_object_mouse_tile_y = clamp(_selected_object_mouse_tile_y,0, room_tile_height - _object_height);
 
-var _new_offset = selected_object.rotate_object_offset(
+var _new_offset = rotate_object_offset(
   _object_width,
   _object_height,
   _sprite_offset_x,
