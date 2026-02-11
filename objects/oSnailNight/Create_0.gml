@@ -1,6 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-//mymask=instance_create_layer(x,y,layer,oSnailMask)
 sindex=sprite_index
 iindex=image_index
 xindex=image_xscale

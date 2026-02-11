@@ -468,15 +468,14 @@ function level_maker_get_objects_list() {
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER)
     .add_tag("can_flip")
-    .set_preview_sprite_frame_flip_h(1)
     .set_button_sprite_draw_config(sLady, 0, 3, 0, -8, -8);
   _objects[0, 14].on_begin_draw_button_sprite = function() {
-      var _palette = sSnailPal,
-          _palette_index = oLevelMaker.selected_style,
-          _is_surface = false;
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    var _palette = sSnailPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+    
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[0, 14].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -503,12 +502,12 @@ function level_maker_get_objects_list() {
     .add_tag("can_flip", "grid_16")
     .set_button_sprite_draw_config(sBat, 0, 10, 4, -7, -8);
 	_objects[0, 15].on_begin_draw_button_sprite = function() {
-      var _palette = sSnailPal,
-          _palette_index = oLevelMaker.selected_style,
-          _is_surface = false;
-      
-      pal_swap_set(_palette, _palette_index, _is_surface);
-    };
+    var _palette = sSnailPal,
+        _palette_index = oLevelMaker.selected_style,
+        _is_surface = false;
+    
+    pal_swap_set(_palette, _palette_index, _is_surface);
+  };
   _objects[0, 15].on_end_draw_button_sprite = function() {
     pal_swap_reset();
   };
@@ -855,7 +854,6 @@ function level_maker_get_objects_list() {
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER)
     .add_tag("can_flip", "is_vertical")
-    .set_preview_sprite_frame_flip_v(1)
     .set_button_sprite_draw_config(sLadyVerUI, 0, 3, 1, -8, -8);
   _objects[1, 10].on_begin_draw_button_sprite = function() {
       var _palette = sSnailPal,
@@ -888,7 +886,6 @@ function level_maker_get_objects_list() {
     .set_size(48, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER)
     .add_tag("can_flip")
-    .set_preview_sprite_frame_flip_h(1)
     .set_button_sprite_draw_config(sLadyGiant, 0, 19, 1, -8, -8);
   _objects[1, 11].on_begin_draw_button_sprite = function() {
       var _palette = sSnailPal,
@@ -921,7 +918,6 @@ function level_maker_get_objects_list() {
     .set_size(64, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER)
     .add_tag("can_flip")
-    .set_preview_sprite_frame_flip_h(1)
     .set_button_sprite_draw_config(sLadyGiant4, 0, 14, 1, -8, -8);
   _objects[1, 12].on_begin_draw_button_sprite = function() {
     var _palette = sSnailPal,
@@ -954,7 +950,6 @@ function level_maker_get_objects_list() {
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.CENTER)
     .add_tag("can_flip", "grid_16", "is_vertical")
-    .set_preview_sprite_frame_flip_v(1)
     .set_button_sprite_draw_config(sBatDown, 0, 10, 4, -7, -8);
   _objects[1, 13].on_begin_draw_button_sprite = function() {
     var _palette = sSnailPal,

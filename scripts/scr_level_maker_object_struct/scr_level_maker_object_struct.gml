@@ -10,9 +10,6 @@ function LMObject(_object_index) constructor {
 	size_y = 16;
 	origin_type = LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.TOP_LEFT;
 	tags = [];
-
-	preview_sprite_frame_flip_h = undefined;
-	preview_sprite_frame_flip_v = undefined;
 	
 	button_sprite_sprite_index = undefined;
 	button_sprite_image_index = 0;
@@ -49,20 +46,6 @@ function LMObject(_object_index) constructor {
     origin_type = _origin;
     return self;
   };
-	
-  /// @desc Sets the sprite frame that will be used when the preview sprite is flipped horizontally.
-  /// @param {real} _frame_flipped The sprite frame that has the object's sprite flipped.
-	static set_preview_sprite_frame_flip_h = function(_frame_flipped = 0) {
-		preview_sprite_frame_flip_h = _frame_flipped;
-		return self;
-	}
-	
-  /// @desc Sets the sprite frame that will be used when the preview sprite is flipped vertically.
-  /// @param {real} _frame_flipped The sprite frame that has the object's sprite flipped.
-	static set_preview_sprite_frame_flip_v = function(_frame_flipped = 0) {
-		preview_sprite_frame_flip_v = _frame_flipped;
-		return self;
-	}
 	
   /// @desc Configs the part of the object sprite that is displayed in a Level Maker button.
   /// @param {Asset.GMSprite} _sprite The object's sprite index.
@@ -173,9 +156,7 @@ function LMObject(_object_index) constructor {
         _blend = c_white,
         _alpha = 1,
         _final_xscale = _xscale,
-        _final_yscale = _yscale,
-        _preview_index_horizontal = preview_sprite_frame_flip_h,
-        _preview_index_vertical = preview_sprite_frame_flip_v;
+        _final_yscale = _yscale;
 
     if is_method(on_begin_draw_preview_sprite) {
       var _new_config = on_begin_draw_preview_sprite(_xscale, _yscale, _angle);
