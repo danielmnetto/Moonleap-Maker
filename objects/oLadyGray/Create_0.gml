@@ -51,7 +51,7 @@ drawy=y
 
 prehsp=hsp
 
-set_pallete_index();
+set_palette_index_by_level_style();
 
 is_stuck = function() {
 	return has_collided(2, 0) and has_collided(-2, 0);

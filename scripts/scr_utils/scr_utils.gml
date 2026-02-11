@@ -73,7 +73,7 @@ function object_is_outside_room() {
 	return x < 0 or x >= room_width or y < 0 or y >= room_height;
 }
 
-function set_pallete_index() {
+function set_palette_index_by_level_style() {
 	if instance_exists(oGrassDay) {
 		palette_index = 0;
 	} else if instance_exists(oCloudDay) {

@@ -19,7 +19,7 @@ yy = y;
 
 nearmush_list = ds_list_create();
 
-set_pallete_index();
+set_palette_index_by_level_style();
 
 mask_index = sprite_index;
 image_xscale = 1;
