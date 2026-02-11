@@ -15,23 +15,28 @@ based on that they update their colors
 // Input variables
 scr_inputcreate()
 
-mode = LEVEL_EDITOR_MODE.EDITING;
+mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 
 // User Level Config
-level_name = "";
-level_author_name = "";
+level_name = "my level";
+level_author_name = "my name";
 use_night_music = false;
-use_ranking_system = false;
-rank_S_change_max = 0;
+perfect_score = 0;
+is_level_file_saved_local = false;
+level_file_name = "";
 
-// Grid-related
-tile_size = 8;
-room_tile_width =  room_width div tile_size;
+// "True Test" config
+time_played_timer = new DeltaStopwatch();
+current_player_score = -1;
+
+// Objects Grid-related
+tile_size = LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE;
+room_tile_width = room_width div tile_size;
 room_tile_height = (room_height div tile_size) + tile_size;
 objects_grid = []; // Grid where the objects inserted by player are.
 
 // Cursor-related
-cursor = LEVEL_CURSOR_TYPE.NOTHING;
+cursor = LEVEL_MAKER_CURSOR.NOTHING;
 cursor_object_hovering = undefined;
 is_cursor_inside_level = false;
 item_preview_offset_x = 0;
@@ -43,7 +48,7 @@ item_place_disable_timer = new FrameTimer(30);
 return_to_editor_timer = new FrameTimer(60);
 
 // Level-related
-selected_style = LEVEL_STYLE.GRASS;
+selected_style = LEVEL_MAKER_STYLE.GRASS;
 //time = 0; //used to release the buttons
 
 // UI-related
@@ -57,21 +62,21 @@ color = {
 };
 
 // List-related
-current_layer = LEVEL_CURRENT_LAYER.OBJECTS;
+current_layer = LEVEL_MAKER_LAYERS.OBJECTS;
 list_positions_length = 16;
 
 // Tileset-related
 tiles = level_maker_get_tiles_list(selected_style);
 selected_tile = undefined;
 cursor_tile_hovering = undefined;
-tileset_size = 16;
+tileset_size = LEVEL_MAKER_GRID_TILESETS_TILE_SIZE;
 
 // Objects-related
 obj = level_maker_get_objects_list();
 selected_object = 0;
 selected_object_type = 0;
 selected_object_position = 0;
-default_sprite_origin = SPRITE_ORIGIN.TOP_LEFT;
+default_sprite_origin = LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.TOP_LEFT;
 object_grid_hovering = -1; // Object where cursor is above at.
 
 object_types_length = array_length(obj);
@@ -118,15 +123,15 @@ set_list_navigation = function() {
 }
 
 update_selected_object = function() {
-    selected_object = array_get(obj[selected_object_type], selected_object_position);
+  selected_object = array_get(obj[selected_object_type], selected_object_position);
 }
 
 update_selected_tile = function() {
-    selected_tile = variable_clone(array_get(tiles[selected_object_type], selected_object_position));
+  selected_tile = variable_clone(array_get(tiles[selected_object_type], selected_object_position));
 }
 
 update_current_item = function() {
-    if current_layer == LEVEL_CURRENT_LAYER.OBJECTS {
+    if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
         update_selected_object();
     } else {
         update_selected_tile();
@@ -134,7 +139,11 @@ update_current_item = function() {
 }
 
 check_return_to_editor_timer = function() {
-  if level_maker_is_editing() 
+  if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    return;
+  }
+  
+  if level_maker_is_editing()
     or (not level_maker_is_editing() 
       and instance_exists(oPlayer)
       and not oPlayer.has_collected_all_stars()) {
@@ -145,18 +154,23 @@ check_return_to_editor_timer = function() {
   return_to_editor_timer.count();
   
   if return_to_editor_timer.has_timed_out() {
-    end_level_and_return_to_editor();
+    end_level();
   }
 }
 
 cursor_set_position = function() {
 	var _in_level_editor = level_maker_is_editing();
 
-	camera_current_interpolation += _in_level_editor ? -0.07 : 0.07;
+  if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    camera_current_interpolation = 1;
+  } else {
+    camera_current_interpolation += _in_level_editor ? -0.07 : 0.07;
+  }
 	camera_current_interpolation = clamp(camera_current_interpolation, 0, 1);
 
-	// Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application surface to keep it pixel perfect
-	// this is instead of using the actual camera cause then it would look ugly zoomed in
+	// Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application
+  // surface to keep it pixel perfect this is instead of using the actual camera cause then it
+  // would look ugly zoomed in.
 
 	var _cam_offset_x = camera_get_view_x(view_camera[0]);
 	var _cam_offset_y = camera_get_view_y(view_camera[0]);
@@ -172,13 +186,13 @@ cursor_set_position = function() {
 
 	global.level_maker_mouse_x = (mouse_x - _app_surface_x) / _gui_scale_x;
 	global.level_maker_mouse_y = (mouse_y - _app_surface_y) / _gui_scale_y;
-}
+};
 
 cursor_get_object_from_grid = function() {
 	if not is_cursor_inside_level
-	or current_layer != LEVEL_CURRENT_LAYER.OBJECTS
+	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS
 	or not mouse_check_button_pressed(mb_left)
-	or cursor != LEVEL_CURSOR_TYPE.FINGER
+	or cursor != LEVEL_MAKER_CURSOR.FINGER
 	or not is_struct(object_grid_hovering)
 	or not item_place_disable_timer.has_timed_out() {
 		return;
@@ -198,14 +212,14 @@ cursor_get_object_from_grid = function() {
 
 cursor_create_object_in_grid = function(_tile_x, _tile_y) {
 	if not is_cursor_inside_level
-	or current_layer != LEVEL_CURRENT_LAYER.OBJECTS
+	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS
 	or is_undefined(selected_object)
 	or not item_place_disable_timer.has_timed_out() then
 		return;
 	
 	if (mouse_check_button_released(mb_left) 
 			or (mouse_check_button(mb_left) and selected_object.has_tag("is_holdable"))
-		) and cursor == LEVEL_CURSOR_TYPE.CURSOR 
+		) and cursor == LEVEL_MAKER_CURSOR.CURSOR 
 		and not is_undefined(selected_object)
 		and not has_object_below_cursor
 	{
@@ -246,12 +260,12 @@ cursor_create_object_in_grid = function(_tile_x, _tile_y) {
 
 cursor_remove_object_from_grid = function() {
 	if not is_cursor_inside_level
-	or current_layer != LEVEL_CURRENT_LAYER.OBJECTS then
+	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS then
 		return;
 	
 	if (mouse_check_button(mb_right) 
 		or (mouse_check_button(mb_left) 
-			and cursor == LEVEL_CURSOR_TYPE.ERASER))
+			and cursor == LEVEL_MAKER_CURSOR.ERASER))
 		and is_struct(object_grid_hovering) 
 	{
 		remove_object_from_grid(object_grid_hovering);
@@ -264,16 +278,16 @@ cursor_remove_object_from_grid = function() {
 
 cursor_create_tile_in_grid = function() {
 	if not is_cursor_inside_level
-	or current_layer == LEVEL_CURRENT_LAYER.OBJECTS
-	or cursor != LEVEL_CURSOR_TYPE.CURSOR
+	or current_layer == LEVEL_MAKER_LAYERS.OBJECTS
+	or cursor != LEVEL_MAKER_CURSOR.CURSOR
 	or is_undefined(selected_tile)
 	or not mouse_check_button(mb_left)
    or not item_place_disable_timer.has_timed_out() {
       return;
    }
 
-    var _instance_layer_name = level_maker_get_background_instances_layer_name();
-    var _tileset_layer_name = level_maker_get_background_tile_layer_name();
+    var _instance_layer_name = level_maker_get_decoration_layers().names.get_instance_name(current_layer);
+    var _tileset_layer_name = level_maker_get_decoration_layers().names.get_tile_name(current_layer);
     var _tilemap_id = layer_tilemap_get_id(_tileset_layer_name);
 
     if _tilemap_id == -1 then return;
@@ -327,51 +341,73 @@ cursor_create_tile_in_grid = function() {
 
 cursor_remove_tile_from_grid = function() {
 	if not is_cursor_inside_level 
-	or current_layer == LEVEL_CURRENT_LAYER.OBJECTS then
+	or current_layer == LEVEL_MAKER_LAYERS.OBJECTS then
 		return;
 		
 	if (not mouse_check_button(mb_left) and mouse_check_button(mb_right)) 
-    or (mouse_check_button(mb_left) and cursor == LEVEL_CURSOR_TYPE.ERASER) {
-		var _instance_layer_name = level_maker_get_background_instances_layer_name();
+    or (mouse_check_button(mb_left) and cursor == LEVEL_MAKER_CURSOR.ERASER) {
+		var _instance_layer_name = level_maker_get_decoration_layers().names.get_instance_name(current_layer);
 		var _x = floor(x / tileset_size) * tileset_size;
 		var _y = floor(y / tileset_size) * tileset_size;
-        var _tile_draft_list = ds_list_create();
-        var _tile_draft_amount = collision_rectangle_list(_x, _y, _x + tileset_size, _y + tileset_size, oMakerEditorTileDraft, false, true, _tile_draft_list, true);
-        var _tile_draft_to_remove = noone;
+    var _tile_draft_list = ds_list_create();
+    var _tile_draft_amount = collision_rectangle_list(_x, _y, _x + tileset_size, _y + tileset_size, oMakerEditorTileDraft, false, true, _tile_draft_list, true);
+    var _tile_draft_to_remove = noone;
 
-        for (var i = 0; i < _tile_draft_amount and _tile_draft_to_remove == noone; i++) {
-            var _current_draft = ds_list_find_value(_tile_draft_list, i);
+    for (var i = 0; i < _tile_draft_amount and _tile_draft_to_remove == noone; i++) {
+      var _current_draft = ds_list_find_value(_tile_draft_list, i);
+
+      if layer_get_name(_current_draft.layer) == _instance_layer_name {
+        _tile_draft_to_remove = _current_draft;
+      }
+    }
+
+    ds_list_destroy(_tile_draft_list);
     
-            if layer_get_name(_current_draft.layer) == _instance_layer_name {
-                _tile_draft_to_remove = _current_draft;
-            }
-        }
+    if _tile_draft_to_remove == noone {
+      return;
+    }
 
-        ds_list_destroy(_tile_draft_list);
-        
-        if _tile_draft_to_remove == noone {
-            return;
-        }
+    instance_destroy(_tile_draft_to_remove);
 
-        instance_destroy(_tile_draft_to_remove);
-
-        audio_play_sfx(snd_brokestone, false, -5, 15); 
-        repeat(2) {
-            instance_create_layer(x, y, "Instances_2", oBigSmoke);
-        }
+    audio_play_sfx(snd_brokestone, false, -5, 15); 
+    repeat(2) {
+      instance_create_layer(x, y, "Instances_2", oBigSmoke);
+    }
 	}
+};
+
+rotate_object_offset = function(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle){
+  var _half_width_object = (_object_width * LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE) div 2;
+  var _half_height_object = (_object_height * LEVEL_MAKER_GRID_OBJECTS_TILE_SIZE) div 2;
+  
+  _sprite_offset_x -= _half_width_object;
+  _sprite_offset_y -= _half_height_object;
+  
+  var _dist = point_distance(0, 0, _sprite_offset_x, _sprite_offset_y);
+  var _dir = point_direction(0, 0, _sprite_offset_x, _sprite_offset_y);
+  
+  _sprite_offset_x = lengthdir_x(_dist, _dir + _angle);
+  _sprite_offset_y = lengthdir_y(_dist, _dir + _angle);
+  
+  _sprite_offset_x += _half_width_object;
+  _sprite_offset_y += _half_height_object;
+  
+  return {
+    sprite_x_offset: _sprite_offset_x,
+    sprite_y_offset: _sprite_offset_y
+  };
 }
 
 update_tilesets_by_style = function() {
 	if not level_maker_is_editing() then return;
 	
-	var _layers = level_maker_get_tileset_layers();
+	var _tilemap_layers = level_maker_get_decoration_layers().tiles;
 	
 	var _tilemaps = [];
 	var _tileset = undefined;
 	
-	for (var i = 0; i < array_length(_layers); i++) {
-		var _layer = _layers[i];
+	for (var i = 0; i < array_length(_tilemap_layers); i++) {
+		var _layer = _tilemap_layers[i];
 		
 		if _layer == -1 then continue;
 		
@@ -380,19 +416,19 @@ update_tilesets_by_style = function() {
 		if _tilemap == -1 then continue;
 		
 		switch(selected_style) {
-			case LEVEL_STYLE.GRASS:
+			case LEVEL_MAKER_STYLE.GRASS:
 				_tileset = tMakerGrassDay;
 				break;
-			case LEVEL_STYLE.CLOUDS:
+			case LEVEL_MAKER_STYLE.CLOUDS:
 				_tileset = tMakerCloudDay;
 				break;
-			case LEVEL_STYLE.FLOWERS:
+			case LEVEL_MAKER_STYLE.FLOWERS:
 				_tileset = tMakerFlowerDay;
 				break;
-			case LEVEL_STYLE.SPACE:
+			case LEVEL_MAKER_STYLE.SPACE:
 				_tileset = tMakerSpaceDay;
 				break;
-			case LEVEL_STYLE.DUNGEON:
+			case LEVEL_MAKER_STYLE.DUNGEON:
 				_tileset = tMakerDungeonDay;
 				break;
 		}
@@ -403,7 +439,7 @@ update_tilesets_by_style = function() {
 
 set_tile_manipulation = function() {
 	if is_undefined(selected_tile)
-  or current_layer == LEVEL_CURRENT_LAYER.OBJECTS then 
+  or current_layer == LEVEL_MAKER_LAYERS.OBJECTS then 
 		return;
 		
 	var _tile = selected_tile.tile_id;
@@ -459,7 +495,7 @@ set_tile_manipulation = function() {
 
 set_object_rotation_and_scaling = function() {
 	if is_undefined(selected_object) 
-  or current_layer != LEVEL_CURRENT_LAYER.OBJECTS then 
+  or current_layer != LEVEL_MAKER_LAYERS.OBJECTS then 
 		return;
 	
 	if selected_object.has_tag("can_flip") {
@@ -526,25 +562,6 @@ get_x_y_from_object_index = function(_object) {
 	}
 }
 
-rotate_object_offset = function(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle){
-	var _half_width_object = (_object_width * tile_size) div 2;
-	var _half_height_object = (_object_height * tile_size) div 2;
-	
-	_sprite_offset_x -= _half_width_object;
-	_sprite_offset_y -= _half_height_object;
-	
-	var _dist = point_distance(0,0,_sprite_offset_x,_sprite_offset_y);
-	var _dir = point_direction(0,0,_sprite_offset_x,_sprite_offset_y);
-	
-	_sprite_offset_x = lengthdir_x(_dist,_dir+_angle);
-	_sprite_offset_y = lengthdir_y(_dist,_dir+_angle);
-	
-	_sprite_offset_x += _half_width_object;
-	_sprite_offset_y += _half_height_object;
-	
-	return [_sprite_offset_x,_sprite_offset_y];
-}
-
 get_grid_object_hovering = function(_mouse_x, _mouse_y){
 	for(var _x = 0; _x < room_tile_width; _x++){
 		for(var _y = 0; _y < room_tile_height; _y++){
@@ -594,10 +611,10 @@ place_object_in_object_grid = function(_top_left_x, _top_left_y, _object, _xscal
 	var _object_width = 1;
 	var _object_height = 1;
 
-	var _tiled_size = _object.get_size(tile_size);
+	var _tiled_size = _object.get_tiled_size_and_sprite_offset(tile_size);
 
-	_object_width = _tiled_size[0];
-	_object_height = _tiled_size[1];
+	_object_width = _tiled_size.tiled_width;
+	_object_height = _tiled_size.tiled_height;
 	
 	// Create object grid struct
 	var _object_grid = new LMObjectGrid(
@@ -641,10 +658,10 @@ check_for_objects_in_grid_position = function(_top_left_x, _top_left_y, _object)
 	
 	var _object_width = 1;
 	var _object_height = 1;
-	var _size = _object.get_size(tile_size);
+	var _size = _object.get_tiled_size_and_sprite_offset(tile_size);
 
-	_object_width = _size[0];
-	_object_height = _size[1];
+	_object_width = _size.tiled_width;
+	_object_height = _size.tiled_height;
 	
 	//make sure the object stays inside the grid
 	_top_left_x = clamp(_top_left_x,0, room_tile_width - _object_width);
@@ -739,11 +756,12 @@ remove_orb_from_grid = function() {
 			var _object_index = _object_grid.object;
 			
 			if is_struct(_object_grid)
-				and _top_left_x == _x
-				and _top_left_y == _y
-				and (_object_grid.object.index == oMagicOrb 
-					or _object_grid.object.index == oGrayOrb)
-			{
+      and _top_left_x == _x
+      and _top_left_y == _y
+      and (
+        _object_grid.object.index == oMagicOrb 
+        or _object_grid.object.index == oGrayOrb
+      ) {
 				remove_object_from_grid(_object_grid);
 			}
 		}
@@ -767,12 +785,12 @@ object_of_type_exists_in_editor = function(_object_index) {
 }
 
 start_level = function() {
-	var has_player_in_level =
+	var _has_player_in_level =
 		object_of_type_exists_in_editor(oPlayer) 
 		or object_of_type_exists_in_editor(oPlayerDir) 
 		or object_of_type_exists_in_editor(oPlayerNeutral);
 			
-	var has_star_in_level = 
+	var _has_star_in_level = 
 		object_of_type_exists_in_editor(oStar) 
 		or object_of_type_exists_in_editor(oStarColor) 
 		or object_of_type_exists_in_editor(oStarRunning) 
@@ -780,48 +798,66 @@ start_level = function() {
 		or object_of_type_exists_in_editor(oStarFly) 
 		or object_of_type_exists_in_editor(oStarColorNight);
 	
-	if not (has_player_in_level and has_star_in_level) {
-		var _msg = "";
+	if not (_has_player_in_level and _has_star_in_level) {
+		var _msg = "",
+        _msg_count = 0, // used to add line break
+        _duration = 60;
 		
-		if not has_player_in_level then _msg += $"- {LANG.maker_noplayer}\n";
-		if not has_star_in_level then _msg += $"- {LANG.maker_noestar}\n";
-		
-		show_message_async(_msg);
+		if not _has_player_in_level {
+      _msg += $"- {LANG.maker_noplayer}";
+      _msg_count += 1;
+      _duration += 60;
+    }
+		if not _has_star_in_level {
+      if _msg_count > 0 then _msg += "\n";
+      _msg += $"- {LANG.maker_noestar}";
+      _duration += 60;
+    }
+    call_message_popup(_msg, _duration, layer);
 		return;
 	}
 	
-  mode = LEVEL_EDITOR_MODE.TESTING;
-	//instance_destroy(oPause);
-	audio_play_sfx(sndStarGame, false, -18.3, 1);
+  if mode != LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    mode = LEVEL_MAKER_EDITOR_MODE.TESTING;
+  }
 	
 	// =========================
 	// MUSIC SETTING
 	// =========================
 	switch (selected_style) {
-		case LEVEL_STYLE.GRASS:	
+		case LEVEL_MAKER_STYLE.GRASS:
+      if instance_exists_any([o_grass_song_night, o_grass_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_grass_song_night : o_grass_song);
-			break;
-		case LEVEL_STYLE.CLOUDS:
+    break;
+  
+		case LEVEL_MAKER_STYLE.CLOUDS:
+      if instance_exists_any([o_cloud_song_night, o_cloud_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_cloud_song_night : o_cloud_song);
-			break;
-		case LEVEL_STYLE.FLOWERS:
+    break;
+  
+		case LEVEL_MAKER_STYLE.FLOWERS:
+      if instance_exists_any([o_flower_song_night, o_flower_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_flower_song_night : o_flower_song);
-			break;
-		case LEVEL_STYLE.SPACE:
+    break;
+  
+		case LEVEL_MAKER_STYLE.SPACE:
+      if instance_exists_any([o_space_song_night, o_space_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_space_song_night : o_space_song);
-			break;
-		case LEVEL_STYLE.DUNGEON:
+    break;
+  
+		case LEVEL_MAKER_STYLE.DUNGEON:
+      if instance_exists_any([o_dungeon_song_night, o_dungeon_song]) then break;
 			instance_create_layer(0, 0, "Instances", use_night_music ? o_dungeon_song_night : o_dungeon_song);
-			break;
+    break;
 	}
 	
 	// =========================
 	// ANIMATED TILES PLACEMENT
 	// =========================
 	//change_tiles_to_animated_sprites();
-    with(oMakerEditorTileDraft) {
-        set_in_room();
-    }
+  with(oMakerEditorTileDraft) {
+    set_in_room();
+  }
 	
 	// =========================
 	// OBJECTS PLACEMENT
@@ -834,46 +870,46 @@ start_level = function() {
 	// Instantiate all objects on the level
 	for(var _x = 0; _x < room_tile_width; _x++) {
 		for(var _y = 0; _y < room_tile_height; _y++) {
-			var _object_grid = objects_grid[_x,_y];
+			var _object_grid = objects_grid[_x, _y];
 			
-			if _object_grid == -1 then continue;
+			if _object_grid == -1 {
+        continue;
+      }
 			
-			var _top_left_x = _object_grid.top_left_x;
-			var _top_left_y = _object_grid.top_left_y;
+			var _obj_x = _object_grid.top_left_x,
+			    _obj_y = _object_grid.top_left_y;
 			
-			if is_struct(_object_grid)
-			and _top_left_x == _x 
-			and _top_left_y == _y {
-				var _object = _object_grid.object;
-				var _xscale = _object_grid.xscale;
-				var _yscale = _object_grid.yscale;
-				var _angle = _object_grid.angle;
+			if is_struct(_object_grid) and _obj_x == _x and _obj_y == _y {
+				var _object = _object_grid.object,
+				    _xscale = _object_grid.xscale,
+				    _yscale = _object_grid.yscale,
+				    _angle = _object_grid.angle,
 				
-				var _sprite = object_get_sprite(_object.index);
-				var _object_width = 1;
-				var _object_height = 1;
-				var _sprite_offset_x = sprite_get_xoffset(_sprite);
-				var _sprite_offset_y = sprite_get_yoffset(_sprite);
-				var _size = _object.get_size(tile_size);
+				    _sprite = object_get_sprite(_object.index),
+				    _object_width = 1,
+				    _object_height = 1,
+				    _sprite_offset_x = sprite_get_xoffset(_sprite),
+				    _sprite_offset_y = sprite_get_yoffset(_sprite),
+				    _size = _object.get_tiled_size_and_sprite_offset(tile_size);
 
-				_object_width = _size[0];
-				_object_height = _size[1];
-				_sprite_offset_x = _size[2];
-				_sprite_offset_y = _size[3];
+				_object_width = _size.tiled_width;
+				_object_height = _size.tiled_height;
+				_sprite_offset_x = _size.sprite_x_offset;
+				_sprite_offset_y = _size.sprite_y_offset;
 			
-				var _new_offset = rotate_object_offset(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle);
+				var _new_offset = _object.rotate_object_offset(_object_width, _object_height, _sprite_offset_x, _sprite_offset_y, _angle);
 				
-				_sprite_offset_x = _new_offset[0];
-				_sprite_offset_y = _new_offset[1];
+				_sprite_offset_x = _new_offset.sprite_x_offset;
+				_sprite_offset_y = _new_offset.sprite_y_offset;
 
-				var _in_world_x = _x * tile_size + _sprite_offset_x;
-				var _in_world_y = _y * tile_size + _sprite_offset_y;
+				var _in_world_x = _x * tile_size + _sprite_offset_x,
+				    _in_world_y = _y * tile_size + _sprite_offset_y;
 				
 				_in_world_x = round(_in_world_x);
 				_in_world_y = round(_in_world_y);
 				
-				var _priority = 0;
-				var _layer_name = "Player_Instances";
+				var _priority = 0,
+				    _layer_name = "Player_Instances";
 				
 				switch(_object.index) {
 					// THEY MUST BE THE LAST TO BE CREATED IN ROOM TO NOT BREAK THE STAR COUNTING.
@@ -881,7 +917,7 @@ start_level = function() {
 					case oPlayerDir:
 					case oPlayerNeutral:
 						_priority = 0;
-						break;
+          break;
 						
 					case oStar:
 					case oStarColor:
@@ -903,12 +939,12 @@ start_level = function() {
 					case oLadyVer:
 					case oLadyGray:
 						_priority = 1;
-						break;
+          break;
 						
 					default:
 						_layer_name = "Gimmick_Instances";
 						_priority = 10;
-						break;
+          break;
 				}
 				
 				var _object_var_struct = {
@@ -939,10 +975,10 @@ start_level = function() {
 	ds_priority_destroy(instance_queue);
 	
 	with(oLevelMaker) {
-		scr_update_style();
+		level_maker_update_style();
 	}
   
-  if selected_style == LEVEL_STYLE.DUNGEON {
+  if selected_style == LEVEL_MAKER_STYLE.DUNGEON {
     instance_create_layer(0, 0, "Instances_2", oFogMaker);
   }
 
@@ -953,18 +989,20 @@ start_level = function() {
     
   layer_set_visible(_fx_dust, true);
 
-  //if selected_style == LEVEL_STYLE.DUNGEON then
-  //    instance_create_layer(0, 0, "Instances_2", oFog);
-	
   level_maker_change_fx();
 
 	with(oBrokenStone) {
-		brokenright = instance_place(x+1,y,oBrokenStone)
-		brokenleft = instance_place(x-1,y,oBrokenStone)
-		brokenup = instance_place(x,y-1,oBrokenStone)
-		brokendown = instance_place(x,y+1,oBrokenStone)
+		brokenright = instance_place(x + 1, y, oBrokenStone);
+		brokenleft = instance_place(x - 1, y, oBrokenStone);
+		brokenup = instance_place(x, y - 1, oBrokenStone);
+		brokendown = instance_place(x, y + 1, oBrokenStone);
 	}
-}
+};
+
+reset_level = function() {
+  end_level();
+  start_level();
+};
 
 delete_all_objects_from_level = function() {
 	for (var yy = list_positions_length - 1; yy>=0; yy-=1) {
@@ -975,35 +1013,33 @@ delete_all_objects_from_level = function() {
 			instance_destroy(object.index, false);
 		}
 	}
-}
+};
 
 stop_all_music = function() {
 	instance_destroy(o_music);
 	audio_stop_all();
+};
+
+destroy_level_gimmicks = function() {
+  instance_destroy(oNeutralFlag);
+	instance_destroy(oKeyFollow, false);
+	instance_destroy(oKeyFollow2, false);
+	instance_destroy(oKeyFollow3, false);
+	instance_destroy(oFogMaker);
 }
 
-end_level_and_return_to_editor = function() {
-	//destroy the "song"
-	stop_all_music();
-	
+end_level = function() {
 	delete_all_objects_from_level();
-    with(oMakerEditorTileDraft) {
-        remove_from_room();
-    }
-
-    mode = LEVEL_EDITOR_MODE.EDITING;
-	//instance_create_layer(-16, -16, layer, oPause);
+  with(oMakerEditorTileDraft) {
+    remove_from_room();
+  }
 	
 	// Reset day/night state
 	if instance_exists(oCamera) then
 		oCamera.night = false;
 	
 	// Destroy gimmicks that would persist on level editor after playtest
-	instance_destroy(oNeutralFlag);
-	instance_destroy(oKeyFollow, false);
-	instance_destroy(oKeyFollow2, false);
-	instance_destroy(oKeyFollow3, false);
-	instance_destroy(oFogMaker);
+	destroy_level_gimmicks();
 	
   // Disable layer effects
   var _fx_dust = layer_get_id("FX_Dust");
@@ -1011,7 +1047,16 @@ end_level_and_return_to_editor = function() {
   layer_set_visible(_fx_dust, false);
   
   level_maker_change_fx();
+  
+  if mode != LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    return_to_the_editor_mode();
+  }
+}
+
+return_to_the_editor_mode = function() {
+  stop_all_music();
   audio_play_sfx(snd_bump, false, 1, 1);
+  mode = LEVEL_MAKER_EDITOR_MODE.EDITING;
 	just_entered_level_editor = true;
 }
 
@@ -1034,7 +1079,7 @@ set_sample_level = function() {
 	// star
 	place_object_in_object_grid(22, 12, get_lmobject_from_list(oStar));
 
-	selected_style = LEVEL_STYLE.GRASS;
+	selected_style = LEVEL_MAKER_STYLE.GRASS;
 
 	update_selected_object();
 	update_selected_tile();

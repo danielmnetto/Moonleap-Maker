@@ -34,7 +34,7 @@ if room!=Room100
 
 numb=approach(numb,0,1)
 
-if state = WIN or instance_exists(oPauseMenu) or numb>0
+if state = WIN or instance_exists(oPauseUI) or numb>0
 
 {
 	key_right=		0

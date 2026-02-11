@@ -28,7 +28,7 @@ nearmush_list = ds_list_create();
 
 image_index = 0;
 
-set_pallete_index();
+set_palette_index_by_level_style();
 
 play_mushroom_sound = function() {
 	if audio_is_playing_any([snd_cogumelo_01,snd_cogumelo_02,snd_cogumelo_03,snd_cogumelo_04]) then return;

@@ -73,7 +73,7 @@ function object_is_outside_room() {
 	return x < 0 or x >= room_width or y < 0 or y >= room_height;
 }
 
-function set_pallete_index() {
+function set_palette_index_by_level_style() {
 	if instance_exists(oGrassDay) {
 		palette_index = 0;
 	} else if instance_exists(oCloudDay) {
@@ -96,11 +96,28 @@ function in_hub_view() {
 }
 
 function is_at_hub() {
-	return room == Room100;
+	return room_is([Room100]);
 }
 
-function on_desktop() {
-	return ((os_type == os_windows) or (os_type == os_linux) or (os_type == os_macosx));
+/// @description Checks whether the current OS is one of the items in the array.
+/// @param {Array<Constant.OperatingSystem>} os_type_array 
+function is_os_type_any(_os_type_array) {
+  return array_any(_os_type_array, function(_os_type) { return os_type == _os_type });
+}
+
+/// @desc Checks whether the current OS is desktop.
+function is_on_desktop() {
+	return is_os_type_any([os_windows, os_linux, os_macosx]);
+}
+
+/// @desc Checks whether the current OS is console.
+function is_on_console() {
+	return is_os_type_any([os_ps4, os_ps5, os_xboxseriesxs, os_gdk, os_switch, os_switch2]);
+}
+
+/// @desc Checks whether the current OS is mobile.
+function is_on_mobile() {
+	return is_os_type_any([os_android, os_ios]);
 }
 
 function draw_text_shadow(_x, _y, _text, _shadow_offset_x, _shadow_offset_y, _shadow_color) {
@@ -112,8 +129,101 @@ function draw_text_shadow(_x, _y, _text, _shadow_offset_x, _shadow_offset_y, _sh
 	draw_text(_x, _y, _text);
 }
 
-function room_transit(_target) {
-	var trans = instance_create_layer(0, 0, layer, oTransition);
-	
-	trans.target_room = _target;
+/// @description Calls the transition effects and redirects to the room target.
+/// @param {Asset.GMRoom} room_target The room to transit.
+function room_transit(_room_target, _layer = layer) {
+	var _transition = instance_create_layer(0, 0, _layer, oTransition);
+	_transition.target_room = _room_target;
+}
+
+/// @desc Gets the object's sprite horizontal center regardless the sprite origin.
+/// @param {Asset.GMObject} _object The object to find the sprite's center.
+function object_get_sprite_center_x(_object) {
+  with(_object) {
+    return x - sprite_xoffset + sprite_width / 2;
+  }
+}
+
+/// @desc Gets the object's sprite vertical center regardless the sprite origin.
+/// @param {Asset.GMObject} _object The object to find the sprite's center.
+function object_get_sprite_center_y(_object) {
+  with(_object) {
+    return y - sprite_yoffset + sprite_height / 2;
+  }
+}
+
+/// @desc Formats a string to be compatible to files' names.
+/// @param {string} _str String to be formatted.
+function string_filename_create(_str) {
+  var _new_name = _str;
+  
+  // Removes the start and end spaces.
+  _new_name = string_trim(_new_name);
+  
+  // The inner spaces are replaced by underscores.
+  _new_name = string_replace_all(_new_name, " ", "_"); 
+  
+  // Lowercase to all letters.
+  _new_name = string_lower(_new_name);
+  
+  // Removes all symbols from the name
+  for (var i = 32; i <= 255; i++) {
+    if (i >= 48 and i <= 57)
+    or (i >= 65 and i <= 90)
+    or (i == 95)
+    or (i >= 97 and i <= 122)
+    or (i >= 192 and i <= 214)
+    or (i >= 216 and i <= 246)
+    or (i >= 248 and i <= 255) {
+      continue;
+    }
+    _new_name = string_replace_all(_new_name, chr(i), "");
+  }
+  
+  return _new_name;
+}
+
+/// @desc Draws the given sprite five times, one in the given coordinates and other four outside the room.
+/// This function is useful to make a visual effect which is make the sprite leave the room from one side and
+/// appear to another if the current room has the same size of the active camera area.
+function draw_sprite_wrap_ext(
+  _sprite,
+  _frame,
+  _x,
+  _y,
+  _xscale,
+  _yscale,
+  _angle,
+  _blend,
+  _alpha
+) {
+  draw_sprite_ext(_sprite, _frame, _x, _y, _xscale, _yscale, _angle, _blend, _alpha);
+  draw_sprite_ext(_sprite, _frame, _x - room_width, _y, _xscale, _yscale, _angle, _blend, _alpha);
+  draw_sprite_ext(_sprite, _frame, _x + room_width, _y, _xscale, _yscale, _angle, _blend, _alpha);
+  draw_sprite_ext(_sprite, _frame, _x,_y - room_height, _xscale, _yscale, _angle, _blend, _alpha);
+  draw_sprite_ext(_sprite, _frame, _x,_y + room_height, _xscale, _yscale, _angle, _blend, _alpha);
+}
+
+/// @desc Draws part of the given sprite five times, one in the given coordinates and other four outside the room.
+/// This function is useful to make a visual effect which is make the sprite leave the room from one side and
+/// appear to another if the current room has the same size of the active camera area.
+function draw_sprite_wrap_part_ext(
+  _sprite,
+  _frame,
+  _left,
+  _top,
+  _width,
+  _height,
+  _x,
+  _y,
+  _xscale,
+  _yscale,
+  _blend,
+  _alpha
+) {
+  draw_sprite_part_ext(_sprite, _frame, _left, _top, _width, _height, _x, _y, _xscale, _yscale, _blend, _alpha);
+  draw_sprite_part_ext(_sprite, _frame, _left, _top, _width, _height, _x - room_width, _y, _xscale, _yscale, _blend, _alpha);
+  draw_sprite_part_ext(_sprite, _frame, _left, _top, _width, _height, _x + room_width, _y, _xscale, _yscale, _blend, _alpha);
+  draw_sprite_part_ext(_sprite, _frame, _left, _top, _width, _height, _x,_y - room_height, _xscale, _yscale, _blend, _alpha);
+  draw_sprite_part_ext(_sprite, _frame, _left, _top, _width, _height, _x,_y + room_height, _xscale, _yscale, _blend, _alpha);
 }

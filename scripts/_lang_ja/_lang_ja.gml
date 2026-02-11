@@ -73,13 +73,58 @@ lang_add("JA", {
   maker_spacestyle: "宇宙",
   maker_dungeonstyle: "ダンジョン",
   
-  maker_menumakelevel: "レベルを作成",
+  maker_menu_play: "プレイする",
+  maker_menu_make: "作成する",
+  maker_menu_import: "インポートする",
+  
+  text_input_description: "キーボードで入力し、ENTER を押して完了します",
+  maker_level_options: "レベルオプション",
+  maker_edit_level_name: "レベル名を編集",
+  maker_edit_level_author: "レベル作者名を編集",
+  maker_perfect_score: "パーフェクトスコア: ",
+  maker_night_music: "ナイトミュージックを使用: ",
+  maker_back_to_editor: "エディターに戻る",
+  maker_perfect_score_help: "最高ランクを達成するためにプレイヤーが変更できる最大回数",
+  maker_minimum: "最小: ",
+  maker_chars: "文字数: ",
+  
+  maker_levels: "レベル: ",
+  maker_nolevels: "表示できるレベルがありません",
+  maker_rank_title: "ランク",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "並び替え: ",
+  maker_orderby_name_asc: "名前（昇順）",
+  maker_orderby_name_desc: "名前（降順）",
+  maker_orderby_author_asc: "作者（昇順）",
+  maker_orderby_author_desc: "作者（降順）",
+  maker_orderby_rank_asc: "ランク（低い → 高い）",
+  maker_orderby_rank_desc: "ランク（高い → 低い）",
   
   maker_noplayer: "プレイヤーがいないとテストできません！",
   maker_noestar: "スターがないとテストできません！",
   
   maker_help_text: "Moonleap Makerへようこそ！\nオブジェクトをクリックして、レベル上に配置しましょう\n\nキーボード:\nZ - オブジェクトを回転\nX - オブジェクトを反転\nWASD または 矢印キー - オブジェクトリストをナビゲート\nF5 - レベルをテスト\n\nマウス:\n左クリック - オブジェクトを配置\n右クリック - オブジェクトを消去\nスクロール - オブジェクトリストのタイプを変更\n画面ループはプレイヤーのみに制限することをお勧めします\n他のオブジェクトは予期せぬ動作をするかもしれません",
   
+  maker_help_page1: "Moonleap Maker へようこそ！\n\nオブジェクトをクリックして、レベルに配置してください。\n他のオブジェクトは正しく動作しない場合があります。\n画面ループはプレイヤーのみを推奨します。",
+  maker_help_page2: "ショートカット 1:\n\nZキー - 選択中のオブジェクトを回転\nXキー - 選択中のオブジェクトを反転\nWASD/矢印キー - オブジェクトリストを移動\nF5キー - レベルをテスト、またはエディターに戻る",
+  maker_help_page3: "ショートカット 2:\n\nマウス左ボタン - オブジェクトを設置または移動\nマウス右ボタン - オブジェクトを削除\nマウススクロール - オブジェクトリストのタイプを変更",
+  
+  maker_level_file_oldversion: "このレベルファイルは古いバージョンのレベルエディターで作成されたため、読み込むことができませんでした",
+  maker_level_file_invalid: "このレベルファイルは無効なため、読み込むことができませんでした",
+  maker_level_file_notfound: "このレベルのファイルが見つかりませんでした。",
+  maker_level_overwrite: "このレベルファイルを開くと現在のレベルが上書きされます。本当に続行しますか？",
+  maker_level_save: "保存",
+  maker_level_save_as: "名前を付けて保存...",
+  maker_level_upload_success: "レベルのインポートに成功しました！",
+  maker_level_upload_error: "レベルファイルのインポート中にエラーが発生し、操作を完了できませんでした。",
+  maker_level_save_success: "レベルファイルが正常に保存されました！",
+  maker_level_save_error: "レベルファイルの保存中にエラーが発生し、保存できませんでした。",
+
   maker_intro: "Moonleap Makerへようこそ！このエディターはベータ版です",
   
   maker_foreground: "1: 前景（かざり）",
@@ -90,6 +135,10 @@ lang_add("JA", {
   maker_warning_change_style: "注意！スタイルを変更すると、レベル内にある装飾タイルは削除されます。本当にスタイルを変更してもよろしいですか？",
   maker_warning_confirm: "はい",
   maker_warning_cancel: "いいえ",
+  
+  maker_level_time_played: "プレイ時間: ",
+  maker_level_result: "結果: ",
+  maker_level_try_again: "もう一度試す",
 
   maker_object_oPlayer: "プレーヤー",
   maker_object_oSolid: "ソリッドブロック",
@@ -136,6 +185,7 @@ lang_add("JA", {
   maker_object_oMagicOrb: "魔法のオーブ",
   maker_object_oStarFly: "フライングスター",
   maker_object_oSolidInv: "目に見えないソリッドブロック",
+  
 
 
 //          .88b  d88. d88888b d8b   db db    db 

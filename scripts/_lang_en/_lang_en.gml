@@ -38,18 +38,18 @@ lang_add("EN", {
   //      88b  d88   dPYb   88odP  88__   88__dP 
   //      88YbdP88  dP__Yb  88"Yb  88""   88"Yb  
   //      88 YY 88 dP""""Yb 88  Yb 888888 88  Yb 
-
+  
   maker_name: "level editor",
   maker_play: "Test the Level",
   maker_load: "Load Level",
   maker_savemenu: "Save Level",
-  maker_menu: "Maker Menu",
+  maker_menu: "Maker menu",
   maker_change_up: "Change Type (Up)",
   maker_change_down: "Change Type (Down)",
   maker_help: "Help",
-  maker_change_level_style: "Change Level Style",
+  maker_change_level_style: "Change level style",
   maker_eraser: "Eraser",
-  maker_erase_level: "Erase the Level (Hold)",
+  maker_erase_level: "Erase the Level (hold)",
   maker_change_layer: "Change Layer",
   maker_grassstyle: "Grass",
   maker_cloudstyle: "Cloud",
@@ -57,13 +57,58 @@ lang_add("EN", {
   maker_spacestyle: "Space",
   maker_dungeonstyle: "Dungeon",
   
-  maker_menumakelevel: "Make Levels",
+  maker_menu_play: "play",
+  maker_menu_make: "make",
+  maker_menu_import: "import",
+  
+  text_input_description: "use the keyboard to type and press ENTER to finish",
+  maker_level_options: "level options",
+  maker_edit_level_name: "edit level name",
+  maker_edit_level_author: "edit level author name",
+  maker_perfect_score: "perfect score: ",
+  maker_night_music: "use night music: ",
+  maker_back_to_editor: "back to editor",
+  maker_perfect_score_help: "the maximum number of times the player can change to achieve the best rank",
+  maker_minimum: "minimum: ",
+  maker_chars: "characters: ",
+  
+  maker_levels: "levels: ",
+  maker_nolevels: "there are no levels to display",
+  maker_rank_title: "rank",
+  maker_rank_S: "S",
+  maker_rank_A: "A",
+  maker_rank_B: "B",
+  maker_rank_C: "C",
+  maker_rank_D: "D",
+  maker_rank_none: "-",
+  maker_orderby: "sort by: ",
+  maker_orderby_name_asc: "name (ascending)",
+  maker_orderby_name_desc: "name (descending)",
+  maker_orderby_author_asc: "author (ascending)",
+  maker_orderby_author_desc: "author (descending)",
+  maker_orderby_rank_asc: "rank (lowest to highest)",
+  maker_orderby_rank_desc: "rank (highest to lowest)",
   
   maker_noplayer: "You can't test without a player!",
   maker_noestar: "You can't test without a star!",
   
   maker_help_text: "Welcome to Moonleap Maker!\nClick on the objects and place them on the level\n\nKeyboard: \nZ - Rotate the object \nX - Mirror the object \nWASD or Arrow Keys - Navigate through the Object list \nF5 - Test the Level \n\nMouse: \nLeft Button - Place the Object \nRight Button - Erase Objects \nScroll - Change the type in the object list \nWe suggest limiting the screen loop to the player only\nOther objects may not behave as expected",
   
+  maker_help_page1: "Welcome to Moonleap Maker!\n\nClick on objects and place them on the level.\nOther objects may not work correctly.\nIt is recommended that only the Player loops on the screen.",
+  maker_help_page2: "Shortcuts 1:\n\nZ key - Rotates the selected object\nX key - Flips the selected object\nWASD/arrow keys - Navigate through the object list\nF5 key - Tests the level or returns to the editor",
+  maker_help_page3: "Shortcuts 2:\n\nLeft mouse button - Places or moves objects\nRight mouse button - Erases objects\nMouse scroll - Changes the type in the object list",
+  
+  maker_level_file_oldversion: "This level file is from an older version of the level editor and could not be loaded.",
+  maker_level_file_invalid: "This level file is invalid and could not be loaded",
+  maker_level_file_notfound: "The level file was not found.",
+  maker_level_overwrite: "Opening this level file will overwrite the current level. Are you sure you want to proceed?",
+  maker_level_save: "save",
+  maker_level_save_as: "save as...",
+  maker_level_upload_success: "Level imported successfully!",
+  maker_level_upload_error: "An error occurred while importing the level file and the action could not be completed.",
+  maker_level_save_success: "Level file saved successfully!",
+  maker_level_save_error: "An error occurred while trying to save the level file and it could not be saved.",
+
   maker_intro: "Welcome to Moonleap Maker! This editor is in beta",
   
   maker_foreground: "1: Foreground (Decoration)",
@@ -74,6 +119,10 @@ lang_add("EN", {
   maker_warning_change_style: "Warning! When changing the style, the existing decoration tiles in the level will be erased. Are you sure you want to change the style?",
   maker_warning_confirm: "Yes",
   maker_warning_cancel: "No",
+  
+  maker_level_time_played: "time played: ",
+  maker_level_result: "result: ",
+  maker_level_try_again: "try again",
 
   maker_object_oPlayer: "Player",
   maker_object_oSolid: "Solid block",
