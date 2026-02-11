@@ -100,8 +100,12 @@ lang_add("IT", {
   maker_orderby_rank_asc: "classifica (crescente)",
   maker_orderby_rank_desc: "classifica (decrescente)",
   
-  maker_noplayer: "Non puoi testare senza un giocatore!",
-  maker_noestar: "Non puoi testare senza una stella!",
+  maker_level_save_no_player: "Non puoi salvare il livello senza un giocatore!",
+  maker_level_save_no_star: "Non puoi salvare il livello senza una stella!",
+  maker_level_test_no_player: "Non puoi testare il livello senza un giocatore!",
+  maker_level_test_no_star: "Non puoi testare il livello senza una stella!",
+  maker_level_play_no_player: "Questo livello non ha un giocatore!",
+  maker_level_play_no_star: "Questo livello non ha una stella!",
   
   maker_help_text: "Benvenuto in Moonleap Maker!\nClicca sugli oggetti e posizionali nel livello\n\nTastiera: \nZ - Ruota l'oggetto \nX - Specchia l'oggetto \nWASD o Frecce - Naviga nella lista degli oggetti \nF5 - Testa il Livello \n\nMouse: \nTasto Sinistro - Posiziona l'Oggetto \nTasto Destro - Cancella Oggetti \nScroll - Cambia il tipo nella lista degli oggetti \nConsigliamo di limitare il loop dello schermo solo al giocatore\nAltri oggetti potrebbero non comportarsi come previsto",
   

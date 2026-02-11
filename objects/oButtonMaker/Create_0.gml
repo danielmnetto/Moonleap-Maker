@@ -206,6 +206,13 @@ action_menu = function() {
 };
 
 action_save_level = function() {
+  var _is_level_valid = level_maker_check_level_validation();
+  
+  if not _is_level_valid {
+    level_maker_save_show_missing_objects_message();
+    return;
+  }
+  
   play_sound_on_press();
   menu_call_layer(menus_get_save_level(), "main", "Instances", true, false, false, true);
 };
@@ -224,6 +231,13 @@ action_load_level = function() {
 };
 
 action_test_level = function() {
+  var _is_level_valid = level_maker_check_level_validation();
+  
+  if not _is_level_valid {
+    level_maker_test_show_missing_objects_message();
+    return;
+  }
+  
   with(oLevelMaker) {
     if level_maker_is_editing() {
       start_level();

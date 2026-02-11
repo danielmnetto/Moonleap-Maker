@@ -86,8 +86,12 @@ lang_add("PT-BR", {
   maker_orderby_rank_asc: "rank (menor -> maior)",
   maker_orderby_rank_desc: "rank (maior -> menor)",
   
-  maker_noplayer: "Você não pode testar sem um jogador!",
-  maker_noestar: "Você não pode testar sem uma estrela!",
+  maker_level_save_no_player: "Você não pode salvar a fase sem um jogador!",
+  maker_level_save_no_star: "Você não pode salvar a fase sem uma estrela!",
+  maker_level_test_no_player: "Você não pode testar a fase sem um jogador!",
+  maker_level_test_no_star: "Você não pode testar a fase sem uma estrela!",
+  maker_level_play_no_player: "Esta fase está sem um jogador!",
+  maker_level_play_no_star: "Esta fase está sem uma estrela!",
   
   maker_help_text: "Bem-vindo ao Moonleap Maker!\nClique nos objetos e posicione-os na fase\n\nTeclado: \nZ - Rotaciona o objeto \nX - Espelha o objeto \nWASD ou Setas - Navegam pela lista de objetos \nF5 - Testa o Nível \n\nMouse: \nBotão Esquerdo - Coloca o Objeto \nBotão Direito - Apaga Objetos \nScroll - Muda o tipo na lista de objetos\n\nRecomendamos que somente o player loope pela tela\nOutros objetos podem não funcionar corretamente",
   

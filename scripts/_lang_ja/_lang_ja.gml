@@ -105,8 +105,12 @@ lang_add("JA", {
   maker_orderby_rank_asc: "ランク（低い → 高い）",
   maker_orderby_rank_desc: "ランク（高い → 低い）",
   
-  maker_noplayer: "プレイヤーがいないとテストできません！",
-  maker_noestar: "スターがないとテストできません！",
+  maker_level_save_no_player: "プレイヤーなしではレベルを保存できません！",
+  maker_level_save_no_star: "スターなしではレベルを保存できません！",
+  maker_level_test_no_player: "プレイヤーなしではレベルをテストできません！",
+  maker_level_test_no_star: "スターなしではレベルをテストできません！",
+  maker_level_play_no_player: "このレベルにはプレイヤーがいません！",
+  maker_level_play_no_star: "このレベルにはスターがありません！",
   
   maker_help_text: "Moonleap Makerへようこそ！\nオブジェクトをクリックして、レベル上に配置しましょう\n\nキーボード:\nZ - オブジェクトを回転\nX - オブジェクトを反転\nWASD または 矢印キー - オブジェクトリストをナビゲート\nF5 - レベルをテスト\n\nマウス:\n左クリック - オブジェクトを配置\n右クリック - オブジェクトを消去\nスクロール - オブジェクトリストのタイプを変更\n画面ループはプレイヤーのみに制限することをお勧めします\n他のオブジェクトは予期せぬ動作をするかもしれません",
   

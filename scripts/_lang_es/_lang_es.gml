@@ -69,8 +69,12 @@ text_poem8: "consuelo y dulzura de la paz",
   maker_orderby_rank_asc: "rank (de mayor a menor)",
   maker_orderby_rank_desc: "rank (de menor a mayor)",
   
-  maker_noplayer: "¡No puedes probar sin un jugador!",
-  maker_noestar: "¡No puedes probar sin una estrella!",
+  maker_level_save_no_player: "¡No puedes guardar la fase sin un jugador!",
+  maker_level_save_no_star: "¡No puedes guardar la fase sin una estrella!",
+  maker_level_test_no_player: "¡No puedes probar la fase sin un jugador!",
+  maker_level_test_no_star: "¡No puedes probar la fase sin una estrella!",
+  maker_level_play_no_player: "¡Esta fase no tiene jugador!",
+  maker_level_play_no_star: "¡Esta fase no tiene estrella!",
   
   maker_help_text: "¡Bienvenido a Moonleap Maker!\nHaz clic en los objetos y colócalos en el nivel\n\nTeclado: \nZ - Rotar el objeto \nX - Espejar el objeto \nWASD o Flechas - Navegar por la lista de objetos \nF5 - Probar el Nivel \n\nMouse: \nBotón Izquierdo - Colocar el Objeto \nBotón Derecho - Borrar Objetos \nScroll - Cambiar el tipo en la lista de objetos \nSugerimos limitar el bucle de la pantalla solo al jugador\nOtros objetos pueden no comportarse como se espera",
   
