@@ -376,6 +376,38 @@ function level_maker_get_objects_list() {
 	_objects[0, 10] =	new LMObject(oStar)
     .set_size(16, 16)
     .add_tag("can_spin");
+  _objects[0, 10].on_begin_draw_button_sprite = method(
+    { main: _objects[0, 10] },
+    function() {
+      main.button_sprite_sprite_index = sStar;
+      
+      switch(oLevelMaker.selected_style) {
+        case LEVEL_MAKER_STYLE.FLOWERS:
+        case LEVEL_MAKER_STYLE.SPACE:
+        case LEVEL_MAKER_STYLE.DUNGEON:
+          main.button_sprite_sprite_index = sStarFlower;
+        break;
+      }
+    }
+  );
+  _objects[0, 10].on_begin_draw_preview_sprite = function() {
+    var _sprite = sStar;
+    
+    switch(oLevelMaker.selected_style) {
+      case LEVEL_MAKER_STYLE.FLOWERS:
+      case LEVEL_MAKER_STYLE.SPACE:
+      case LEVEL_MAKER_STYLE.DUNGEON:
+        _sprite = sStarFlower;
+      break;
+    }
+    
+    return {
+      sprite: _sprite
+    };
+  };
+  _objects[0, 10].on_end_draw_preview_sprite = function() {
+    pal_swap_reset();
+  };
   
 	_objects[0, 11] =	new LMObject(oStarRunning)
     .set_size(16, 16);
