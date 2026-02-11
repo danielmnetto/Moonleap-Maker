@@ -3,9 +3,9 @@ function LMTile(_tile_id) constructor {
 	original_tile_id = _tile_id;
 	tileset = undefined;
 	
-	can_change = false;
-	is_animated = false;
+	colorblind_icon_frame = -1;
 	
+	is_animated = false;
 	sprite_day = -1;
 	sprite_night = -1;
 
@@ -24,8 +24,8 @@ function LMTile(_tile_id) constructor {
 		is_animated = _is_animated;
 	}
 	
-	set_can_change = function(_can_change) {
-		can_change = _can_change;
+	set_colorblind_icon_frame = function(_frame) {
+		colorblind_icon_frame = _frame;
 	}
 	
 	set_animated_sprites = function(_sprite_day, _sprite_night) {
@@ -176,7 +176,7 @@ function level_maker_get_tiles_list(_style) {
 
 			_lmtile.set_original_tile_id(_c_tile_id);
 			_lmtile.set_tileset(_tileset);
-			_lmtile.set_can_change(_c_tile_id >= _tile_changes_starts_from);
+			_lmtile.set_colorblind_icon_frame(_c_tile_id >= _tile_changes_starts_from ? 0 : -1);
 			
 			_tiles_list[t, p] = _lmtile;
 		}

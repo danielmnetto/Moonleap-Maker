@@ -426,7 +426,7 @@
     {"name":"scr_level_maker_objects_list","order":11,"path":"scripts/scr_level_maker_objects_list/scr_level_maker_objects_list.yy",},
     {"name":"scr_level_maker_save_load","order":3,"path":"scripts/scr_level_maker_save_load/scr_level_maker_save_load.yy",},
     {"name":"scr_level_maker_save_update","order":10,"path":"scripts/scr_level_maker_save_update/scr_level_maker_save_update.yy",},
-    {"name":"scr_level_maker_tiles","order":4,"path":"scripts/scr_level_maker_tiles/scr_level_maker_tiles.yy",},
+    {"name":"scr_level_maker_tile_struct","order":4,"path":"scripts/scr_level_maker_tile_struct/scr_level_maker_tile_struct.yy",},
     {"name":"scr_level_maker_transition","order":9,"path":"scripts/scr_level_maker_transition/scr_level_maker_transition.yy",},
     {"name":"scr_menu_constructors","order":40,"path":"scripts/scr_menu_constructors/scr_menu_constructors.yy",},
     {"name":"scr_menu_functions","order":43,"path":"scripts/scr_menu_functions/scr_menu_functions.yy",},

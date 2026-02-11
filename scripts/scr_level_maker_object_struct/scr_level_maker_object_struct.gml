@@ -10,6 +10,7 @@ function LMObject(_object_index) constructor {
 	size_y = 16;
 	origin_type = LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.TOP_LEFT;
 	tags = [];
+  colorblind_icon_frame = -1;
 	
 	button_sprite_sprite_index = undefined;
 	button_sprite_image_index = 0;
@@ -32,6 +33,14 @@ function LMObject(_object_index) constructor {
   static set_size = function(_width, _height) {
     size_x = _width;
     size_y = _height;
+    return self;
+  };
+  
+  /// @desc Sets the colorblind icon frame to the object.
+  /// @param {real} _frame The colorblind icon frame number. Use 0 or 1 for the icon. Use -1 to disable it.
+  static set_colorblind_icon_frame = function(_frame) {
+    colorblind_icon_frame = _frame;
+    
     return self;
   };
   

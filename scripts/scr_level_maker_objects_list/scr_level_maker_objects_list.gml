@@ -223,6 +223,7 @@ function level_maker_get_objects_list() {
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5)
     .add_tag("grid_16", "is_holdable")
+    .set_colorblind_icon_frame(0)
     .set_button_sprite_draw_config(sGrassGre, 0, 8, 8, 0, 0);
   _objects[0, 06].on_begin_draw_button_sprite = method(
     { main: _objects[0, 06] }, 
@@ -273,6 +274,7 @@ function level_maker_get_objects_list() {
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5)
     .add_tag("grid_16", "is_holdable")
+    .set_colorblind_icon_frame(1)
     .set_button_sprite_draw_config(sGrassGre, 0, 8, 8, 0, 0);
   _objects[0, 07].on_begin_draw_button_sprite = method(
     { main: _objects[0, 07] }, 
@@ -324,6 +326,7 @@ function level_maker_get_objects_list() {
   
 	_objects[0, 08] =	new LMObject(oLadderDay)
     .set_size(16, 16)
+    .set_colorblind_icon_frame(0)
     .set_button_sprite_draw_config(sLadderDay, 0, 0, 0, 0, 0);
   _objects[0, 08].on_begin_draw_button_sprite = method(
     { main: _objects[0, 08] }, 
@@ -351,6 +354,7 @@ function level_maker_get_objects_list() {
   
 	_objects[0, 09] =	new LMObject(oLadderNight)
     .set_size(16, 16)
+    .set_colorblind_icon_frame(1)
     .set_button_sprite_draw_config(sLadderNight, 0, 0, 0, 0, 0);
   _objects[0, 09].on_begin_draw_button_sprite = function() {
     var _palette = sLadderPal,

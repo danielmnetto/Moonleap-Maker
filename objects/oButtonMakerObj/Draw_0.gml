@@ -17,14 +17,20 @@ switch (oLevelMaker.current_layer) {
       draw_sprite_ext(_sprite, _frame, xx, yy + drawplus, scale, scale, image_angle, image_blend, 1);
     }
 		
-		if global.settings.filter and object.can_change then
-			draw_sprite(sColorBlind, object.is_moon_variant, xstart, ystart + drawplus);
-		break;
-	default:
-		if not is_undefined(tile) and tile != 0
-			tile.draw_sprite_preview(x - 8, y - 8 + drawplus);
+    var _object_colorblind_icon_frame = object.colorblind_icon_frame;
+		if global.settings.filter and _object_colorblind_icon_frame >= 0 {
+      draw_sprite(sColorBlind, _object_colorblind_icon_frame, xstart, ystart + drawplus);
+    }
+  break;
+	
+  default:
+		if not is_undefined(tile) and tile != 0 {
+      tile.draw_sprite_preview(x - 8, y - 8 + drawplus);
+    }
 		
-		if global.settings.filter and tile.can_change then
-			draw_sprite(sColorBlind, 0, x, y + drawplus);
-		break;
+    var _tile_colorblind_icon_frame = tile.colorblind_icon_frame;
+		if global.settings.filter and _tile_colorblind_icon_frame >= 0 {
+      draw_sprite(sColorBlind, _tile_colorblind_icon_frame, x, y + drawplus);
+    }
+  break;
 }
