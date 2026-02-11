@@ -300,7 +300,7 @@ function level_maker_get_objects_list() {
     }
   );
   _objects[0, 07].on_begin_draw_preview_sprite = function() {
-    var _sprite = sGrassGre,
+    var _sprite = sGrassOre,
         _frame = 2;
     
     switch(oLevelMaker.selected_style) {
