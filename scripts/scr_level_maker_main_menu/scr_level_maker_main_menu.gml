@@ -37,23 +37,23 @@ function menu_maker_get_main() {
       function() { return LANG.maker_menu_import; },
       function() {
         try {
-        	var _level_filename = get_open_filename("*.moonlevel", "my_level");
+        	var _level_filename = get_open_filename($"*.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}", "my_level");
           
           if _level_filename == "" {
             return;
           }
           
-          var _level_json = "",
-              _file = file_text_open_read(_level_filename),
-              _filename_dest = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{filename_name(_level_filename)}";
+          var _filename_split = string_split(_level_filename, ".", true);
           
-          // Copy all level information.
-          while not file_text_eof(_file) {
-            _level_json += file_text_read_string(_file);
+          if _filename_split[array_length(_filename_split) - 1] != LEVEL_MAKER_LEVEL_FILE_EXTENSION {
+            audio_play_sfx(snd_bump, false, -5, 13);
+            call_message_popup(LANG.maker_level_file_invalid, 180, "Instances", true);
+            return;
           }
-          file_text_close(_file);
           
-          var _loaded_level_data = json_parse(_level_json);
+          var _level_json = "",
+              _filename_dest = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{filename_name(_level_filename)}",
+              _loaded_level_data = level_maker_level_file_open(_level_filename);
           
           if not maker_level_data_is_valid(_loaded_level_data) {
             audio_play_sfx(snd_bump, false, -5, 13);
@@ -70,14 +70,7 @@ function menu_maker_get_main() {
           // Paste all level information to the new file.
           custom_levels_directory_create();
           
-          if file_exists(_filename_dest) {
-            file_delete(_filename_dest);
-          }
-          
-          var _new_file = file_text_open_write(_filename_dest);
-          
-          file_text_write_string(_new_file, _level_json);
-          file_text_close(_new_file);
+          level_maker_level_file_save(_filename_dest, _loaded_level_data);
           
           audio_play_sfx(sndStarGame, false, -6, 0);
           call_message_popup(LANG.maker_level_upload_success, 120, "Instances", true);

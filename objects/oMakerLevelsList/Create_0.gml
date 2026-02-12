@@ -184,27 +184,27 @@ import_levels_from_levels_folder = function() {
   levels = [];
   
   var _level_files = [],
-      _file_pattern = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/*.moonlevel",
+      _file_pattern = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/*.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}",
       _level_filename = file_find_first(_file_pattern, fa_none);
   
   while _level_filename != "" {
-    var _level_file = file_text_open_read($"{LEVEL_MAKER_LEVELS_FOLDER_NAME}/{_level_filename}"),
-        _level_json = "";
-    
-    while not file_text_eof(_level_file) {
-      _level_json += file_text_read_string(_level_file);
+    try {
+    	var _level_file_path = $"{LEVEL_MAKER_LEVELS_FOLDER_NAME}/{_level_filename}",
+          _level_json = level_maker_level_file_open(_level_file_path);
+      
+      array_push(levels, new MakerLevel(
+        $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{_level_filename}",
+        _level_json.name,
+        _level_json.author,
+        _level_json.player_score,
+        _level_json.perfect_score,
+        _level_json.style
+      ));
+    } catch (_error) {
+    	show_debug_message($"[!!!] Couldn't load level file {_level_filename}.\n {_error}");
+    } finally {
+      _level_filename = file_find_next();
     }
-    file_text_close(_level_file);
-    _level_json = json_parse(_level_json);
-    array_push(levels, new MakerLevel(
-      $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{_level_filename}",
-      _level_json.name,
-      _level_json.author,
-      _level_json.player_score,
-      _level_json.perfect_score,
-      _level_json.style
-    ));
-    _level_filename = file_find_next();
   }
   
   file_find_close();

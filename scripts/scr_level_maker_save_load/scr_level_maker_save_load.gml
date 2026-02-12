@@ -1,12 +1,12 @@
 #macro LEVEL_MAKER_SAVE_SYSTEM_VERSION "1.4"
 
+#macro LEVEL_MAKER_LEVEL_FILE_EXTENSION "moonlevel"
 #macro LEVEL_MAKER_LEVELS_FOLDER_NAME "custom_levels"
 #macro LEVEL_MAKER_LEVELS_FOLDER_PATH $"{working_directory}/{LEVEL_MAKER_LEVELS_FOLDER_NAME}"
 
 /// @desc Saves the current Moonleap Maker level into a file with a given name.
 function level_maker_save(_level_file_path) {
 	with(oLevelMaker) {
-
     // Get all objects information
 		var _objects_data = [];
 
@@ -90,30 +90,32 @@ function level_maker_save(_level_file_path) {
     ds_list_destroy(_draft_list);
 
 		// Set level information
-    var _save_data = {
-      version: LEVEL_MAKER_SAVE_SYSTEM_VERSION,
-      name: level_name,
-      author: level_author_name,
-      player_score: -1,
-      perfect_score: perfect_score,
-      use_night_music: use_night_music,
-      style: selected_style,
-      objects: _objects_data,
-      tiles: _tiles_data
-    };
-		
-    // Write on file
-		var _file_name = _level_file_path;
-		var _json = json_stringify(_save_data);
-		
-		if file_exists(_file_name) {
-			file_delete(_file_name)
-		}
-		
-		var _file = file_text_open_write(_file_name);
+    var _save_data = new LevelMakerFileData();
     
-		file_text_write_string(_file, _json);
-		file_text_close(_file);
+    _save_data.version = LEVEL_MAKER_SAVE_SYSTEM_VERSION;
+    _save_data.name = level_name;
+    _save_data.author = level_author_name;
+    _save_data.player_score = -1;
+    _save_data.perfect_score = perfect_score;
+    _save_data.use_night_music = use_night_music;
+    _save_data.style = selected_style;
+    _save_data.objects = _objects_data;
+    _save_data.tiles = _tiles_data;
+		
+    level_maker_level_file_save(_level_file_path, _save_data);
+    // Write on file
+		//var _file_name = _level_file_path;
+		//var _json = json_stringify(_save_data);
+    //_json = base64_encode(_json);
+		//
+		//if file_exists(_file_name) {
+			//file_delete(_file_name)
+		//}
+		//
+		//var _file = file_text_open_write(_file_name);
+    //
+		//file_text_write_string(_file, _json);
+		//file_text_close(_file);
 	}
 }
 
@@ -124,31 +126,33 @@ function level_maker_load(_level_file_path) {
 		return;
 	}
 	
-	// Read json from file
-	var _json_string = "";
-	var _file = file_text_open_read(_level_file_path);
-	while not file_text_eof(_file) {
-		_json_string += file_text_read_string(_file);
-	}
-	file_text_close(_file);
-	
-	// All level info parsed
-	var _loaded_data = json_parse(_json_string);
+	var _loaded_data = undefined;
+  
+  try {
+  	_loaded_data = level_maker_level_file_open(_level_file_path);
+  } catch (_error) {
+    audio_play_sfx(snd_bump, false, -5, 13);
+  	call_message_popup(LANG.maker_level_file_invalid, 180, "Instances");
+    show_debug_message(_error);
+    return;
+  }
 		
   if not maker_level_data_is_valid(_loaded_data) {
+    audio_play_sfx(snd_bump, false, -5, 13);
     call_message_popup(LANG.maker_level_file_invalid, 180, "Instances");
     return;
   }
   
 	if _loaded_data.version != LEVEL_MAKER_SAVE_SYSTEM_VERSION {
+    audio_play_sfx(snd_bump, false, -5, 13);
     call_message_popup(LANG.maker_level_file_oldversion, 180, "Instances");
 		return;
 	}
   
 	with(oLevelMaker) {
-		var _level_style = struct_read(_loaded_data, "style", LEVEL_MAKER_STYLE.GRASS);
-    var _level_objects = struct_read(_loaded_data, "objects", []);
-    var _level_tiles = struct_read(_loaded_data, "tiles", []);
+		var _level_style = struct_read(_loaded_data, "style", LEVEL_MAKER_STYLE.GRASS),
+        _level_objects = struct_read(_loaded_data, "objects", []),
+        _level_tiles = struct_read(_loaded_data, "tiles", []);
 
     is_level_file_saved_local = true;
     level_file_name = _level_file_path;
@@ -174,17 +178,17 @@ function level_maker_load(_level_file_path) {
           if _loaded_object_grid == -1 {
             objects_grid[_x, _y] = -1;
           } else {
-            var _ox = _loaded_object_grid[0];
-            var _oy = _loaded_object_grid[1];
-            var _oname = _loaded_object_grid[2];
-            var _owidth = _loaded_object_grid[3];
-            var _oheight = _loaded_object_grid[4];
-            var _oxscale = _loaded_object_grid[5];
-            var _oyscale = _loaded_object_grid[6];
-            var _oangle = _loaded_object_grid[7];
-  
-            var _object_index = asset_get_index(_oname);
-            var _object_data = undefined;
+            var _ox = _loaded_object_grid[0],
+                _oy = _loaded_object_grid[1],
+                _oname = _loaded_object_grid[2],
+                _owidth = _loaded_object_grid[3],
+                _oheight = _loaded_object_grid[4],
+                _oxscale = _loaded_object_grid[5],
+                _oyscale = _loaded_object_grid[6],
+                _oangle = _loaded_object_grid[7],
+                
+                _object_index = asset_get_index(_oname),
+                _object_data = undefined;
               
             for(var t = 0; t < oLevelMaker.object_types_length and is_undefined(_object_data); t++) {
               for(var p = 0; p < oLevelMaker.list_positions_length and is_undefined(_object_data); p++) {
@@ -198,7 +202,9 @@ function level_maker_load(_level_file_path) {
             }
               
             if not is_undefined(_object_data) {
-              objects_grid[_ox, _oy] = new LMObjectGrid(_ox, _oy, _object_data, _owidth, _oheight, _oxscale, _oyscale, _oangle);
+              objects_grid[_ox, _oy] = new LMObjectGrid(
+                _ox, _oy, _object_data, _owidth, _oheight, _oxscale, _oyscale, _oangle
+              );
             } else {
               objects_grid[_ox, _oy] = -1;
             }
@@ -209,22 +215,21 @@ function level_maker_load(_level_file_path) {
 
     if array_length(_level_tiles) > 0 { 
       for(var i = 0; i < array_length(_level_tiles); i++) {
-        var _loaded_tile = array_get(_level_tiles, i);
+        var _loaded_tile = array_get(_level_tiles, i),
+            _tx = _loaded_tile[0],
+            _ty = _loaded_tile[1],
+            _tlayer_name = _loaded_tile[2],
+            _tid = _loaded_tile[3],
+            _trotated = _loaded_tile[4],
+            _tmirrored = _loaded_tile[5],
+            _tflipped = _loaded_tile[6],
+            _ttilemaplayername = _loaded_tile[7],
+            _txscale = _loaded_tile[8],
+            _tyscale = _loaded_tile[9],
+            _tangle = _loaded_tile[10],
 
-        var _tx = _loaded_tile[0];
-        var _ty = _loaded_tile[1];
-        var _tlayer_name = _loaded_tile[2];
-        var _tid = _loaded_tile[3];
-        var _trotated = _loaded_tile[4];
-        var _tmirrored = _loaded_tile[5];
-        var _tflipped = _loaded_tile[6];
-        var _ttilemaplayername = _loaded_tile[7];
-        var _txscale = _loaded_tile[8];
-        var _tyscale = _loaded_tile[9];
-        var _tangle = _loaded_tile[10];
-
-        var _tilelist = level_maker_get_tiles_list(_level_style);
-        var _tile = undefined;
+            _tilelist = level_maker_get_tiles_list(_level_style),
+            _tile = undefined;
 
         for (var t = 0; t < array_length(_tilelist) and is_undefined(_tile); t++) {
           var _type = _tilelist[t];

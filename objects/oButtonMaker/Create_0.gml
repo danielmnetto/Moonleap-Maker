@@ -220,7 +220,7 @@ action_save_level = function() {
 action_load_level = function() {
   play_sound_on_press();
 
-  var _level_file_name = get_open_filename("*.moonlevel", "mylevelname");
+  var _level_file_name = get_open_filename($"*.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}", "mylevelname");
 
   if (_level_file_name != "") {
     level_maker_load(_level_file_name);

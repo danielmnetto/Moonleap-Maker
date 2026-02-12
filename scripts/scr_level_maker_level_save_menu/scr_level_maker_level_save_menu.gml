@@ -17,7 +17,7 @@ function menu_save_level_get_main() {
     new MenuOptionCloseMenu(
       function() { return LANG.maker_level_save; },
       function() {
-        var _filename = $"{string_filename_create(oLevelMaker.level_name)}.moonlevel";
+        var _filename = $"{string_filename_create(oLevelMaker.level_name)}.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}";
         var _path = $"{LEVEL_MAKER_LEVELS_FOLDER_PATH}/{_filename}";
         
         try {
@@ -36,7 +36,7 @@ function menu_save_level_get_main() {
     new MenuOptionCloseMenu(
       function() { return LANG.maker_level_save_as; },
       function() {
-        var _path = get_save_filename("*.moonlevel", $"{string_filename_create(oLevelMaker.level_name)}.moonlevel");
+        var _path = get_save_filename("*.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}", $"{string_filename_create(oLevelMaker.level_name)}.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}");
         if (_path == "") {
           return;
         }
