@@ -656,9 +656,11 @@ perform_win = function() {
   if winwait == 0
   and room_is(RoomMaker0)
   and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
-    if (oLevelMaker.current_player_score < 0 or changecount < oLevelMaker.current_player_score)
+    if (oLevelMaker.current_player_score < 0
+      or changecount < oLevelMaker.current_player_score)
     and not instance_exists(oBird) {
       level_maker_save_update_player_score(oLevelMaker.level_file_name, changecount);
+      oLevelMaker.current_player_score = changecount;
     }
     
     var _maker_transition = maker_transition_start(room),
