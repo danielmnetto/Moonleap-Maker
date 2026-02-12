@@ -42,10 +42,8 @@ function menu_maker_get_main() {
           if _level_filename == "" {
             return;
           }
-          
-          var _filename_split = string_split(_level_filename, ".", true);
-          
-          if _filename_split[array_length(_filename_split) - 1] != LEVEL_MAKER_LEVEL_FILE_EXTENSION {
+
+          if not level_maker_is_level_file_extension_valid(_level_filename) {
             audio_play_sfx(snd_bump, false, -5, 13);
             call_message_popup(LANG.maker_level_file_invalid, 180, "Instances", true);
             return;
@@ -61,7 +59,7 @@ function menu_maker_get_main() {
             return;
           }
           
-          if _loaded_level_data.version != LEVEL_MAKER_SAVE_SYSTEM_VERSION {
+          if not maker_level_is_level_latest_version(_loaded_level_data) {
             audio_play_sfx(snd_bump, false, -5, 13);
             call_message_popup(LANG.maker_level_file_oldversion, 240, "Instances", true);
         		return;

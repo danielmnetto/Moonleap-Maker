@@ -43,3 +43,11 @@ function level_maker_level_file_save(_level_file_path, _level_data) {
   file_text_write_string(_file, _json);
   file_text_close(_file);
 }
+
+/// @desc Checks whether the given level file name has a valid extension.
+/// @param {string} _level_file_name Level file name.
+function level_maker_is_level_file_extension_valid(_level_file_name) {
+  var _filename_split = string_split(_level_file_name, ".", true);
+          
+  return _filename_split[array_length(_filename_split) - 1] == LEVEL_MAKER_LEVEL_FILE_EXTENSION;
+}

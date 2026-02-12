@@ -136,6 +136,12 @@ function level_maker_load(_level_file_path) {
     show_debug_message(_error);
     return;
   }
+  
+  if not level_maker_is_level_file_extension_valid(_level_file_path) {
+    audio_play_sfx(snd_bump, false, -5, 13);
+    call_message_popup(LANG.maker_level_file_invalid, 180, "Instances", true);
+    return;
+  }
 		
   if not maker_level_data_is_valid(_loaded_data) {
     audio_play_sfx(snd_bump, false, -5, 13);
@@ -143,7 +149,7 @@ function level_maker_load(_level_file_path) {
     return;
   }
   
-	if _loaded_data.version != LEVEL_MAKER_SAVE_SYSTEM_VERSION {
+	if not maker_level_is_level_latest_version(_loaded_data) {
     audio_play_sfx(snd_bump, false, -5, 13);
     call_message_popup(LANG.maker_level_file_oldversion, 180, "Instances");
 		return;
@@ -280,7 +286,8 @@ function custom_levels_directory_create() {
   directory_create(_directory);
 };
 
-/// @desc Checks whether the maker level data is valid. Returns `true` if so.
+/// @desc Checks whether the maker level maker data is valid.
+/// @param {Struct.LevelMakerFileData} _level_data The level data.
 function maker_level_data_is_valid(_level_data) {
   return not (
     (not struct_exists(_level_data, "version")          or not is_string(_level_data.version))
@@ -294,3 +301,9 @@ function maker_level_data_is_valid(_level_data) {
     or (not struct_exists(_level_data, "objects")          or not is_array (_level_data.objects))
   );
 };
+
+/// @desc Checks whether the maker level data version is the latest one.
+/// @param {Struct.LevelMakerFileData} _level_data The level data.
+function maker_level_is_level_latest_version(_level_data) {
+  return _level_data.version == LEVEL_MAKER_SAVE_SYSTEM_VERSION;
+}

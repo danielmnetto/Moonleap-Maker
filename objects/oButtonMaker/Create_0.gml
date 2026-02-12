@@ -221,10 +221,13 @@ action_load_level = function() {
   play_sound_on_press();
 
   var _level_file_name = get_open_filename($"*.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}", "mylevelname");
-
-  if (_level_file_name != "") {
-    level_maker_load(_level_file_name);
+  
+  if _level_file_name == "" {
+    return;
   }
+  
+  level_maker_load(_level_file_name);
+  
   with (oLevelMaker) {
     item_place_disable_timer.reset();
   }
