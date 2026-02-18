@@ -25,12 +25,9 @@ if instance_exists(oLevelMaker) {
 	nice_black = c_black;
 }
 
-if (instance_exists(oLevelMaker) and oLevelMaker.selected_style)
-or instance_exists(oDunDay) {
+if instance_exists(oDunDay) {
 	instance_create_layer(0, 0, "Instances_2", oFog);
 }
-//if room_height>180
-//{y=view_height}else {y=0}
 
 y=0
 x=0

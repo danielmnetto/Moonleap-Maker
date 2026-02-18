@@ -222,7 +222,7 @@ function level_maker_get_objects_list() {
 	_objects[0, 06] =	new LMObject(oSolidDay)
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5)
-    .add_tag("grid_16", "is_holdable")
+    .add_tag("grid_16", "is_holdable", "can_spin")
     .set_colorblind_icon_frame(0)
     .set_button_sprite_draw_config(sGrassGre, 0, 8, 8, 0, 0);
   _objects[0, 06].on_begin_draw_button_sprite = method(
@@ -273,7 +273,7 @@ function level_maker_get_objects_list() {
 	_objects[0, 07] =	new LMObject(oSolidNight)
     .set_size(16, 16)
     .set_sprite_origin(LEVEL_MAKER_OBJECT_SPRITE_ORIGIN.OFFSET5)
-    .add_tag("grid_16", "is_holdable")
+    .add_tag("grid_16", "is_holdable", "can_spin")
     .set_colorblind_icon_frame(1)
     .set_button_sprite_draw_config(sGrassGre, 0, 8, 8, 0, 0);
   _objects[0, 07].on_begin_draw_button_sprite = method(

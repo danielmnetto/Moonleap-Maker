@@ -969,6 +969,10 @@ start_level = function() {
 	// EFFECTS ENABLING
 	// =========================
   var _fx_dust = layer_get_id("FX_Dust");
+  
+  if layer_exists(_fx_dust) {
+    level_maker_set_fx(_fx_dust)
+  }
     
   layer_set_visible(_fx_dust, true);
 
