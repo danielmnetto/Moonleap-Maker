@@ -249,11 +249,16 @@ cursor_create_object_in_grid = function(_tile_x, _tile_y) {
 		if instance_exists(oSolidNight) then oSolidNight.update = true;
 		audio_play_sfx(snd_key2, false, -18.3, 20);
 		
-		repeat(3) {
-			var sm = instance_create_layer(x + 8, y + 8, "Instances_2", oBigSmoke);
+		repeat(irandom_range(2, 4)) {
+			var _smoke = instance_create_layer(
+        (_tile_x * tile_size) + 8,
+        (_tile_y * tile_size) + 8,
+        "Instances_Effects",
+        oBigSmoke
+      );
 			
-			sm.image_xscale=0.5;
-			sm.image_yscale=0.5;
+			_smoke.image_xscale = 0.5;
+			_smoke.image_yscale = 0.5;
 		}
 	}
 }
@@ -268,11 +273,13 @@ cursor_remove_object_from_grid = function() {
 			and cursor == LEVEL_MAKER_CURSOR.ERASER))
 		and is_struct(object_grid_hovering) 
 	{
+    var _tile_x = object_grid_hovering.top_left_x,
+        _tile_y = object_grid_hovering.top_left_y;
 		remove_object_from_grid(object_grid_hovering);
 		
 		audio_play_sfx(snd_brokestone,false,-5,15);
-		instance_create_layer(x + 8, y + 8, "Instances_2", oBigSmoke);
-		instance_create_layer(x + 8, y + 8, "Instances_2", oBigSmoke);
+		instance_create_layer((_tile_x * tile_size) + 8, (_tile_y * tile_size) + 8, "Instances_Effects", oBigSmoke);
+		instance_create_layer((_tile_x * tile_size) + 8, (_tile_y * tile_size) + 8, "Instances_Effects", oBigSmoke);
 	}
 }
 
@@ -333,7 +340,7 @@ cursor_create_tile_in_grid = function() {
     audio_play_sfx(snd_key2, false, -18.3, 20);
     
     repeat(3) {
-        var sm = instance_create_layer(x + 8, y + 8, "Instances_2", oBigSmoke);
+        var sm = instance_create_layer(x + 8, y + 8, "Instances_Effects", oBigSmoke);
         sm.image_xscale = 0.5;
         sm.image_yscale = 0.5;
     }
@@ -371,7 +378,7 @@ cursor_remove_tile_from_grid = function() {
 
     audio_play_sfx(snd_brokestone, false, -5, 15); 
     repeat(2) {
-      instance_create_layer(x, y, "Instances_2", oBigSmoke);
+      instance_create_layer(x, y, "Instances_Effects", oBigSmoke);
     }
 	}
 };
