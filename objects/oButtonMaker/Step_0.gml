@@ -5,9 +5,14 @@ if oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
 
 scr_inputget();
 
-var _is_left_pressing = mouse_check_button(mb_left),
-    _has_left_pressed = mouse_check_button_pressed(mb_left),
-    _is_mouse_hover = collision_point(global.level_maker_mouse_x, global.level_maker_mouse_y, self, false, false);
+var _is_left_pressing = key_cursor_left_click_pressing,
+    _has_left_pressed = key_cursor_left_click_pressed,
+    _mouse_x = global.level_maker_mouse_x,
+    _mouse_y = global.level_maker_mouse_y,
+    _obj = self,
+    _is_precise = false,
+    _not_me = false,
+    _is_mouse_hover = collision_point(_mouse_x, _mouse_y, _obj, _is_precise, _not_me);
 
 // Button shaking effect
 drawx = random_range(-holding_button_frames, holding_button_frames);
@@ -33,7 +38,7 @@ if image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL {
 		x = lerp(x, (32-small_size) / 2, 0.2);
 		y = lerp(y, room_height - 16 - small_size / 2, 0.2);
 
-		image_xscale = lerp(image_xscale,small_size/32, 0.2);
+		image_xscale = lerp(image_xscale, small_size / 32, 0.2);
 		image_yscale = image_xscale;
 	}
 } else if not level_maker_is_editing()
@@ -60,12 +65,12 @@ if _is_mouse_hover and _is_left_pressing {
 // ===================================
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.PAGE_UP
-and (key_up or mouse_wheel_up()) {
+and key_maker_list_page_up {
 	action_items_page_up();
 }
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.PAGE_DOWN
-and (key_down or mouse_wheel_down()) {
+and key_maker_list_page_down {
 	action_items_page_down();
 }
 
@@ -75,17 +80,19 @@ and keyboard_check_pressed(ord("S")) {
   action_save_level();
 }
 
+if image_index == LEVEL_MAKER_BUTTON_TYPE.MENU
+and key_maker_creator_menu {
+  action_menu();
+}
+
 if image_index == LEVEL_MAKER_BUTTON_TYPE.LOAD_LEVEL
 and keyboard_check(vk_control)
 and keyboard_check_pressed(ord("O")) {
   action_load_level();
 }
 
-// Before, the shortcut was 'SPACEBAR' to test the level.
-// It was changed to 'F5' because it was conflicting with
-// player's jump input.
 if image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL
-and keyboard_check_pressed(vk_f5) {
+and key_maker_toggle_test {
   action_test_level();
 }
 

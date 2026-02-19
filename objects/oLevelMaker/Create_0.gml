@@ -42,6 +42,12 @@ is_cursor_inside_level = false;
 item_preview_offset_x = 0;
 item_preview_offset_y = 0;
 has_object_below_cursor = false;
+cursor_move_speed = 2.5;
+previous_mouse_x = mouse_x;
+previous_mouse_y = mouse_y;
+
+global.level_maker_mouse_x = GUI_W / 2;
+global.level_maker_mouse_y = GUI_H / 2;
 
 item_place_disable_timer = new FrameTimer(30);
 
@@ -70,6 +76,8 @@ tiles = level_maker_get_tiles_list(selected_style);
 selected_tile = undefined;
 cursor_tile_hovering = undefined;
 tileset_size = LEVEL_MAKER_GRID_TILESETS_TILE_SIZE;
+selected_tile_type = 0;
+selected_tile_position = 0;
 
 // Objects-related
 obj = level_maker_get_objects_list();
@@ -97,29 +105,62 @@ set_hover_text = function(_hover_text) {
     hover_text = _hover_text;
 }
 
-set_list_navigation = function() {
-	var ui_nav_x = key_right_pressed - key_left_pressed;
+set_objects_list_navigation = function() {
+  if current_layer != LEVEL_MAKER_LAYERS.OBJECTS {
+    return;
+  }
+  
+	var _nav_axis_x = key_maker_item_select_right - key_maker_item_select_left;
 	
-	if ui_nav_x == 0 then return;
+	if _nav_axis_x == 0 then return;
 
-	item_preview_offset_x = 2 * sign(ui_nav_x);
-	selected_object_position += sign(ui_nav_x);
-	
-	while selected_object_position < 0 
-		or selected_object_position > list_positions_length - 1 
-		or is_undefined(obj[selected_object_type, selected_object_position])
-	{
-		selected_object_position += sign(ui_nav_x);
+	item_preview_offset_x = 2 * sign(_nav_axis_x);
+  do {
+    selected_object_position += sign(_nav_axis_x);
 		
 		if selected_object_position < 0 then 
 			selected_object_position = list_positions_length - 1;
-		else if selected_object_position > list_positions_length - 1 then 
-			selected_object_position = 0;
-	}
+		else if selected_object_position > list_positions_length - 1 {
+      selected_object_position = 0;
+    }
+  } until selected_object_position >= 0
+  and selected_object_position <= list_positions_length - 1
+  and not is_undefined(obj[selected_object_type, selected_object_position]);
 	
+  shake_gamepad(0.4, 4);
 	audio_play_sfx(snd_bump, false, -5, 13);
 
-	selected_object = obj[selected_object_type, selected_object_position];
+  update_selected_object();
+  cursor = LEVEL_MAKER_CURSOR.CURSOR;
+}
+
+set_tiles_list_navigation = function() {
+  if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+    return;
+  }
+  
+	var _nav_axis_x = key_maker_item_select_right - key_maker_item_select_left;
+	
+	if _nav_axis_x == 0 then return;
+
+	item_preview_offset_x = 2 * sign(_nav_axis_x);
+  do {
+    selected_tile_position += sign(_nav_axis_x);
+		
+		if selected_tile_position < 0 then 
+			selected_tile_position = list_positions_length - 1;
+		else if selected_tile_position > list_positions_length - 1 {
+      selected_tile_position = 0;
+    }
+  } until selected_tile_position >= 0
+  and selected_tile_position <= list_positions_length - 1
+  and not is_undefined(tiles[selected_tile_type, selected_tile_position]);
+	
+  shake_gamepad(0.4, 4);
+	audio_play_sfx(snd_bump, false, -5, 13);
+
+  update_selected_tile();
+  cursor = LEVEL_MAKER_CURSOR.CURSOR;
 }
 
 update_selected_object = function() {
@@ -127,15 +168,15 @@ update_selected_object = function() {
 }
 
 update_selected_tile = function() {
-  selected_tile = variable_clone(array_get(tiles[selected_object_type], selected_object_position));
+  selected_tile = variable_clone(array_get(tiles[selected_tile_type], selected_tile_position));
 }
 
 update_current_item = function() {
-    if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
-        update_selected_object();
-    } else {
-        update_selected_tile();
-    }
+  if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+    update_selected_object();
+  } else {
+    update_selected_tile();
+  }
 }
 
 check_return_to_editor_timer = function() {
@@ -158,8 +199,8 @@ check_return_to_editor_timer = function() {
   }
 }
 
-cursor_set_position = function() {
-	var _in_level_editor = level_maker_is_editing();
+update_camera_zoom = function() {
+  var _in_level_editor = level_maker_is_editing();
 
   if mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
     camera_current_interpolation = 1;
@@ -167,8 +208,44 @@ cursor_set_position = function() {
     camera_current_interpolation += _in_level_editor ? -0.07 : 0.07;
   }
 	camera_current_interpolation = clamp(camera_current_interpolation, 0, 1);
+}
 
-	// Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application
+cursor_set_position = function() {
+  if instance_exists_any([oPauseUI, oMessagePopup, oTransition, oMakerTransition])
+  or mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    return;
+  }
+  
+  var _axis_x = key_cursor_move_right - key_cursor_move_left,
+      _axis_y = key_cursor_move_down - key_cursor_move_up,
+      _cursor_x = global.level_maker_mouse_x,
+      _cursor_y = global.level_maker_mouse_y;
+  
+  if _axis_x != 0 or _axis_y != 0 {
+    var _dir = point_direction(0, 0, _axis_x, _axis_y);
+    
+    _cursor_x += lengthdir_x(cursor_move_speed, _dir);
+    _cursor_y += lengthdir_y(cursor_move_speed, _dir);
+    
+    if mode == LEVEL_MAKER_EDITOR_MODE.TESTING {
+      _cursor_x = clamp(_cursor_x, 0, GUI_W);
+      _cursor_y = clamp(_cursor_y, 0, GUI_H);
+    } else {
+      _cursor_x = clamp(_cursor_x, -53, GUI_W + 53);
+      _cursor_y = clamp(_cursor_y, -53, GUI_H + 7);
+    }
+    
+    global.level_maker_mouse_x = _cursor_x;
+    global.level_maker_mouse_y = _cursor_y;
+    
+    return;
+  }
+
+  if mouse_x == previous_mouse_x and mouse_y == previous_mouse_y {
+    return;
+  }
+  
+  // Recalculate the mouse position since I'm using oAppSurfaceManager to resize the application
   // surface to keep it pixel perfect this is instead of using the actual camera cause then it
   // would look ugly zoomed in.
 
@@ -186,12 +263,15 @@ cursor_set_position = function() {
 
 	global.level_maker_mouse_x = (mouse_x - _app_surface_x) / _gui_scale_x;
 	global.level_maker_mouse_y = (mouse_y - _app_surface_y) / _gui_scale_y;
+  
+  previous_mouse_x = mouse_x;
+  previous_mouse_y = mouse_y;
 };
 
 cursor_get_object_from_grid = function() {
 	if not is_cursor_inside_level
 	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS
-	or not mouse_check_button_pressed(mb_left)
+	or not key_cursor_left_click_pressed
 	or cursor != LEVEL_MAKER_CURSOR.FINGER
 	or not is_struct(object_grid_hovering)
 	or not item_place_disable_timer.has_timed_out() {
@@ -217,8 +297,8 @@ cursor_create_object_in_grid = function(_tile_x, _tile_y) {
 	or not item_place_disable_timer.has_timed_out() then
 		return;
 	
-	if (mouse_check_button_released(mb_left) 
-			or (mouse_check_button(mb_left) and selected_object.has_tag("is_holdable"))
+	if (key_cursor_left_click_pressing
+			or (key_cursor_left_click_pressing and selected_object.has_tag("is_holdable"))
 		) and cursor == LEVEL_MAKER_CURSOR.CURSOR 
 		and not is_undefined(selected_object)
 		and not has_object_below_cursor
@@ -268,8 +348,8 @@ cursor_remove_object_from_grid = function() {
 	or current_layer != LEVEL_MAKER_LAYERS.OBJECTS then
 		return;
 	
-	if (mouse_check_button(mb_right) 
-		or (mouse_check_button(mb_left) 
+	if (key_cursor_right_click_pressing
+		or (key_cursor_left_click_pressing
 			and cursor == LEVEL_MAKER_CURSOR.ERASER))
 		and is_struct(object_grid_hovering) 
 	{
@@ -288,7 +368,7 @@ cursor_create_tile_in_grid = function() {
 	or current_layer == LEVEL_MAKER_LAYERS.OBJECTS
 	or cursor != LEVEL_MAKER_CURSOR.CURSOR
 	or is_undefined(selected_tile)
-	or not mouse_check_button(mb_left)
+	or not key_cursor_left_click_pressing
    or not item_place_disable_timer.has_timed_out() {
       return;
    }
@@ -340,9 +420,9 @@ cursor_create_tile_in_grid = function() {
     audio_play_sfx(snd_key2, false, -18.3, 20);
     
     repeat(3) {
-        var sm = instance_create_layer(x + 8, y + 8, "Instances_Effects", oBigSmoke);
-        sm.image_xscale = 0.5;
-        sm.image_yscale = 0.5;
+      var sm = instance_create_layer(x + 8, y + 8, "Instances_Effects", oBigSmoke);
+      sm.image_xscale = 0.5;
+      sm.image_yscale = 0.5;
     }
 }
 
@@ -351,8 +431,8 @@ cursor_remove_tile_from_grid = function() {
 	or current_layer == LEVEL_MAKER_LAYERS.OBJECTS then
 		return;
 		
-	if (not mouse_check_button(mb_left) and mouse_check_button(mb_right)) 
-    or (mouse_check_button(mb_left) and cursor == LEVEL_MAKER_CURSOR.ERASER) {
+	if (not key_cursor_left_click_pressing and key_cursor_right_click_pressing) 
+    or (key_cursor_left_click_pressing and cursor == LEVEL_MAKER_CURSOR.ERASER) {
 		var _instance_layer_name = level_maker_get_decoration_layers().names.get_instance_name(current_layer);
 		var _x = floor(x / tileset_size) * tileset_size;
 		var _y = floor(y / tileset_size) * tileset_size;

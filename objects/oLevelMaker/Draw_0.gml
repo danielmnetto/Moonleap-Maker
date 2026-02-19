@@ -51,7 +51,7 @@ if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
 } else {
 	if cursor != LEVEL_MAKER_CURSOR.ERASER
 	and is_cursor_inside_level 
-   and not is_undefined(selected_tile)
+  and not is_undefined(selected_tile)
 	and level_maker_is_editing() 
 	and not instance_exists(oPauseUI) {
 		var _x = floor(x / tileset_size) * tileset_size;

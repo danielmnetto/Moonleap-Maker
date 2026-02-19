@@ -1,3 +1,5 @@
+scr_inputget();
+
 drawtarget = 0;
 
 if not level_maker_is_editing() or instance_exists(oPauseUI) {
@@ -15,7 +17,7 @@ if oLevelMaker.current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
 	sprite_index = not is_active ? -1 : object_get_sprite(object.index);
 } else {
   with(oLevelMaker) {
-    other.tile = tiles[selected_object_type, other.index];
+    other.tile = tiles[selected_tile_type, other.index];
   }
 	
 	is_active = not is_undefined(tile) or tile <= 0;
@@ -43,11 +45,17 @@ var _mouse_x = global.level_maker_mouse_x,
 
 if is_active
 and point_in_rectangle(_mouse_x, _mouse_y, _button_left, _button_top, _button_right, _button_bottom)
-and mouse_check_button_pressed(mb_left) {
+and key_cursor_left_click_pressed {
+  shake_gamepad(0.4, 4);
   audio_play_sfx(sndUiChange, false, -18.3, 1);
   with(oLevelMaker) {
     cursor = LEVEL_MAKER_CURSOR.FINGER;
-    selected_object_position = other.index;
+    if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+      selected_object_position = other.index;  
+    } else {
+      selected_tile_position = other.index;
+    }
+    
     image_xscale = 1;
     image_yscale = 1;
     image_angle = 0;
@@ -77,7 +85,7 @@ var _selected_layer = oLevelMaker.current_layer;
 if (_selected_layer == LEVEL_MAKER_LAYERS.OBJECTS
 	and object == oLevelMaker.obj[oLevelMaker.selected_object_type, oLevelMaker.selected_object_position]
 ) or (_selected_layer != LEVEL_MAKER_LAYERS.OBJECTS
-	and tile == oLevelMaker.tiles[oLevelMaker.selected_object_type, oLevelMaker.selected_object_position]
+	and tile == oLevelMaker.tiles[oLevelMaker.selected_tile_type, oLevelMaker.selected_tile_position]
 ) {
 	drawtarget = -2;
 }

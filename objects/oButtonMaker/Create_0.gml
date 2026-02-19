@@ -59,10 +59,20 @@ play_sound_on_page_change = function() {
   audio_play_sfx(_sound, _can_loop, _gain, _pitch);
 };
 
+shake_gamepad_on_press = function() {
+  var _intensity = 0.4,
+      _duration = 4;
+  
+  shake_gamepad(_intensity, _duration);
+}
+
 change_style = function() {
   with(oLevelMaker) {
 		selected_object_type = 0;
 		selected_object_position = 0;
+    
+    selected_tile_type = 0;
+		selected_tile_position = 0;
 		
 		selected_style += 1;
 		if selected_style >= LEVEL_MAKER_STYLE.LENGTH {
@@ -134,13 +144,39 @@ update_hover_text = function() {
 };
 
 action_items_page_up = function() {
+  shake_gamepad_on_press();
   play_sound_on_page_change();
+  
   with(oLevelMaker) {
-		var _pages_length = current_layer == LEVEL_MAKER_LAYERS.OBJECTS
-      ? array_length(obj) - 1
-      : array_length(tiles) - 1;
+    var _pages_length = 0;
+    
+    if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+      _pages_length = array_length(obj) - 1;
+      
+      selected_object_position = 0; 
+      selected_object_type -= 1;
+      
+  		repeat(_pages_length) {
+  			if selected_object_type < 0 then
+  				selected_object_type = _pages_length;
+  			if selected_object = noone then 
+  				selected_object_position -= 1;
+  		}
+    } else {
+      _pages_length = array_length(tiles) - 1;
+      
+      selected_tile_position = 0; 
+      selected_tile_type -= 1;
+  		repeat(_pages_length) {
+  			if selected_tile_type < 0 then
+  				selected_tile_type = _pages_length;
+  			if is_undefined(selected_tile) then 
+  				selected_tile_position -= 1;
+  		}
+    }
 		
 		item_preview_offset_y = -4;
+    selected_object_position = 0;
     selected_object_type -= 1;
 		repeat(_pages_length) {
 			if selected_object_type < 0 then
@@ -148,42 +184,58 @@ action_items_page_up = function() {
 			if selected_object == noone then
 				selected_object_type -= 1;
 		}
+    
 		oButtonMakerObj.drawplus = -1;
-    with(oLevelMaker) {
-      image_xscale = 1;
-      image_yscale = 1;
-      image_angle = 0;
-      update_current_item();
-    }
+    image_xscale = 1;
+    image_yscale = 1;
+    image_angle = 0;
+    update_current_item();
 	}
 };
 
 action_items_page_down = function() {
+  shake_gamepad_on_press();
   play_sound_on_page_change();
   with(oLevelMaker) {
-		var _pages_length = current_layer == LEVEL_MAKER_LAYERS.OBJECTS
-      ? array_length(obj) - 1
-      : array_length(tiles) - 1;
-
-		item_preview_offset_y = 4; 
-    selected_object_type += 1;
-		repeat(list_positions_length - 1) {
-			if selected_object_type > _pages_length then
-				selected_object_type = 0;
-			if selected_object = noone then 
-				selected_object_position += 1;
-		}
-		oButtonMakerObj.drawplus = 1;
-		with(oLevelMaker) {
-      image_xscale = 1;
-      image_yscale = 1;
-      image_angle = 0;
-      update_current_item();
+    item_preview_offset_y = 4;
+    
+    var _pages_length = 0;
+    
+    if current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+      _pages_length = array_length(obj) - 1;
+      
+      selected_object_position = 0; 
+      selected_object_type += 1;
+      
+  		repeat(_pages_length) {
+  			if selected_object_type > _pages_length then
+  				selected_object_type = 0;
+  			if selected_object = noone then 
+  				selected_object_position += 1;
+  		}
+    } else {
+      _pages_length = array_length(tiles) - 1;
+      
+      selected_tile_position = 0; 
+      selected_tile_type += 1;
+  		repeat(_pages_length) {
+  			if selected_tile_type > _pages_length then
+  				selected_tile_type = 0;
+  			if is_undefined(selected_tile) then 
+  				selected_tile_position += 1;
+  		}
     }
+
+    image_xscale = 1;
+    image_yscale = 1;
+    image_angle = 0;
+    update_current_item();
+		oButtonMakerObj.drawplus = 1;
 	}
 };
 
 action_menu = function() {
+  shake_gamepad_on_press();
   play_sound_on_press();
   
   var _menu_list = menus_get_level_editor(),
@@ -212,14 +264,15 @@ action_save_level = function() {
     level_maker_save_show_missing_objects_message();
     return;
   }
-  
+  shake_gamepad_on_press();
   play_sound_on_press();
   menu_call_layer(menus_get_save_level(), "main", "Instances", true, false, false, true);
 };
 
 action_load_level = function() {
   play_sound_on_press();
-
+  shake_gamepad_on_press();
+  
   var _level_file_name = get_open_filename($"*.{LEVEL_MAKER_LEVEL_FILE_EXTENSION}", "mylevelname");
   
   if _level_file_name == "" {
@@ -241,6 +294,7 @@ action_test_level = function() {
     return;
   }
   
+  shake_gamepad_on_press();
   with(oLevelMaker) {
     if level_maker_is_editing() {
       start_level();
@@ -254,16 +308,17 @@ action_test_level = function() {
 
 action_help = function() {
   play_sound_on_press();
+  shake_gamepad_on_press(); 
   call_message_info([
     LANG.maker_help_page1,
     LANG.maker_help_page2,
     LANG.maker_help_page3 
   ], "Instances_2");
-	//show_message_async(LANG.maker_help_text);
 };
 
 action_change_style = function() {
   play_sound_on_press();
+  shake_gamepad_on_press();
   if instance_number(oMakerEditorTileDraft) > 0 {
     var _warning = instance_create_layer(0, 0, "Instances_2", oMakerWarning);
     
@@ -276,11 +331,12 @@ action_change_style = function() {
 
 action_eraser = function() {
   play_sound_on_press();
+  shake_gamepad_on_press();
   oLevelMaker.cursor = LEVEL_MAKER_CURSOR.ERASER;
 };
 
 action_clear_level = function() {
-  var _is_left_pressing = mouse_check_button(mb_left);
+  var _is_left_pressing = key_cursor_left_click_pressing;
 
   if _is_left_pressing {
 		if not has_cleared_level {
@@ -291,6 +347,7 @@ action_clear_level = function() {
 		
 			if holding_button_frames == holding_button_max_frames {
 				has_cleared_level = true;
+        shake_gamepad_on_press();
 				audio_play_sfx(sfx_luano_death_pause_01, false, -8.79, 5);
 				with(oLevelMaker) {
           selected_style = LEVEL_MAKER_STYLE.GRASS;
@@ -309,6 +366,7 @@ action_clear_level = function() {
 };
 
 action_change_layer = function() {
+  shake_gamepad_on_press();
   play_sound_on_press();
   with(oLevelMaker) {
     selected_object = undefined;

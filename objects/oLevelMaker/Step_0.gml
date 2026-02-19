@@ -61,7 +61,7 @@ check_return_to_editor_timer();
 if not level_maker_is_editing() or instance_exists(oPauseUI) then exit;
 
 // This code is to prevent random misfiring clicks after you press the button to play the level again
-if just_entered_level_editor and mouse_check_button_released(mb_left) {
+if just_entered_level_editor and key_cursor_left_click_released {
 	just_entered_level_editor = false;
 	exit;
 }
@@ -77,7 +77,8 @@ scr_inputget();
 // ------------------------------------
 // Selecting objects
 // ------------------------------------
-set_list_navigation();
+set_objects_list_navigation();
+set_tiles_list_navigation();
 update_tilesets_by_style();
 
 sprite_index = is_undefined(selected_object) ? -1 : object_get_sprite(selected_object.index);
