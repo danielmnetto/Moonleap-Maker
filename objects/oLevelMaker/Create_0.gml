@@ -971,7 +971,7 @@ start_level = function() {
   switch (selected_style) {
     case LEVEL_MAKER_STYLE.GRASS:
       var _drops_min = 0,
-          _drops_max = 10,
+          _drops_max = 7,
           _drops_amount = irandom_range(_drops_min, _drops_max),
           _position_gap = 16,
           _x_start = 0,
@@ -980,7 +980,7 @@ start_level = function() {
       repeat (_drops_amount) {
         var _x = irandom_range(_x_start, _x_end);
         
-        instance_create_layer(_x * _position_gap, 0, "Instances_Effects", oWaterCreator);
+        instance_create_layer(_x * _position_gap, 0, "Instances", oWaterCreator);
       }
     break;
     
