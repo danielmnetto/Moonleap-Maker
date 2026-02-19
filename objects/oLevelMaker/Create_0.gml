@@ -978,10 +978,37 @@ start_level = function() {
           _x_end = GUI_W / _position_gap;
       
       repeat (_drops_amount) {
-        var _x = irandom_range(_x_start, _x_end);
+        var _x = irandom_range(_x_start, _x_end),
+            _y = 0,
+            _layer = "Instances",
+            _water_creator_obj = oWaterCreator;
         
-        instance_create_layer(_x * _position_gap, 0, "Instances", oWaterCreator);
+        instance_create_layer(_x * _position_gap, _y, _layer, _water_creator_obj);
       }
+    break;
+  
+    case LEVEL_MAKER_STYLE.FLOWERS:
+      var _locations_amount = irandom_range(0, 2);
+      
+      repeat(_locations_amount) {
+        var _bugs_amount = irandom_range(1, 3),
+            _screen_margin = 48;
+        
+        repeat(_bugs_amount) {
+          var _x = irandom_range(_screen_margin, GUI_W - _screen_margin) + irandom_range(-12, 12),
+            _y = irandom_range(_screen_margin, GUI_H - _screen_margin) + irandom_range(-8, 8),
+            _layer = "Instances",
+            _bug_object = oBug;
+        
+          instance_create_layer(_x, _y, _layer, _bug_object);
+        }
+      }
+    break;
+  
+    case LEVEL_MAKER_STYLE.SPACE:
+      var _layer_background_wave = "FX_Background2";
+      
+      layer_set_visible(_layer_background_wave, true);
     break;
     
     case LEVEL_MAKER_STYLE.DUNGEON:
@@ -995,7 +1022,7 @@ start_level = function() {
   var _fx_dust = layer_get_id("FX_Dust");
   
   if layer_exists(_fx_dust) {
-    level_maker_set_fx(_fx_dust)
+    level_maker_set_fx(_fx_dust);
   }
     
   layer_set_visible(_fx_dust, true);
@@ -1039,6 +1066,7 @@ destroy_level_gimmicks = function() {
 	instance_destroy(oFogMaker);
   instance_destroy(oWaterCreator);
   instance_destroy(oWaterDrop);
+  instance_destroy(oBug);
 }
 
 end_level = function() {
@@ -1055,9 +1083,11 @@ end_level = function() {
 	destroy_level_gimmicks();
 	
   // Disable layer effects
-  var _fx_dust = layer_get_id("FX_Dust");
+  var _fx_dust = layer_get_id("FX_Dust"),
+      _layer_background_wave = "FX_Background2";
 
   layer_set_visible(_fx_dust, false);
+  layer_set_visible(_layer_background_wave, false);
   
   level_maker_change_fx();
   
