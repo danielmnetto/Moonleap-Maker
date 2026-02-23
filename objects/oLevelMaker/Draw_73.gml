@@ -37,11 +37,20 @@ if mode == LEVEL_MAKER_EDITOR_MODE.EDITING and hover_text != "" {
 }
 
 // CURSOR
-draw_set_halign(fa_left)
+draw_set_halign(fa_left);
 
 if mode != LEVEL_MAKER_EDITOR_MODE.PLAYING {
-  draw_sprite(sCursor, cursor, global.level_maker_mouse_x, global.level_maker_mouse_y);  
+  var _sprite = sCursor,
+      _frame = cursor,
+      _x = global.level_maker_mouse_x,
+      _y = global.level_maker_mouse_y,
+      _xscale = 1,
+      _yscale = 1,
+      _angle = 0,
+      _color = c_white,
+      _alpha = mode == LEVEL_MAKER_EDITOR_MODE.TESTING ? 0.25 : 1;
+
+  draw_sprite_ext(_sprite, _frame, _x, _y, _xscale, _yscale, _angle, _color, _alpha);
 }
 
-draw_set_color(-1);
-draw_set_halign(-1);
+draw_reset();
