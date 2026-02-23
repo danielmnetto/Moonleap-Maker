@@ -31,7 +31,7 @@ function scr_inputget()
       or obDirection.key_right;
 		key_right_pressed = keyboard_check_pressed(ord("D"))
       or keyboard_check_pressed(vk_right) 
-      or gamepad_button_check(_gpad_device_index, gp_padr)
+      or gamepad_button_check_pressed(_gpad_device_index, gp_padr)
       or (gamepad_axis_value(_gpad_device_index, gp_axislh) > _gpad_axis_deadzone)
       or obDirection.key_right;
     key_left = keyboard_check(ord("A"))
@@ -41,7 +41,7 @@ function scr_inputget()
       or obDirection.key_left;
 		key_left_pressed = keyboard_check_pressed(ord("A"))
       or keyboard_check_pressed(vk_left)
-      or gamepad_button_check(_gpad_device_index, gp_padl)
+      or gamepad_button_check_pressed(_gpad_device_index, gp_padl)
       or gamepad_axis_value(_gpad_device_index, gp_axislh) < -_gpad_axis_deadzone
       or obDirection.key_left;
     key_down_notpressed = keyboard_check(ord("S"))
@@ -78,48 +78,39 @@ function scr_inputget()
       or gamepad_button_check_pressed(_gpad_device_index, gp_select);
     
     // Level Maker
-    key_cursor_move_down = keyboard_check(ord("K"))
+    key_cursor_move_down = keyboard_check(ord("S"))
       or gamepad_axis_value(_gpad_device_index, gp_axislv) > _gpad_axis_deadzone
       or gamepad_axis_value(_gpad_device_index, gp_axisrv) > _gpad_axis_deadzone;
-    key_cursor_move_up = keyboard_check(ord("I"))
+    key_cursor_move_up = keyboard_check(ord("W"))
       or gamepad_axis_value(_gpad_device_index, gp_axislv) < -_gpad_axis_deadzone
       or gamepad_axis_value(_gpad_device_index, gp_axisrv) < -_gpad_axis_deadzone;
-    key_cursor_move_left = keyboard_check(ord("J"))
+    key_cursor_move_left = keyboard_check(ord("A"))
       or gamepad_axis_value(_gpad_device_index, gp_axislh) < -_gpad_axis_deadzone
       or gamepad_axis_value(_gpad_device_index, gp_axisrh) < -_gpad_axis_deadzone;
-    key_cursor_move_right = keyboard_check(ord("L"))
+    key_cursor_move_right = keyboard_check(ord("D"))
       or gamepad_axis_value(_gpad_device_index, gp_axislh) > _gpad_axis_deadzone
       or gamepad_axis_value(_gpad_device_index, gp_axisrh) > _gpad_axis_deadzone;
+    
     key_cursor_left_click_pressing = mouse_check_button(mb_left)
-      or keyboard_check(ord("U"))
-      or gamepad_button_check(_gpad_device_index, gp_shoulderl)
-      or gamepad_button_check(_gpad_device_index, gp_face1)
-      or gamepad_button_check(_gpad_device_index, gp_face3);
+      or keyboard_check(ord("Q"))
+      or gamepad_button_check(_gpad_device_index, gp_shoulderl);
     key_cursor_left_click_pressed = mouse_check_button_pressed(mb_left)
-      or keyboard_check_pressed(ord("U"))
-      or gamepad_button_check_pressed(_gpad_device_index, gp_shoulderl)
-      or gamepad_button_check_pressed(_gpad_device_index, gp_face1)
-      or gamepad_button_check_pressed(_gpad_device_index, gp_face3);
+      or keyboard_check_pressed(ord("Q"))
+      or gamepad_button_check_pressed(_gpad_device_index, gp_shoulderl);
     key_cursor_left_click_released = mouse_check_button_released(mb_left)
-      or keyboard_check_released(ord("U"))
-      or gamepad_button_check_released(_gpad_device_index, gp_shoulderl)
-      or gamepad_button_check_released(_gpad_device_index, gp_face1)
-      or gamepad_button_check_released(_gpad_device_index, gp_face3);
+      or keyboard_check_released(ord("Q"))
+      or gamepad_button_check_released(_gpad_device_index, gp_shoulderl);
+    
     key_cursor_right_click_pressing = mouse_check_button(mb_right)
-      or keyboard_check(ord("O"))
-      or gamepad_button_check(_gpad_device_index, gp_shoulderr)
-      or gamepad_button_check(_gpad_device_index, gp_face2)
-      or gamepad_button_check(_gpad_device_index, gp_face4);
+      or keyboard_check(ord("E"))
+      or gamepad_button_check(_gpad_device_index, gp_shoulderr);
     key_cursor_right_click_pressed = mouse_check_button_pressed(mb_right)
-      or keyboard_check_pressed(ord("O"))
-      or gamepad_button_check_pressed(_gpad_device_index, gp_shoulderr)
-      or gamepad_button_check_pressed(_gpad_device_index, gp_face2)
-      or gamepad_button_check_pressed(_gpad_device_index, gp_face4);
+      or keyboard_check_pressed(ord("E"))
+      or gamepad_button_check_pressed(_gpad_device_index, gp_shoulderr);
     key_cursor_right_click_released = mouse_check_button_released(mb_right)
-      or keyboard_check_released(ord("O"))
-      or gamepad_button_check_released(_gpad_device_index, gp_shoulderr)
-      or gamepad_button_check_released(_gpad_device_index, gp_face2)
-      or gamepad_button_check_released(_gpad_device_index, gp_face4);
+      or keyboard_check_released(ord("E"))
+      or gamepad_button_check_released(_gpad_device_index, gp_shoulderr);
+    
     key_maker_list_page_up = keyboard_check_pressed(vk_up)
       or gamepad_button_check_pressed(_gpad_device_index, gp_padu)
       or mouse_wheel_up();
@@ -130,6 +121,12 @@ function scr_inputget()
       or gamepad_button_check_pressed(_gpad_device_index, gp_padl);
     key_maker_item_select_right = keyboard_check_pressed(vk_right)
       or gamepad_button_check_pressed(_gpad_device_index, gp_padr);
+    
+    key_maker_item_rotate = keyboard_check_pressed(ord("Z"))
+      or gamepad_button_check_pressed(_gpad_device_index, gp_face4);
+    key_maker_item_mirror = keyboard_check_pressed(ord("X"))
+      or gamepad_button_check_pressed(_gpad_device_index, gp_face3);
+    
     key_maker_toggle_test = keyboard_check_pressed(vk_f5)
       or gamepad_button_check_pressed(_gpad_device_index, gp_start);
     key_maker_creator_menu = keyboard_check_pressed(vk_return)

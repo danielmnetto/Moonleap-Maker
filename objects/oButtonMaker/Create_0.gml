@@ -174,16 +174,6 @@ action_items_page_up = function() {
   				selected_tile_position -= 1;
   		}
     }
-		
-		item_preview_offset_y = -4;
-    selected_object_position = 0;
-    selected_object_type -= 1;
-		repeat(_pages_length) {
-			if selected_object_type < 0 then
-				selected_object_type = _pages_length;
-			if selected_object == noone then
-				selected_object_type -= 1;
-		}
     
 		oButtonMakerObj.drawplus = -1;
     image_xscale = 1;

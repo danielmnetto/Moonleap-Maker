@@ -532,7 +532,7 @@ set_tile_manipulation = function() {
 	var _tile = selected_tile.tile_id;
 	
 	// Rotate tile
-	if keyboard_check_pressed(ord("Z")) {
+	if key_maker_item_rotate {
 		audio_play_sfx(sndPress, false, -5, 13);
 		
 		image_angle += 90;
@@ -567,7 +567,7 @@ set_tile_manipulation = function() {
 	}
 	
 	// Flip/Mirror tile
-	if keyboard_check_pressed(ord("X")) {
+	if key_maker_item_mirror {
 		audio_play_sfx(sndPress, false, -5, 13);
 		var _new_tile = _tile;
 		
@@ -586,7 +586,7 @@ set_object_rotation_and_scaling = function() {
 		return;
 	
 	if selected_object.has_tag("can_flip") {
-		if keyboard_check_pressed(ord("X")) {
+		if key_maker_item_mirror {
 			if selected_object.has_tag("is_vertical") {
 				image_yscale *= -1;
 			} else {
@@ -600,7 +600,7 @@ set_object_rotation_and_scaling = function() {
 	}
 	
 	if selected_object.has_tag("can_spin") {
-		if keyboard_check_pressed(ord("Z")) {
+		if key_maker_item_rotate {
 			image_angle += 90;
 			if image_angle >= 360 then image_angle = 0;
 			audio_play_sfx(sndPress, false, -5, 13);

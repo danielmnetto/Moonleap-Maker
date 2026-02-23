@@ -29,9 +29,13 @@ function scr_inputcreate() {
   key_cursor_right_click_released = false;
   
   key_maker_toggle_test = false;
+  key_maker_creator_menu = false;
+  
   key_maker_list_page_up = false;
   key_maker_list_page_down = false;
   key_maker_item_select_left = false;
   key_maker_item_select_right = false;
-  key_maker_creator_menu = false;
+  
+  key_maker_item_rotate = false;
+  key_maker_item_mirror = false;
 }
