@@ -300,9 +300,19 @@ action_help = function() {
   play_sound_on_press();
   shake_gamepad_on_press(); 
   call_message_info([
-    LANG.maker_help_page1,
-    LANG.maker_help_page2,
-    LANG.maker_help_page3 
+    LANG.maker_help_welcome,
+    LANG.maker_help_creating_and_testing,
+    LANG.maker_help_custom_config,
+    LANG.maker_help_recommendations,
+    LANG.maker_help_layers,
+    LANG.maker_help_change_style1,
+    LANG.maker_help_change_style2,
+    LANG.maker_help_save_level,
+    LANG.maker_help_load_level,
+    LANG.maker_help_shortcut_keyboard1,
+    LANG.maker_help_shortcut_keyboard2,
+    LANG.maker_help_shortcut_controller1,
+    LANG.maker_help_shortcut_controller2
   ], "Instances_2");
 };
 

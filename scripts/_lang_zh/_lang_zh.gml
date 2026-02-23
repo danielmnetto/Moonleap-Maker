@@ -117,12 +117,20 @@ lang_add("ZH", {
   maker_level_play_no_player: "此关卡没有玩家！",
   maker_level_play_no_star: "此关卡没有星星！",
   
-  maker_help_text: "欢迎来到 Moonleap Maker！\n点击对象并将它们放置在关卡中\n\n键盘：\nZ - 旋转对象\nX - 镜像对象\nWASD 或方向键 - 在对象列表中导航\nF5 - 测试关卡\n\n鼠标：\n左键 - 放置对象\n右键 - 删除对象\n滚轮 - 更改对象列表中的类型\n建议将屏幕循环限制为仅限玩家\n其他对象可能无法按预期运行",
-  
-  maker_help_page1: "欢迎来到 Moonleap Maker！\n\n点击对象并将它们放置在关卡中。\n其他对象可能无法正常工作。\n建议只有玩家在屏幕上循环。",
-  maker_help_page2: "快捷键 1：\n\nZ 键 - 旋转选中的对象\nX 键 - 翻转选中的对象\nWASD/方向键 - 浏览对象列表\nF5 键 - 测试关卡或返回编辑器",
-  maker_help_page3: "快捷键 2：\n\n鼠标左键 - 放置或移动对象\n鼠标右键 - 删除对象\n鼠标滚轮 - 更改对象列表中的类型",
-  
+  maker_help_welcome: "欢迎来到 Moonleap Maker！\n\n使用 Moonleap 的元素创建自定义关卡，挑战自己并与朋友分享！",
+  maker_help_creating_and_testing: "创建与测试关卡\n\n从上方列表中选择一个对象，并将其放置在屏幕中央。然后按下左下角的 Play 按钮来测试你的关卡。",
+  maker_help_custom_config: "修改关卡信息\n\n要配置关卡信息，请按下屏幕左侧的菜单按钮，并修改关卡名称、作者和完美分数等选项。",
+  maker_help_recommendations: "建议\n\n请确保只有玩家在关卡中循环。一些元素如果放置在某些位置，可能无法正常工作。",
+  maker_help_layers: "放置装饰图块\n\n你可以使用装饰图块来装饰关卡。按下屏幕右侧的图层按钮切换深度，然后选择并开始在关卡中放置所需的图块。",
+  maker_help_change_style1: "更改关卡风格\n\n如果想更改关卡风格，请按下屏幕右侧的画笔按钮，直到出现所需选项。",
+  maker_help_change_style2: "关于关卡风格与装饰图块\n\n装饰图块在不同关卡风格中是独有的，更换风格时需要将其删除。因此，请先选择关卡风格，再开始装饰。",
+  maker_help_save_level: "保存关卡\n\n当你对关卡满意或希望稍后继续时，请按下屏幕左侧的软盘按钮，并选择保存方式。",
+  maker_help_load_level: "加载关卡\n\n如果想加载保存在设备上的自己或他人的关卡，请按下屏幕左侧的文件夹按钮，并选择一个名称以 .moonlevel 结尾的文件。",
+  maker_help_shortcut_keyboard1: "键盘快捷键\n\nWASD - 移动光标\nQ 和 E - 模拟鼠标点击（分别为左键和右键）\n方向键 - 在菜单元素之间导航",
+  maker_help_shortcut_keyboard2: "键盘快捷键\n\nZ - 旋转选中的元素\nX - 镜像选中的元素\nF5 - 在测试关卡与返回编辑器之间切换\nENTER 或 ESC - 打开菜单",
+  maker_help_shortcut_controller1: "手柄快捷键\n\n模拟摇杆 - 移动光标\n肩键 - 模拟鼠标点击（分别为左键和右键）\n方向键 - 在菜单元素之间导航",
+  maker_help_shortcut_controller2: "手柄快捷键\n\n左侧功能键 - 旋转选中的元素\n上方功能键 - 镜像选中的元素\nStart 键 - 在测试关卡与返回编辑器之间切换\nSelect 键 - 打开菜单",
+    
   maker_level_file_oldversion: "此关卡文件来自旧版本的关卡编辑器，无法加载",
   maker_level_file_invalid: "此关卡文件无效，无法加载",
   maker_level_file_notfound: "未找到该关卡文件。",
