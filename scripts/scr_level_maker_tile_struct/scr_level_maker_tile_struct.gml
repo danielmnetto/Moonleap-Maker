@@ -61,7 +61,7 @@ function level_maker_get_tiles_list(_style) {
 			_pages = 4;
 			_tiles_amount = 56;
 			_tile_changes_starts_from = 38;
-      _excluded_tile_indexes = [14];
+      _excluded_tile_indexes = [14, 37];
 			break;
 
 		case LEVEL_MAKER_STYLE.CLOUDS:
@@ -69,7 +69,7 @@ function level_maker_get_tiles_list(_style) {
 			_pages = 4;
 			_tiles_amount = 62;
 			_tile_changes_starts_from = 37;
-      _excluded_tile_indexes = [44];
+      _excluded_tile_indexes = [36, 44];
 			_animated_tiles = {
 				"_38": {
 					sprite_day: sAnimTileCloudCloudEdgeDay,
@@ -97,8 +97,8 @@ function level_maker_get_tiles_list(_style) {
 		case LEVEL_MAKER_STYLE.FLOWERS:
 			_tileset = tMakerFlowerDay;
 			_pages = 3;
-			_tiles_amount = 39;
-      _excluded_tile_indexes = [22];
+			_tiles_amount = 38;
+      _excluded_tile_indexes = [13, 22];
 			_tile_changes_starts_from = infinity; // infinity = no tiles that changes day/night in this tileset
 			break;
 
@@ -107,7 +107,7 @@ function level_maker_get_tiles_list(_style) {
 			_pages = 3;
 			_tiles_amount = 53;
 			_tile_changes_starts_from = 34;
-      _excluded_tile_indexes = [35, 39, 40, 41, 42, 43];
+      _excluded_tile_indexes = [33, 35, 39, 40, 41, 42, 43];
       _animated_tiles = {
         "_37": {
           sprite_day: sAnimTileSpaceCloudCenterDay,
@@ -137,6 +137,7 @@ function level_maker_get_tiles_list(_style) {
 			_pages = 4;
 			_tiles_amount = 57;
 			_tile_changes_starts_from = 45;
+      _excluded_tile_indexes = [38];
       _animated_tiles = {
         "_56": {
           sprite_day: sAnimTileDunTochaDay,
