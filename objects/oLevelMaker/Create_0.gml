@@ -27,6 +27,7 @@ level_file_name = "";
 
 // "True Test" config
 time_played_timer = new DeltaStopwatch();
+record_time_timer = new DeltaStopwatch();
 current_player_score = -1;
 
 // Objects Grid-related

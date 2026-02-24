@@ -655,14 +655,23 @@ perform_win = function() {
   
   if winwait == 0
   and room_is(RoomMaker0)
+  and instance_exists(oLevelMaker)
   and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
-    if (oLevelMaker.current_player_score < 0
-      or changecount < oLevelMaker.current_player_score)
-    and not instance_exists(oBird) {
-      level_maker_save_update_player_score(oLevelMaker.level_file_name, changecount);
-      oLevelMaker.current_player_score = changecount;
+    var _time_played = oLevelMaker.time_played_timer.get_time(),
+        _record_time = oLevelMaker.record_time_timer.get_time();
+    
+    if _time_played < _record_time {
+      oLevelMaker.record_time_timer.set_time(_time_played);
+      _record_time = _time_played;
+      level_maker_save_update_record_time(oLevelMaker.level_file_name, _record_time);
     }
     
+    if (oLevelMaker.current_player_score < 0 or changecount < oLevelMaker.current_player_score)
+    and not instance_exists(oBird) {
+      oLevelMaker.current_player_score = changecount;
+      level_maker_save_update_player_score(oLevelMaker.level_file_name, changecount);
+    }
+
     var _maker_transition = maker_transition_start(room),
         _maker_level_style = oLevelMaker.selected_style;
     
@@ -677,8 +686,9 @@ perform_win = function() {
       _results.level_author = oLevelMaker.level_author_name;
       _results.player_score = changecount;
       _results.perfect_score = oLevelMaker.perfect_score;
-      _results.time_played = oLevelMaker.time_played_timer.get_time();
-    }
+      _results.record_time = oLevelMaker.time_played_timer.get_time();
+      _results.time_played = oLevelMaker.record_time_timer.get_time();
+    };
     return;
   }
       

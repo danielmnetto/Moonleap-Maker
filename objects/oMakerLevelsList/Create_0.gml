@@ -17,6 +17,9 @@ level_display_range_end = levels_to_display - 1;
 
 levels_orderby = LEVELS_ORDERBY.NAME_ASC;
 
+input_delay_frames = 0;
+input_delay_frames_max = 5;
+
 // If there are no levels available, set 'order by' option selected.
 if array_length(levels) == 0 {
   current_level_index = -1;
@@ -198,7 +201,8 @@ import_levels_from_levels_folder = function() {
         _level_json.author,
         _level_json.player_score,
         _level_json.perfect_score,
-        _level_json.style
+        _level_json.style,
+        struct_exists(_level_json, "record_time") ? _level_json.record_time : -1
       ));
     } catch (_error) {
     	show_debug_message($"[!!!] Couldn't load level file {_level_filename}.\n {_error}");

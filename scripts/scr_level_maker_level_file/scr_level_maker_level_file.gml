@@ -2,6 +2,7 @@ function LevelMakerFileData() constructor {
   version = LEVEL_MAKER_SAVE_SYSTEM_VERSION;
   name = "my level";
   author = "my name";
+  record_time = -1;
   player_score = -1;
   perfect_score = 0;
   use_night_music = false;

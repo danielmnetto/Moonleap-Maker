@@ -1,10 +1,11 @@
-enum LEVEL_MAKER_RESULT_OPTION { TRY_AGAIN, QUIT , LENGTH}
+enum LEVEL_MAKER_RESULT_OPTION { TRY_AGAIN, QUIT , LENGTH }
 
 level_name = "";
 level_author = "";
 player_score = 0;
 perfect_score = 0;
-time_played = 0;
+time_played = -1;
+record_time = -1;
 
 current_option = 0;
 
@@ -30,17 +31,6 @@ rank_get_result_letter = function() {
   }
   
   return _letter;
-};
-
-time_played_get_formatted = function() {
-  var _time_rounded = floor(time_played),
-      _minutes = _time_rounded div 60,
-      _seconds = _time_rounded mod 60,
-      _tenths = floor((time_played - _time_rounded) * 10),
-      _minutes_string = string_replace_all(string_format(_minutes, 2, 0), " ", "0"),
-      _seconds_string = string_replace_all(string_format(_seconds, 2, 0), " ", "0");
-  
-  return $"{_minutes_string}:{_seconds_string}.{_tenths}";
 };
 
 play_sound_on_navigate = function() {

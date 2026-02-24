@@ -1,4 +1,13 @@
-scr_inputget();
+input_delay_frames = max(-1, input_delay_frames - 1);
+
+if input_delay_frames == -1 {
+  scr_inputget();
+}
+
+if instance_exists(oLevelDescription) {
+  input_delay_frames = input_delay_frames_max;
+  exit;
+}
 
 var _levels = levels_get_orderedby(),
     _levels_length = array_length(_levels),
@@ -49,20 +58,9 @@ if _input_nav_up and current_level_index > -2 {
 
     // Levels
     default:
-      play_transition_sound();
-      var _data_trasition = instance_create_layer(-16, -16, "Instances", oMakerLevelDataTransition),
-          _transition_title = _level.name,
-          _transition_subtitle = _level.author;
+      var _level_description = instance_create_layer(-16, -16, "Instances", oLevelDescription);
       
-      _data_trasition.level_filename = _level.filename;
-      _data_trasition.is_true_test = true;
-      
-      var _transition = maker_transition_start(
-        RoomMaker0,
-        _transition_title,
-        _transition_subtitle,
-      );
-      
+      _level_description.level = _level;
     break;
   }
 }

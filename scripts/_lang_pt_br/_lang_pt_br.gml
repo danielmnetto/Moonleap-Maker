@@ -57,6 +57,8 @@ lang_add("PT-BR", {
   maker_menu_play: "jogar",
   maker_menu_make: "criar",
   maker_menu_import: "importar",
+  maker_menu_edit: "editar",
+  maker_menu_level_erase: "excluir",
   
   text_input_description: "utilize o teclado para escrever e pressione ENTER para finalizar",
   maker_level_options: "opções da fase",
@@ -71,7 +73,7 @@ lang_add("PT-BR", {
   
   maker_levels: "fases: ",
   maker_nolevels: "não há fases para exibir",
-  maker_rank_title: "rank",
+  maker_rank_title: "rank: ",
   maker_rank_S: "S",
   maker_rank_A: "A",
   maker_rank_B: "B",
@@ -125,10 +127,11 @@ lang_add("PT-BR", {
   maker_far_background: "4: Fundo distante (decoração)",
 
   maker_warning_change_style: "Atenção! Ao trocar de estilo, os ladrilhos de decoração existentes no nível serão apagados. Você tem certeza que deseja trocar de estilo?",
-  maker_warning_confirm: "Sim",
-  maker_warning_cancel: "Não",
+  maker_warning_confirm: "sim",
+  maker_warning_cancel: "não",
   
   maker_level_time_played: "tempo jogado: ",
+  maker_level_record_time: "tempo recorde: ",
   maker_level_result: "resultado: ",
   maker_level_try_again: "tentar novamente",
 

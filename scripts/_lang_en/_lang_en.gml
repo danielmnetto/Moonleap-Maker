@@ -60,6 +60,8 @@ lang_add("EN", {
   maker_menu_play: "play",
   maker_menu_make: "make",
   maker_menu_import: "import",
+  maker_menu_edit: "edit",
+  maker_menu_level_erase: "delete",
   
   text_input_description: "use the keyboard to type and press ENTER to finish",
   maker_level_options: "level options",
@@ -74,7 +76,7 @@ lang_add("EN", {
   
   maker_levels: "levels: ",
   maker_nolevels: "there are no levels to display",
-  maker_rank_title: "rank",
+  maker_rank_title: "rank: ",
   maker_rank_S: "S",
   maker_rank_A: "A",
   maker_rank_B: "B",
@@ -129,10 +131,11 @@ lang_add("EN", {
   maker_far_background: "4: Far Background (Decoration)",
 
   maker_warning_change_style: "Warning! When changing the style, the existing decoration tiles in the level will be erased. Are you sure you want to change the style?",
-  maker_warning_confirm: "Yes",
-  maker_warning_cancel: "No",
+  maker_warning_confirm: "yes",
+  maker_warning_cancel: "no",
   
   maker_level_time_played: "time played: ",
+  maker_level_record_time: "record time: ",
   maker_level_result: "result: ",
   maker_level_try_again: "try again",
 

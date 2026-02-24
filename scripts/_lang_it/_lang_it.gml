@@ -71,6 +71,8 @@ lang_add("IT", {
   maker_menu_play: "giocare",
   maker_menu_make: "creare",
   maker_menu_import: "importare",
+  maker_menu_edit: "modifica",
+  maker_menu_level_erase: "eliminare",
   
   text_input_description: "usa la tastiera per scrivere e premi INVIO per terminare",
   maker_level_options: "opzioni del livello",
@@ -85,7 +87,7 @@ lang_add("IT", {
   
   maker_levels: "livelli: ",
   maker_nolevels: "non ci sono livelli da visualizzare",
-  maker_rank_title: "classifica",
+  maker_rank_title: "classifica: ",
   maker_rank_S: "S",
   maker_rank_A: "A",
   maker_rank_B: "B",
@@ -140,10 +142,11 @@ lang_add("IT", {
   maker_far_background: "4: Sfondo Lontano (Decorazione)",
 
   maker_warning_change_style: "Attenzione! Cambiando stile, le piastrelle decorative esistenti nel livello verranno eliminate. Sei sicuro di voler cambiare stile?",
-  maker_warning_confirm: "Sì",
-  maker_warning_cancel: "No",
+  maker_warning_confirm: "sì",
+  maker_warning_cancel: "no",
 
   maker_level_time_played: "tempo giocato: ",
+  maker_level_record_time: "tempo record: ",
   maker_level_result: "risultato: ",
   maker_level_try_again: "riprovare",
   

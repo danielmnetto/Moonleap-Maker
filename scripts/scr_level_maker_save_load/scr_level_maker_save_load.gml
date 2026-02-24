@@ -96,6 +96,7 @@ function level_maker_save(_level_file_path) {
     _save_data.name = level_name;
     _save_data.author = level_author_name;
     _save_data.player_score = -1;
+    _save_data.record_time = -1;
     _save_data.perfect_score = perfect_score;
     _save_data.use_night_music = use_night_music;
     _save_data.style = selected_style;
@@ -103,19 +104,6 @@ function level_maker_save(_level_file_path) {
     _save_data.tiles = _tiles_data;
 		
     level_maker_level_file_save(_level_file_path, _save_data);
-    // Write on file
-		//var _file_name = _level_file_path;
-		//var _json = json_stringify(_save_data);
-    //_json = base64_encode(_json);
-		//
-		//if file_exists(_file_name) {
-			//file_delete(_file_name)
-		//}
-		//
-		//var _file = file_text_open_write(_file_name);
-    //
-		//file_text_write_string(_file, _json);
-		//file_text_close(_file);
 	}
 }
 
@@ -168,6 +156,15 @@ function level_maker_load(_level_file_path) {
     perfect_score = _loaded_data.perfect_score;
 		selected_style = _level_style;
     current_player_score = _loaded_data.player_score;
+    
+    record_time_timer.set_time(infinity);
+    if struct_exists(_loaded_data, "record_time") {
+      var _record_time = _loaded_data.record_time;
+      
+      if _record_time > -1 {
+        record_time_timer.set_time(_record_time);
+      }
+    }
     
 		reset_level_objects_grid();
     reset_level_tiles_grid();

@@ -76,6 +76,8 @@ lang_add("JA", {
   maker_menu_play: "プレイする",
   maker_menu_make: "作成する",
   maker_menu_import: "インポートする",
+  maker_menu_edit: "編集",
+  maker_menu_level_erase: "削除",
   
   text_input_description: "キーボードで入力し、ENTER を押して完了します",
   maker_level_options: "レベルオプション",
@@ -90,7 +92,7 @@ lang_add("JA", {
   
   maker_levels: "レベル: ",
   maker_nolevels: "表示できるレベルがありません",
-  maker_rank_title: "ランク",
+  maker_rank_title: "ランク: ",
   maker_rank_S: "S",
   maker_rank_A: "A",
   maker_rank_B: "B",
@@ -149,6 +151,7 @@ lang_add("JA", {
   maker_warning_cancel: "いいえ",
   
   maker_level_time_played: "プレイ時間: ",
+  maker_level_record_time: "最速タイム: ",
   maker_level_result: "結果: ",
   maker_level_try_again: "もう一度試す",
 

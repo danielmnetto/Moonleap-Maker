@@ -227,19 +227,6 @@ for (var _i = level_display_range_start; _i <= level_display_range_end and _i < 
     _text_break_on_space,
     _text_alpha
   );
-
-  // Rank title
-  //draw_set_halign(fa_center);
-  //draw_text_nox(
-    //_rank_title_x,
-    //_rank_title_y,
-    //_rank_title_text,
-    //_text_letters_distance,
-    //_text_line_distance,
-    //_text_line_width,
-    //_text_break_on_space,
-    //_text_alpha
-  //);
   
   // Rank letter
   draw_text_nox(

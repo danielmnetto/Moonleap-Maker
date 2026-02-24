@@ -81,6 +81,8 @@ lang_add("ZH", {
   maker_menu_play: "玩",
   maker_menu_make: "创建",
   maker_menu_import: "导入",
+  maker_menu_edit: "编辑",
+  maker_menu_level_erase: "删除",
   
   text_input_description: "使用键盘输入并按 ENTER 完成",
   maker_level_options: "关卡选项",
@@ -95,7 +97,7 @@ lang_add("ZH", {
   
   maker_levels: "关卡: ",
   maker_nolevels: "没有可显示的关卡",
-  maker_rank_title: "排名",
+  maker_rank_title: "排名: ",
   maker_rank_S: "S",
   maker_rank_A: "A",
   maker_rank_B: "B",
@@ -154,6 +156,7 @@ lang_add("ZH", {
   maker_warning_cancel: "否",
   
   maker_level_time_played: "游玩时间: ",
+  maker_level_record_time: "最快时间: ",
   maker_level_result: "结果: ",
   maker_level_try_again: "再试一次",
 

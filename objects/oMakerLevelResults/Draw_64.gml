@@ -91,12 +91,40 @@ draw_text_nox(
   _rank_result_alpha
 );
 
+var _record_time_halign = fa_center,
+    _record_time_valign = fa_middle,
+    _record_time_text = $"{LANG.maker_level_record_time}{time_get_format_mm_ss_ms(record_time)}",
+    _record_time_height = string_height(_record_time_text),
+    _record_time_x = GUI_W / 2,
+    _record_time_y = GUI_H / 2.5 + _record_time_height * 1.5,
+    _record_time_color = COLOR_NICE_WHITE,
+    _record_time_letters_distance = 0,
+    _record_time_line_distance = 12,
+    _record_time_line_width = GUI_W,
+    _record_time_break_on_space = false,
+    _record_time_alpha = 1;
+
+draw_set_halign(_record_time_halign);
+draw_set_valign(_record_time_valign);
+draw_set_color(_record_time_color);
+
+draw_text_nox(
+  _record_time_x,
+  _record_time_y,
+  _record_time_text,
+  _record_time_letters_distance,
+  _record_time_line_distance,
+  _record_time_line_width,
+  _record_time_break_on_space,
+  _record_time_alpha
+);
+
 var _time_played_halign = fa_center,
     _time_played_valign = fa_middle,
-    _time_played_text = $"{LANG.maker_level_time_played}{time_played_get_formatted()}",
+    _time_played_text = $"{LANG.maker_level_time_played}{time_get_format_mm_ss_ms(time_played)}",
     _time_played_height = string_height(_time_played_text),
     _time_played_x = GUI_W / 2,
-    _time_played_y = GUI_H / 2.5 + _time_played_height * 1.5,
+    _time_played_y = GUI_H / 2.5 + _time_played_height * 2.5,
     _time_played_color = COLOR_NICE_WHITE,
     _time_played_letters_distance = 0,
     _time_played_line_distance = 12,
