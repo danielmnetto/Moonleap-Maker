@@ -156,6 +156,11 @@ if current_layer != LEVEL_MAKER_LAYERS.OBJECTS {
 // ------------------------------------
 has_object_below_cursor = check_for_objects_in_grid_position(_selected_object_mouse_tile_x, _selected_object_mouse_tile_y, selected_object);
 
+if instance_exists_any([oPauseUI, oMessagePopup, oTransition, oMakerTransition])
+or mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+  exit;
+}
+
 cursor_get_object_from_grid();
 cursor_create_object_in_grid(_selected_object_mouse_tile_x, _selected_object_mouse_tile_y);
 cursor_remove_object_from_grid();

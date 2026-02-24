@@ -212,11 +212,6 @@ update_camera_zoom = function() {
 }
 
 cursor_set_position = function() {
-  if instance_exists_any([oPauseUI, oMessagePopup, oTransition, oMakerTransition])
-  or mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
-    return;
-  }
-  
   var _axis_x = key_cursor_move_right - key_cursor_move_left,
       _axis_y = key_cursor_move_down - key_cursor_move_up,
       _cursor_x = global.level_maker_mouse_x,
@@ -526,9 +521,11 @@ update_tilesets_by_style = function() {
 }
 
 set_tile_manipulation = function() {
-	if is_undefined(selected_tile)
-  or current_layer == LEVEL_MAKER_LAYERS.OBJECTS then 
-		return;
+	if instance_exists_any([oPauseUI, oMessagePopup, oTransition, oMakerTransition]) 
+  or is_undefined(selected_tile)
+  or current_layer == LEVEL_MAKER_LAYERS.OBJECTS {
+    return;
+  }
 		
 	var _tile = selected_tile.tile_id;
 	
@@ -582,9 +579,11 @@ set_tile_manipulation = function() {
 }
 
 set_object_rotation_and_scaling = function() {
-	if is_undefined(selected_object) 
-  or current_layer != LEVEL_MAKER_LAYERS.OBJECTS then 
-		return;
+	if instance_exists_any([oPauseUI, oMessagePopup, oTransition, oMakerTransition])
+  or is_undefined(selected_object) 
+  or current_layer != LEVEL_MAKER_LAYERS.OBJECTS {
+    return;
+  }
 	
 	if selected_object.has_tag("can_flip") {
 		if key_maker_item_mirror {
