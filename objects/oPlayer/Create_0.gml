@@ -640,14 +640,18 @@ check_change_by_direction = function() {
 }
 
 perform_win = function() {
-  winwait = max(winwait - 1, -1);
-  
-  if winwait > 0 or winwait <= -1 {
-    return;
-  }
-
   if (room_is(RoomMaker0) and oLevelMaker.mode != LEVEL_MAKER_EDITOR_MODE.PLAYING)
   or instance_exists_any([oTransition, oMakerTransition]) {
+    return;
+  }
+  
+  // This is for when the transition is active.
+  if winwait <= -1 {
+    return;
+  }
+  
+  if winwait > 0 {
+    winwait = max(winwait - 1, 0);
     return;
   }
 
@@ -659,6 +663,8 @@ perform_win = function() {
   and oLevelMaker.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
     var _time_played = oLevelMaker.time_played_timer.get_time(),
         _record_time = oLevelMaker.record_time_timer.get_time();
+    
+    winwait = -1;
     
     if _time_played < _record_time {
       oLevelMaker.record_time_timer.set_time(_time_played);
@@ -691,7 +697,9 @@ perform_win = function() {
     };
     return;
   }
-      
+  
+  winwait = -1;
+  
   if changecount == 0 then changecount = 1;
   
   //stage is only half completed (50% completed)
