@@ -10,8 +10,8 @@
   "name":"oMakerLevelDataTransition",
   "overriddenProperties":[],
   "parent":{
-    "name":"LevelMaker",
-    "path":"folders/Objects/LevelMaker.yy",
+    "name":"Player",
+    "path":"folders/Objects/LevelMaker/Player.yy",
   },
   "parentObjectId":null,
   "persistent":true,

@@ -11,8 +11,8 @@
   "name":"oMakerWarning",
   "overriddenProperties":[],
   "parent":{
-    "name":"LevelMaker",
-    "path":"folders/Objects/LevelMaker.yy",
+    "name":"Editor",
+    "path":"folders/Objects/LevelMaker/Editor.yy",
   },
   "parentObjectId":{
     "name":"oPauseUI",

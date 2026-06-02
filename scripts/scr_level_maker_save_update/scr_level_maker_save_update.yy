@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_level_maker_save_update",
   "parent":{
-    "name":"Level Maker",
-    "path":"folders/Scripts/Level Maker.yy",
+    "name":"Save and Load",
+    "path":"folders/Scripts/Level Maker/Save and Load.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

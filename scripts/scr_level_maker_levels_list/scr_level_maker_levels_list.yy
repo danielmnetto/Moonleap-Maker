@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_level_maker_levels_list",
   "parent":{
-    "name":"Level Maker",
-    "path":"folders/Scripts/Level Maker.yy",
+    "name":"Editor",
+    "path":"folders/Scripts/Level Maker/Editor.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
