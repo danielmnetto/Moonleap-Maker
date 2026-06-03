@@ -57,12 +57,16 @@ var _menu = menus[$ current_menu_name],
     _title_base_x = GUI_W / 2,
     _title_base_y = _option_base_y - (_option_y_gap * 2),
     _title_text = get_title(),
+    _title_text_level_name = "",
+    _title_text_author_name = "",
     _title_letters_distance = 0,
     _title_line_distance = 12,
     _title_line_width = 320,
     _title_break_on_space = false,
     _title_alpha = 1,
     _title_color = COLOR_NICE_DARK,
+    _title_y_maker_pause = -18,
+    _title_maker_play_spacing = 12,
 
     _title_text_wave_height = 2.25,
     _title_text_wave_time = 1,
@@ -87,16 +91,47 @@ if show_title {
     _title_text_wave_char
   );
   draw_set_color(_title_color);
-  draw_text_nox(
-    _title_base_x,
-    _title_base_y,
-    _title_text,
-    _title_letters_distance,
-    _title_line_distance,
-    _title_line_width,
-    _title_break_on_space,
-    _title_alpha
-  );
+  
+  var _maker_controller = instance_find(oLevelMaker, 0);
+  
+  if room_is(RoomMaker0)
+  and _maker_controller != noone
+  and _maker_controller.mode == LEVEL_MAKER_EDITOR_MODE.PLAYING {
+    _title_base_y += _title_y_maker_pause;
+    _title_text_level_name = _maker_controller.level_name;
+    _title_text_author_name = _maker_controller.level_author_name;
+    draw_text_nox(
+      _title_base_x,
+      _title_base_y,
+      _title_text_level_name,
+      _title_letters_distance,
+      _title_line_distance,
+      _title_line_width,
+      _title_break_on_space,
+      _title_alpha
+    );
+    draw_text_nox(
+      _title_base_x,
+      _title_base_y + _title_maker_play_spacing,
+      _title_text_author_name,
+      _title_letters_distance,
+      _title_line_distance,
+      _title_line_width,
+      _title_break_on_space,
+      _title_alpha
+    );
+  } else {
+    draw_text_nox(
+      _title_base_x,
+      _title_base_y,
+      _title_text,
+      _title_letters_distance,
+      _title_line_distance,
+      _title_line_width,
+      _title_break_on_space,
+      _title_alpha
+    );
+  }
 }
 
 nox_set_wave(
