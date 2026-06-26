@@ -5,7 +5,16 @@ enum PLATFORM_ANGLE {
   RIGHT = 270
 }
 
-global.rooms_to_ignore_wrap = [];
+// If true, the collision wrapping will be used instead of default collision check.
+global.collision_wrapping_enabled = true;
+
+// An array of rooms that the game will ignore the use of collision wrapping.
+global.rooms_to_ignore_collision_wrap = [Room100];
+
+/// @desc Checks whether the game can use collision wrap.
+function can_collision_wrap() {
+  return global.collision_wrapping_enabled and not room_is(global.rooms_to_ignore_collision_wrap);
+}
 
 /// @param {real} xx The horizontal position.
 /// @param {real} yy The vertical position.
@@ -13,15 +22,102 @@ global.rooms_to_ignore_wrap = [];
 /// If false, they are relative to the room position. Default: true
 /// @param {Array<Asset.GMObject>} included_objects An array of objects to included on collision check. Default: empty array
 /// @param {Array<Asset.GMObject>} excluded_objects An array of objects to be excluded from collision check. Default: empty array
-
 function has_collided(xx, yy, is_position_relative = true, included_objects = [], excluded_objects = []) {
 	xx = (is_position_relative * x) + xx;
 	yy = (is_position_relative * y) + yy;
   
-  return __collided_wrap_room(xx, yy, included_objects, excluded_objects);
+  if not can_collision_wrap() {
+    return __has_collided_base(xx, yy, included_objects, excluded_objects);
+  }
+  
+  return __has_collided_wrap_room(xx, yy, included_objects, excluded_objects);
 }
 
-function __collided_wrap_room(xx, yy, included_objects = [], excluded_objects = []) {
+function __has_collided_base(xx, yy, included_objects = [], excluded_objects = []) {
+  // ======================================================
+	// Excluded objects collision checking
+  // ======================================================
+  if place_meeting(xx, yy, excluded_objects) {
+    return false
+  }
+  
+  // ======================================================
+	// Included objects collision checking
+  // ======================================================
+  if place_meeting(xx, yy, included_objects) {
+    return true;
+  }
+  
+  // ======================================================
+	// Platform objects and their sides collision checking
+  // ======================================================
+  
+  var _platform_list = ds_list_create();
+  var _platform_count = instance_place_list(xx, yy, oPlatGhost, _platform_list, true);
+  
+  if _platform_count > 0 {
+    for (var i = 0; i < _platform_count; i++) {
+      var _platform = ds_list_find_value(_platform_list, i);
+      
+      if __one_way_meeting_from_platform_angle(id, _platform, 0, 0) {
+        ds_list_destroy(_platform_list);
+        return true;
+      }
+    }
+  }
+  
+  ds_list_clear(_platform_list);
+  _platform_count = instance_place_list(xx, yy, oPlatGhostL, _platform_list, true);
+  if _platform_count > 0 {
+    for (var i = 0; i < _platform_count; i++) {
+      var _platform = ds_list_find_value(_platform_list, i);
+      
+      if __one_way_meeting_from_angle(id, _platform, 0, 0, PLATFORM_ANGLE.LEFT) {
+        ds_list_destroy(_platform_list);
+        return true;
+      }
+    }
+  }
+  
+  ds_list_clear(_platform_list);
+  _platform_count = instance_place_list(xx, yy, oPlatGhostInv, _platform_list, true);
+  if _platform_count > 0 {
+    for (var i = 0; i < _platform_count; i++) {
+      var _platform = ds_list_find_value(_platform_list, i);
+      
+      if __one_way_meeting_from_angle(id, _platform, 0, 0, PLATFORM_ANGLE.BOTTOM) {
+        ds_list_destroy(_platform_list);
+        return true;
+      }
+    }
+  }
+  
+  ds_list_clear(_platform_list);
+  _platform_count = instance_place_list(xx, yy, oPlatGhostR, _platform_list, true);
+  if _platform_count > 0 {
+    for (var i = 0; i < _platform_count; i++) {
+      var _platform = ds_list_find_value(_platform_list, i);
+      
+      if __one_way_meeting_from_angle(id, _platform, 0, 0, PLATFORM_ANGLE.RIGHT) {
+        ds_list_destroy(_platform_list);
+        return true;
+      }
+    }
+  }
+  
+  ds_list_destroy(_platform_list);
+  
+  // ======================================================
+	// Other solid objects
+  // ======================================================
+  if place_meeting(xx, yy, oSolid) {
+		return true;
+	}
+	
+	return false;
+}
+
+function __has_collided_wrap_room(xx, yy, included_objects = [], excluded_objects = []) {
   // ======================================================
 	// Excluded objects collision checking
   // ======================================================
@@ -125,7 +221,7 @@ function __one_way_meeting_from_platform_angle(inst, platform, x_offset, y_offse
 /// @param {Id.DSList} list List of all collided platform instances.
 /// @param {real} x_offset The X offset from current instance's horizontal position.
 /// @param {real} y_offset The Y offset from current instance's vertical position.
-/// @param {real} angle The angle to check one way collision with the collided instances. If not specified, all angles will be checked.
+/// @param {real} angle The angle that the platform is facing to check one way collision with the collided instances. If not specified, all angles will be checked.
 function __platforms_meeting_offset(list, x_offset, y_offset, angle = undefined) {
   var _count_collisions = ds_list_size(list);
   
