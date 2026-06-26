@@ -12,16 +12,53 @@ function place_meeting_wrap_room(xx, yy, obj) {
   return place_meeting_wrap(xx, yy, obj, room_width, room_width, room_height, room_height);
 }
 
-function instance_place_list_wrap(xx, yy, obj, list, ordered, left, right, top, bottom) {
-  var _self = instance_place_list(xx, yy, obj, list, ordered);
-  var _left = instance_place_list(xx + -abs(left), yy, obj, list, ordered);
-  var _right = instance_place_list(xx + abs(right), yy, obj, list, ordered);
-  var _top = instance_place_list(xx, yy + -abs(top), obj, list, ordered);
-  var _bottom = instance_place_list(xx, yy + abs(bottom), obj, list, ordered);
+/// @desc Checks collision in five positions. The base and four directions from the base.
+/// It returns five lists of collisions for each position checked and the count of collisions from all the lists together.
+function instance_place_list_wrap(xx, yy, obj, left, right, top, bottom) {
+  var _list_base = ds_list_create(),
+      _list_left = ds_list_create(),
+      _list_right = ds_list_create(),
+      _list_top = ds_list_create(),
+      _list_bottom = ds_list_create(),
+      
+      _count_base = instance_place_list(xx, yy, obj, _list_base, true),
+      _count_left = instance_place_list(xx + -abs(left), yy, obj, _list_left, true),
+      _count_right = instance_place_list(xx + abs(right), yy, obj, _list_right, true),
+      _count_top = instance_place_list(xx, yy + -abs(top), obj, _list_top, true),
+      _count_bottom = instance_place_list(xx, yy + abs(bottom), obj, _list_bottom, true),
+      
+      _total_collisions = array_reduce([_count_base, _count_left, _count_right, _count_top, _count_bottom], function(prev, count) { return prev + count }, 0);
   
-  return array_reduce([_self, _left, _right, _top, _bottom], function(prev, count) { return prev + count }, 0);
+  return {
+    lists: {
+      base: _list_base,
+      left: _list_left,
+      right: _list_right,
+      top: _list_top,
+      bottom: _list_bottom,
+      
+      /// @desc Destroys all wrap instance_place lists.
+      destroy: method(
+        { 
+          base: _list_base,
+          left: _list_left,
+          right: _list_right,
+          top: _list_top,
+          bottom: _list_bottom
+        }, 
+        function() {
+          ds_list_destroy(base);
+          ds_list_destroy(left);
+          ds_list_destroy(right);
+          ds_list_destroy(top);
+          ds_list_destroy(bottom);
+        }
+      ),
+    },
+    total_collisions: _total_collisions,
+  }
 }
 
-function instance_place_list_wrap_room(xx, yy, obj, list, ordered) {
-  return instance_place_list_wrap(xx, yy, obj, list, ordered, room_width, room_width, room_height, room_height);
+function instance_place_list_wrap_room(xx, yy, obj) {
+  return instance_place_list_wrap(xx, yy, obj, room_width, room_width, room_height, room_height);
 }
