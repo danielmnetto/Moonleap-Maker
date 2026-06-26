@@ -1,11 +1,11 @@
 function place_meeting_wrap(xx, yy, obj, left, right, top, bottom) {
-  var _self = place_meeting(xx, yy, obj);
+  var _base = place_meeting(xx, yy, obj);
   var _left = place_meeting(xx + -abs(left), yy, obj);
   var _right = place_meeting(xx + abs(right), yy, obj);
   var _top = place_meeting(xx, yy + -abs(top), obj);
   var _bottom = place_meeting(xx, yy + abs(bottom), obj);
   
-  return _self or _left or _right or _top or _bottom;
+  return _base or _left or _right or _top or _bottom;
 }
 
 function place_meeting_wrap_room(xx, yy, obj) {

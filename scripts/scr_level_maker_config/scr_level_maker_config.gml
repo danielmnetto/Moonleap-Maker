@@ -15,4 +15,4 @@ enum LEVEL_MAKER_EDITOR_MODE { EDITING, TESTING, PLAYING }
  * Change 'global.is_maker_mode' value to true to skip the intro and
  * redirect to the level maker.
  */ 
-global.is_maker_mode = true;
+global.is_maker_mode = false;
