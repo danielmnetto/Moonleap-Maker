@@ -12,6 +12,32 @@ function place_meeting_wrap_room(xx, yy, obj) {
   return place_meeting_wrap(xx, yy, obj, room_width, room_width, room_height, room_height);
 }
 
+function place_meeting_exception_wrap(xx, yy, obj, obj_exception, left, right, top, bottom) {
+	with (obj) {
+		var this = id;
+    
+		if (id == obj_exception) {
+      continue;
+    }
+    
+    with (other) {
+      if place_meeting(xx, yy, this)
+      or place_meeting(xx + -abs(left), yy, obj)
+      or place_meeting(xx + abs(right), yy, obj)
+      or place_meeting(xx, yy + -abs(top), obj)
+      or place_meeting(xx, yy + abs(bottom), obj) {
+        return true;
+      } 
+    }
+	}
+  
+	return false;
+}
+
+function place_meeting_exception_wrap_room(xx, yy, obj, obj_exception) {
+  return place_meeting_exception_wrap(xx, yy, obj, obj_exception, room_width, room_width, room_height, room_height);
+}
+
 /// @desc Checks collision in five positions. The base and four directions from the base.
 /// It returns five lists of collisions for each position checked and the count of collisions from all the lists together.
 function instance_place_list_wrap(xx, yy, obj, left, right, top, bottom) {
