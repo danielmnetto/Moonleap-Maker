@@ -1,3 +1,9 @@
+
+
+// =========================================
+// COLLISION COMMANDS ZONE
+// =========================================
+
 enum PLATFORM_ANGLE {
   TOP = 0,
   LEFT = 90,
@@ -5,23 +11,19 @@ enum PLATFORM_ANGLE {
   RIGHT = 270
 }
 
-// If true, the collision wrapping will be used instead of default collision check.
-global.collision_wrapping_enabled = true;
-
-// An array of rooms that the game will ignore the use of collision wrapping.
-global.rooms_to_ignore_collision_wrap = [Room100];
-
 /// @desc Checks whether the game can use collision wrap.
 function can_collision_wrap() {
   return global.collision_wrapping_enabled and not room_is(global.rooms_to_ignore_collision_wrap);
 }
 
-/// @param {real} xx The horizontal position.
-/// @param {real} yy The vertical position.
-/// @param {bool} is_position_relative If true, the xx and yy positions are relative to the object position.
-/// If false, they are relative to the room position. Default: true
-/// @param {Array<Asset.GMObject>} included_objects An array of objects to included on collision check. Default: empty array
-/// @param {Array<Asset.GMObject>} excluded_objects An array of objects to be excluded from collision check. Default: empty array
+/// @desc Checks for collision between the current instance and solids and platforms.
+/// Collision wrapping is used for collision check if it is enabled and is not ignored by the room. See `global.collision_wrapping_enabled` and `global.rooms_to_ignore_collision_wrap`.
+/// @param {real} xx The horizontal position to check collision.
+/// @param {real} yy The vertical position to check collision.
+/// @param {bool} is_position_relative If true, the `xx` and `yy` positions will be relative to the current instance position.
+/// If false, they are relative to the room position. Default: true.
+/// @param {Array<Asset.GMObject>} included_objects An array of objects to included on collision check. Default: empty array.
+/// @param {Array<Asset.GMObject>} excluded_objects An array of objects to be excluded from collision check. Default: empty array.
 function has_collided(xx, yy, is_position_relative = true, included_objects = [], excluded_objects = []) {
 	xx = (is_position_relative * x) + xx;
 	yy = (is_position_relative * y) + yy;
@@ -33,6 +35,7 @@ function has_collided(xx, yy, is_position_relative = true, included_objects = []
   return __has_collided_wrap_room(xx, yy, included_objects, excluded_objects);
 }
 
+/// @desc This function is used by `has_collided(...)` command to check for collision from current instance's base position only.
 function __has_collided_base(xx, yy, included_objects = [], excluded_objects = []) {
   // ======================================================
 	// Excluded objects collision checking
@@ -117,6 +120,7 @@ function __has_collided_base(xx, yy, included_objects = [], excluded_objects = [
 	return false;
 }
 
+/// @desc This function is used by `has_collided(...)` command to check for collision from current instance's base and collision wrap positions.
 function __has_collided_wrap_room(xx, yy, included_objects = [], excluded_objects = []) {
   // ======================================================
 	// Excluded objects collision checking
@@ -201,6 +205,12 @@ function __has_collided_wrap_room(xx, yy, included_objects = [], excluded_object
 	return false;
 }
 
+/// @desc Checks whether the current instance is one way colliding with the platform at specified angle.
+/// @param {Id.Instance} inst The instance to check one way collision with `platform`.
+/// @param {Id.Instance} platform The platform instance to be used to check if `inst` is one way colliding with it.
+/// @param {real} x_offset The X position offset from `inst`'s bounding box side depending of `angle`.
+/// @param {real} y_offset The Y position offset from `inst`'s bounding box side depending of `angle`.
+/// @param {real} angle The angle to check one way collision.
 function __one_way_meeting_from_angle(inst, platform, x_offset, y_offset, angle) {
   switch(angle) {
     case 90:
@@ -214,10 +224,12 @@ function __one_way_meeting_from_angle(inst, platform, x_offset, y_offset, angle)
   }
 }
 
+/// @desc This function uses `__one_way_meeting_from_angle(...)` command and sets the `angle` argument value as `platform.image_angle`.
 function __one_way_meeting_from_platform_angle(inst, platform, x_offset, y_offset) {
   return __one_way_meeting_from_angle(inst, platform, x_offset, y_offset, platform.image_angle);
 }
 
+/// @desc Iterates all platform instances from `list` to check for one way colliding check from the current instance.
 /// @param {Id.DSList} list List of all collided platform instances.
 /// @param {real} x_offset The X offset from current instance's horizontal position.
 /// @param {real} y_offset The Y offset from current instance's vertical position.

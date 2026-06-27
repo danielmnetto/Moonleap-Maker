@@ -1,3 +1,5 @@
+/// @desc Checks collision with `obj` in five different positions. One in given `xx` and `yy` coordinates and other four in different positions by given offsets (`left`, `right`, `top`, `bottom`).
+/// Same as `place_meeting(...)` command.
 function place_meeting_wrap(xx, yy, obj, left, right, top, bottom) {
   var _base = place_meeting(xx, yy, obj);
   var _left = place_meeting(xx + -abs(left), yy, obj);
@@ -8,10 +10,14 @@ function place_meeting_wrap(xx, yy, obj, left, right, top, bottom) {
   return _base or _left or _right or _top or _bottom;
 }
 
+/// @desc This function uses `place_meeting_wrap(...)` command with `room_width` and `room_height` as offsets.
 function place_meeting_wrap_room(xx, yy, obj) {
   return place_meeting_wrap(xx, yy, obj, room_width, room_width, room_height, room_height);
 }
 
+/// @desc Checks collision with `obj` in five different positions. One in given `xx` and `yy` coordinates and other four in different positions by given offsets (`left`, `right`, `top`, `bottom`).
+/// It will only validate the collision if `obj_exception` is not being collided.
+/// Same as `place_meeting_exception(...)` command.
 function place_meeting_exception_wrap(xx, yy, obj, obj_exception, left, right, top, bottom) {
 	with (obj) {
 		var this = id;
@@ -34,12 +40,13 @@ function place_meeting_exception_wrap(xx, yy, obj, obj_exception, left, right, t
 	return false;
 }
 
+/// @desc This function uses `place_meeting_exception_wrap(...)` command with `room_width` and `room_height` as offsets.
 function place_meeting_exception_wrap_room(xx, yy, obj, obj_exception) {
   return place_meeting_exception_wrap(xx, yy, obj, obj_exception, room_width, room_width, room_height, room_height);
 }
 
-/// @desc Checks collision in five positions. The base and four directions from the base.
-/// It returns five lists of collisions for each position checked and the count of collisions from all the lists together.
+/// @desc Checks collision in five positions. The base and four directions from the base and returns five lists of collisions for each position checked and the count of collisions from all the lists together.
+/// Similar to `instance_place_list(...)` command.
 function instance_place_list_wrap(xx, yy, obj, left, right, top, bottom) {
   var _list_base = ds_list_create(),
       _list_left = ds_list_create(),
@@ -85,6 +92,7 @@ function instance_place_list_wrap(xx, yy, obj, left, right, top, bottom) {
   }
 }
 
+/// @desc This function uses `instance_place_list_wrap(...)` command with `room_width` and `room_height` as offsets.
 function instance_place_list_wrap_room(xx, yy, obj) {
   return instance_place_list_wrap(xx, yy, obj, room_width, room_width, room_height, room_height);
 }

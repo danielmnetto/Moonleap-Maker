@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_collision_wrap_meetings",
+  "%Name":"scr_collision_wrap_settings",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_collision_wrap_meetings",
+  "name":"scr_collision_wrap_settings",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

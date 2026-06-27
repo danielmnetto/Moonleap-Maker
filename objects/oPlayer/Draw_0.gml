@@ -21,7 +21,7 @@ if white != 0 {
 
 if flash > 0 or godmode then pal_swap_set(sPlayerPal,4,0);
 
-draw_sprite_wrap_ext(sprite_index, image_index, xx, yy, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+draw_sprite_wrap_ext_room(sprite_index, image_index, xx, yy, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 
 if sprite_index == PlayerClimb and cape {
 	//capeoutline
