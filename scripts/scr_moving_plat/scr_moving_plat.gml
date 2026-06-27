@@ -21,7 +21,7 @@ function scr_moving_plat(_cx = hsp, _cy = vsp) {
 	repeat(abs(vsp_new)) {
 		// Se não colidir com terreno verticalmente
 		if not has_collided(0, sign(vsp_new), true, [], [oSnail, oSnailNight, oSnailGray]) {
-      var _moveables = [oPlayer, oSnail, oSnailNight, oSnailGray, oStar, oStarRunning, oStarColor, oStarRunningColor, oMagicOrb];
+      var _moveables = [oPlayer, oSnail, oSnailNight, oSnailGray, oStarRunning, oStarColor, oStarRunningColor, oStar, oMagicOrb];
       array_foreach(_moveables, method({ id, vsp_new }, function(inst) {
         __move_object_above_vertical(id, inst, vsp_new);
       }));
@@ -37,7 +37,7 @@ function scr_moving_plat(_cx = hsp, _cy = vsp) {
 	repeat(abs(hsp_new)) {
 		// Se não colidir com terreno, mova os seguintes objetos acima dele.
     if (not has_collided(sign(hsp_new), 0, true, [oPermaSpike])) {
-      var _moveables = [oPlayer, oSnail, oSnailNight, oSnailGray, oStar, oStarRunning, oStarColor, oStarRunningColor, oMagicOrb];
+      var _moveables = [oPlayer, oSnail, oSnailNight, oSnailGray, oStarRunning, oStarColor, oStarRunningColor, oStar, oMagicOrb];
 			array_foreach(_moveables, method({ id, hsp_new }, function(inst) {
         __move_object_above_horizontal(id, inst, hsp_new);
       }));

@@ -12,7 +12,7 @@ landed = false;
 repeat(abs(vsp_new)) {
 	if has_collided(0, sign(vsp), true, [oPermaSpike]) {
 		vsp = 0;
-        break;
+    break;
 	}
 	
 	y += sign(vsp);
