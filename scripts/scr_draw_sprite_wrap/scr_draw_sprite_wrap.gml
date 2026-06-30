@@ -96,3 +96,17 @@ function draw_sprite_wrap_part_ext_room(
 ) {
   draw_sprite_wrap_part_ext(sprite, frame, left_corner, top_corner, width, height, x, y, xscale, yscale, blend, alpha, room_width, room_width, room_height, room_height);
 }
+
+/// @desc Draws one sprite in the given position and other four sprites in four different positions from given offsets (`left`, `right`, `top`, `bottom`) with rounded coordinates.
+function draw_self_wrap_perfect(left, right, top, bottom) {
+  draw_sprite_ext(sprite_index, image_index, round(x), round(y), image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+  draw_sprite_ext(sprite_index, image_index, round(x) + -abs(round(left)), round(y), image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+  draw_sprite_ext(sprite_index, image_index, round(x) + abs(round(right)), round(y), image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+  draw_sprite_ext(sprite_index, image_index, round(x), round(y) + -abs(round(top)), image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+  draw_sprite_ext(sprite_index, image_index, round(x), round(y) + abs(round(bottom)), image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+}
+
+/// @desc This function uses `draw_self_wrap_perfect(...)` command with `room_width` and `room_height` as offsets.
+function draw_self_wrap_perfect_room() {
+  draw_self_wrap_perfect(room_width, room_width, room_height, room_height);
+}
