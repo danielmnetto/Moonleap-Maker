@@ -425,6 +425,7 @@
     {"name":"scr_hubchange","order":25,"path":"scripts/scr_hubchange/scr_hubchange.yy",},
     {"name":"scr_inputcreate","order":24,"path":"scripts/scr_inputcreate/scr_inputcreate.yy",},
     {"name":"scr_inputget","order":23,"path":"scripts/scr_inputget/scr_inputget.yy",},
+    {"name":"scr_instance_place_array","order":56,"path":"scripts/scr_instance_place_array/scr_instance_place_array.yy",},
     {"name":"scr_lang","order":12,"path":"scripts/scr_lang/scr_lang.yy",},
     {"name":"scr_level_maker_editor_functions","order":8,"path":"scripts/scr_level_maker_editor_functions/scr_level_maker_editor_functions.yy",},
     {"name":"scr_level_maker_editor_layers","order":1,"path":"scripts/scr_level_maker_editor_layers/scr_level_maker_editor_layers.yy",},

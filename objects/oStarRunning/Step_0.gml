@@ -8,15 +8,10 @@ if vsp > 4 {
 	vsp = 4
 }
 
-if y>room_height{y-=180}
-if x>room_width{x-=320}
-if y<0{y+=180}
-if x<0{x+=320}
+object_set_room_wrapping();
 
 hsp=0
 if !instance_exists(oPlayer) {exit;}
-
-
 
 if distance_to_point(x,oPlayer.y)<10
 {
@@ -44,12 +39,6 @@ if hsp<0 and !(place_meeting(x-(sprite_width/3),y+1,oSolid) or place_meeting(x-(
 	
 if place_meeting(x+hsp,y,oSolid)
 	{image_xscale=-image_xscale hsp=0}
-	
-
-if y>room_height{y-=180}
-if x>room_width{x-=320}
-if y<0{y+=180}
-if x<0{x+=320}
 
 if hsp!=0
 {

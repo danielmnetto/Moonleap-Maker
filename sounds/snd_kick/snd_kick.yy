@@ -10,7 +10,7 @@
   "compression":1,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.100952,
+  "duration":1.1009524,
   "exportDir":"",
   "name":"snd_kick",
   "parent":{

@@ -22,10 +22,14 @@ function scr_moving_plat(_cx = hsp, _cy = vsp) {
 		// Se não colidir com terreno verticalmente
 		if not has_collided(0, sign(vsp_new), true, [], [oSnail, oSnailNight, oSnailGray]) {
       var _moveables = [oPlayer, oSnail, oSnailNight, oSnailGray, oStarRunning, oStarColor, oStarRunningColor, oStar, oMagicOrb];
-      array_foreach(_moveables, method({ id, vsp_new }, function(inst) {
-        __move_object_above_vertical(id, inst, vsp_new);
-      }));
-
+      var _above = instance_place_array_wrap_room(x, y - 1, _moveables);
+      
+      for (var i = 0; i < array_length(_above); i++) {
+        var _inst_above = _above[i];
+        
+        __move_object_above_vertical(id, _inst_above, vsp_new);
+      }
+      
 			y += sign(vsp_new)
 		} else {
       vsp = 0;
@@ -38,9 +42,13 @@ function scr_moving_plat(_cx = hsp, _cy = vsp) {
 		// Se não colidir com terreno, mova os seguintes objetos acima dele.
     if (not has_collided(sign(hsp_new), 0, true, [oPermaSpike])) {
       var _moveables = [oPlayer, oSnail, oSnailNight, oSnailGray, oStarRunning, oStarColor, oStarRunningColor, oStar, oMagicOrb];
-			array_foreach(_moveables, method({ id, hsp_new }, function(inst) {
-        __move_object_above_horizontal(id, inst, hsp_new);
-      }));
+      var _above = instance_place_array_wrap_room(x, y - 1, _moveables);
+      
+      for (var i = 0; i < array_length(_above); i++) {
+        var _inst_above = _above[i];
+        
+        __move_object_above_horizontal(id, _inst_above, hsp_new);
+      }
 
 			x += sign(hsp_new);
     } else {
@@ -50,6 +58,7 @@ function scr_moving_plat(_cx = hsp, _cy = vsp) {
 	}
 }
 
+/// @desc Makes the `inst_above` move with the `inst_move` vertically.
 /// @param {Id.Instance} inst_move The instance as moving platform.
 /// @param {Id.Instance} inst_above The instance above the moving platform.
 /// @param {real} vsp_final The final vertical velocity of the `inst_move`.
@@ -60,10 +69,12 @@ function __move_object_above_vertical(inst_move, inst_above, vsp_final) {
         place_meeting_wrap_room(x, y + 1, inst_move)
         and sign(vsp) >= 0
         and not place_meeting_exception_wrap_room(x, y + sign(vsp_final), oSolid, inst_move)
-      ) or (
+      ) 
+      or (
         place_meeting_wrap_room(x, y - 1, inst_move) 
         and sign(vsp_final) == 1
-      ) {
+      ) 
+      {
         y += sign(vsp_final);
       }
       return;
@@ -73,15 +84,21 @@ function __move_object_above_vertical(inst_move, inst_above, vsp_final) {
       place_meeting(x, y + 1, inst_move)
       and sign(vsp) >= 0
       and not place_meeting_exception(x, y + sign(vsp_final), oSolid, inst_move)
-    ) or (
+    ) 
+    or (
       place_meeting(x, y - 1, inst_move) 
       and sign(vsp_final) == 1
-    ) {
+    )
+    {
       y += sign(vsp_final);
     }
   }
 }
 
+/// @desc Makes the `inst_above` move with the `inst_move` horizontally.
+/// @param {Id.Instance} inst_move The instance as moving platform.
+/// @param {Id.Instance} inst_above The instance above the moving platform.
+/// @param {real} hsp_final The final horizontal velocity of the `inst_move`.
 function __move_object_above_horizontal(inst_move, inst_above, hsp_final) {
   with (inst_above) {
     if can_collision_wrap() {
@@ -89,7 +106,8 @@ function __move_object_above_horizontal(inst_move, inst_above, hsp_final) {
       or (
         not has_collided(sign(hsp_final), 0)
         and place_meeting_wrap_room(x, y + 1, inst_move)
-      ) {
+      )
+      {
         x += sign(hsp_final);
       }
       return;
@@ -99,7 +117,8 @@ function __move_object_above_horizontal(inst_move, inst_above, hsp_final) {
     or (
       not has_collided(sign(hsp_final), 0)
       and place_meeting(x, y + 1, inst_move)
-    ) {
+    ) 
+    {
       x += sign(hsp_final);
     }
   }

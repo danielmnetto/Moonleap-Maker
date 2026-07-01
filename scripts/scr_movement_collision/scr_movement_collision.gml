@@ -14,9 +14,8 @@ function can_collision_wrap() {
 /// Collision wrapping is used for collision check if it is enabled and is not ignored by the room. See `global.collision_wrapping_enabled` and `global.rooms_to_ignore_collision_wrap`.
 /// @param {real} xx The horizontal position to check collision.
 /// @param {real} yy The vertical position to check collision.
-/// @param {bool} is_position_relative If true, the `xx` and `yy` positions will be relative to the current instance position.
-/// If false, they are relative to the room position. Default: true.
-/// @param {Array<Asset.GMObject>} included_objects An array of objects to included on collision check. Default: empty array.
+/// @param {bool} is_position_relative If true, the `xx` and `yy` positions will be relative to the current instance position. Otherwise, they will be relative to the current room instead. Default: `true`.
+/// @param {Array<Asset.GMObject>} included_objects An array of objects to be included on collision check. Default: empty array.
 /// @param {Array<Asset.GMObject>} excluded_objects An array of objects to be excluded from collision check. Default: empty array.
 function has_collided(xx, yy, is_position_relative = true, included_objects = [], excluded_objects = []) {
 	xx = (is_position_relative * x) + xx;
