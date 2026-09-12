@@ -12,7 +12,9 @@
 
 enum PLAYER_MODE { LEAP, DIRECTION, NEUTRAL }
 
-scr_inputcreate()
+scr_inputcreate();
+init_movement_variables();
+
 changecount = 0;
 dsquash = false;
 dwater = false;
@@ -65,8 +67,6 @@ winwait = 60;
 grace_time = 0;
 grace_time_frames = 10;
 
-hsp = 0;
-vsp = 0;
 jumpspeed = 2.25;
 v_max = 1;
 v_ace = 0.25; 
@@ -77,18 +77,13 @@ numb = 0;
 
 cling_time = 4.0;
 move = 1;
-sticking = true; 
+sticking = false; 
 can_stick = false;
 flash = 0;
 squash = false;
 ghost = false;
 
 was_on_ground = has_collided(0, 1);
-
-cx = 0;
-cy = 0;
-
-sticking = false
 
 mode = instance_exists(oNeutralFlag) ? PLAYER_MODE.NEUTRAL : PLAYER_MODE.LEAP;
 
@@ -303,12 +298,11 @@ set_movement_and_gravity = function() {
 	if ((not key_right and not key_left) or was_on_ground) {
 	   can_stick = true;
 	   sticking = false;
-	} else if (((key_right and key_left) or (key_left and key_right)) and can_stick and not was_on_ground) {
+	} else if ((key_right and key_left) and can_stick and not was_on_ground) {
 	   alarm[0] = cling_time;
-	   sticking = true; 
-	   can_stick = false;       
+	   sticking = true;
+	   can_stick = false;
 	}
-    
     
 	if key_left or key_right or key_jump_pressed {
 		alarm[11] = game_get_speed(gamespeed_fps) * 30;

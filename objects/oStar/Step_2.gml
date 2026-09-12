@@ -1,59 +1,26 @@
-cx += hsp 
-cy += vsp
-var hsp_new = floor(cx);
-var vsp_new = floor(cy);
-cx -= hsp_new;
-cy -= vsp_new;
+calc_subpixel_movement();
 
-jumped = false;
-landed = false;
+apply_stop_going_against_moving_platform();
+apply_moving_platform_movement();
 
-// Vertical collision
-repeat(abs(vsp_new)) {
-	if has_collided(0, sign(vsp), true, [oPermaSpike]) {
+repeat(abs(vsp_final)) {
+	if has_collided(0, sign(vsp_final), true, [oPermaSpike]) {
 		vsp = 0;
+    vsp_final = 0;
     break;
 	}
 	
-	y += sign(vsp);
+	y += sign(vsp_final);
 }
 
-// Horizontal collision
-repeat(abs(hsp_new)) {
-	if can_collision_wrap() {
-    // Going up slopes
-   	if place_meeting_wrap_room(x + sign(hsp), y, oSolid)
-   	and not place_meeting_wrap_room(x + sign(hsp), y - 1, oSolid) {
-   		y -= 1;
-   	}
-   	
-   	// Going down slopes
-   	if vsp >= 0
-   	and not place_meeting_wrap_room(x + sign(hsp), y, oSolid)
-   	and not place_meeting_wrap_room(x + sign(hsp), y + 1, oSolid)
-   	and place_meeting_wrap_room(x + sign(hsp), y + 2, oSolid) {
-   		y += 1;
-   	}
-  } else {
-    // Going up slopes
-   	if place_meeting(x + sign(hsp), y, oSolid)
-   	and not place_meeting(x + sign(hsp), y - 1, oSolid) {
-   		y -= 1;
-   	}
-   	
-   	// Going down slopes
-   	if vsp >= 0
-   	and not place_meeting(x + sign(hsp), y, oSolid)
-   	and not place_meeting(x + sign(hsp), y + 1, oSolid)
-   	and place_meeting(x + sign(hsp), y + 2, oSolid) {
-   		y += 1;
-   	}
-  }
+repeat(abs(hsp_final)) {
+  apply_slopes_movement();
 	
-	if has_collided(sign(hsp), 0, true, [oPermaSpike]) {
+	if has_collided(sign(hsp_final), 0, true, [oPermaSpike]) {
 		hsp = 0;
+    hsp_final = 0;
 		break;
 	}
 	
-	x += sign(hsp);
+	x += sign(hsp_final);
 }

@@ -1,5 +1,7 @@
 enum ORB_MODE { NORMAL, NEUTRAL };
 
+init_movement_variables();
+
 night = true;
 ani = 0;
 hsp = 0;

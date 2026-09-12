@@ -628,6 +628,7 @@
     {"id":{"name":"scr_menu_list","path":"scripts/scr_menu_list/scr_menu_list.yy",},},
     {"id":{"name":"scr_messages","path":"scripts/scr_messages/scr_messages.yy",},},
     {"id":{"name":"scr_movement_collision","path":"scripts/scr_movement_collision/scr_movement_collision.yy",},},
+    {"id":{"name":"scr_movement","path":"scripts/scr_movement/scr_movement.yy",},},
     {"id":{"name":"scr_moving_plat","path":"scripts/scr_moving_plat/scr_moving_plat.yy",},},
     {"id":{"name":"scr_rank","path":"scripts/scr_rank/scr_rank.yy",},},
     {"id":{"name":"scr_restartgame","path":"scripts/scr_restartgame/scr_restartgame.yy",},},

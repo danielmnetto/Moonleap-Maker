@@ -444,6 +444,7 @@
     {"name":"scr_menu_list","order":42,"path":"scripts/scr_menu_list/scr_menu_list.yy",},
     {"name":"scr_messages","order":50,"path":"scripts/scr_messages/scr_messages.yy",},
     {"name":"scr_movement_collision","order":38,"path":"scripts/scr_movement_collision/scr_movement_collision.yy",},
+    {"name":"scr_movement","order":57,"path":"scripts/scr_movement/scr_movement.yy",},
     {"name":"scr_moving_plat","order":32,"path":"scripts/scr_moving_plat/scr_moving_plat.yy",},
     {"name":"scr_rank","order":52,"path":"scripts/scr_rank/scr_rank.yy",},
     {"name":"scr_restartgame","order":14,"path":"scripts/scr_restartgame/scr_restartgame.yy",},

@@ -259,6 +259,6 @@ if nearmush != noone {
 cooldown = approach(cooldown, 0, 1);
 
 if place_meeting(x, y, oSpike) {
-    instance_destroy();
+  instance_destroy();
 }
 

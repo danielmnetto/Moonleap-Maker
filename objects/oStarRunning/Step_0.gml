@@ -1,48 +1,73 @@
-/// @description Insert description here
-// You can write your code in this editor
 on_ground_var = has_collided(0, 1, true, [oPermaSpike]);
-if not on_ground_var and image_angle == 0 {
-	vsp += 0.125
+
+if not on_ground_var and image_angle == 0
+{
+	vsp += v_grav;
 }
-if vsp > 4 {
-	vsp = 4
-}
+
+vsp = min(vsp, v_max_fall);
 
 object_set_room_wrapping();
 
-hsp=0
-if !instance_exists(oPlayer) {exit;}
+hsp = 0;
 
-if distance_to_point(x,oPlayer.y)<10
+var _player = oPlayer;
+var _player_x = _player.x;
+var _player_y = _player.y;
+
+if not instance_exists(_player) 
 {
-if distance_to_point(oPlayer.x,oPlayer.y)<40
-{
-	if oPlayer.x>x {hsp=-1} else {hsp=1}
+  exit;
 }
 
-if distance_to_point(oPlayer.x-320,oPlayer.y)<40
+if distance_to_point(x, _player_y) < distance_y_to_flee
 {
-	if oPlayer.x-320>x {hsp=-1} else {hsp=1}
+  if distance_to_point(_player_x, _player_y) < distance_x_to_flee
+  {
+    hsp = _player_x > x ? -v_flee : v_flee;
+  }
+
+  if distance_to_point(_player_x - room_width, _player_y) < distance_x_to_flee
+  {
+    hsp = _player_x - room_width > x ? -v_flee : v_flee;
+  }
+
+  if distance_to_point(_player_x + room_width, _player_y) < distance_x_to_flee
+  {
+    hsp = _player_x + room_width > x ? -v_flee : v_flee;
+  }
 }
 
-if distance_to_point(oPlayer.x+320,oPlayer.y)<40
+if hsp > 0
+and not (
+  place_meeting(x - (sprite_width / 3), y + 1, oSolid) 
+  or place_meeting(x - (sprite_width / 3), y + 1, oPlatGhost)
+) 
 {
-	if oPlayer.x+320>x {hsp=-1} else {hsp=1}
-}
+  image_xscale = -image_xscale;
+  hsp = 0;
 }
 
-if hsp>0 and !(place_meeting(x-(sprite_width/3),y+1,oSolid) or place_meeting(x-(sprite_width/3),y+1,oPlatGhost))
-	{image_xscale=-image_xscale hsp=0}
-
-if hsp<0 and !(place_meeting(x-(sprite_width/3),y+1,oSolid) or place_meeting(x-(sprite_width/3),y+1,oPlatGhost))
-	{image_xscale=-image_xscale hsp=0}
+if hsp < 0
+and not (
+  place_meeting(x - (sprite_width / 3), y + 1, oSolid)
+  or place_meeting(x - (sprite_width / 3), y + 1, oPlatGhost)
+)
+{
+  image_xscale = -image_xscale;
+  hsp = 0
+}
 	
-if place_meeting(x+hsp,y,oSolid)
-	{image_xscale=-image_xscale hsp=0}
-
-if hsp!=0
+if place_meeting(x + hsp, y, oSolid)
 {
-	image_xscale=hsp image_speed=4
-	} else {image_speed=1 }
-	
-	
+  image_xscale = -image_xscale;
+  hsp = 0;
+}
+
+if hsp != 0
+{
+	image_xscale = hsp;
+  image_speed = 4;
+} else {
+  image_speed = 1;
+}
