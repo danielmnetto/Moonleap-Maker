@@ -1,3 +1,7 @@
+if instance_exists(oPauseUI) {
+  exit;
+}
+
 sprite_index = night ? sStarDaySpike : sStarDay;
 
 on_ground_var = has_collided(0, 1, true, [oPermaSpike]);

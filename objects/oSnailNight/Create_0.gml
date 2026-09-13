@@ -1,3 +1,8 @@
+init_movement_variables();
+v_move = 0.55;
+grav = 0.125;
+hsp = -(image_xscale * 0.55);
+
 sindex=sprite_index
 iindex=image_index
 xindex=image_xscale
@@ -5,33 +10,18 @@ xindex=image_xscale
 numb=0
 night=false
 ani=0
-hsp=-(image_xscale*0.55)
-vsp=0
-grav=0.125
+
 turn=false
 idlesprite=sSnailIdleNight
 walksprite=sSnailWalkNight
 
-
 hsp_plus=0
 ani=0
-hsp=-(image_xscale*0.55)
-vsp=0
-grav=0.125
-
-
-// new movement code
-jumped = false;
-landed = false;
 
 platform_target = 0;
 wall_target     = 0;
 
 on_ground_var = has_collided(0, 1);
-
-// Used for sub-pixel movement
-cx = 0;
-cy = 0;
 
 c_left    = place_meeting(x - 1, y, oSolid);
 c_right   = place_meeting(x + 1, y, oSolid);

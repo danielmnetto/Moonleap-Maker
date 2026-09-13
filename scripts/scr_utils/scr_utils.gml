@@ -1,67 +1,42 @@
-/// @desc Safe struct value loading
+/// @desc This function returns the value of the key from a struct whether it's not undefined. Otherwise it returns the provided `_default` value.
+/// @param {Struct} _struct The struct to find the value.
+/// @param {String} _property The key name of the struct.
+/// @param {Any} _default The value to return whether the value of the struct key is undefined.
 function struct_read(_struct, _property, _default) {
 	var _val = variable_struct_get(_struct, _property);
+  
 	return is_undefined(_val) ? _default : _val;
 }
 
-function struct_clone(_struct) {
-	if not is_struct(_struct) then return undefined;
-	
-	var _new_struct = {};
-	var _names = variable_struct_get_names(_struct);
-	
-	for (var i = 0; i < array_length(_names); i++) {
-		var _name = array_get(_names, i);
-		var _value = variable_struct_get(_struct, _name);
-		
-		// If value is struct, apply recursion
-		if is_struct(_value) {
-			_value = struct_clone(_value);
-		} else if is_method(_value) {
-			// If value is method, set method reference to the new struct and return it.
-			_value = method(_new_struct, _value);
-		}
-		
-		variable_struct_set(_new_struct, _name, _value);
-	}
-	
-    return _new_struct;
+/// @desc This function checks whether the current room is the room or one of the rooms provided.
+/// @param {Asset.GMRoom|Array<Asset.GMRoom>} _room The room or an array of rooms to check.
+function room_is(_room) {
+  if not is_array(_room) {
+    return room == _room;
+  }
+
+  return array_any(_room, function(_cur_room) {
+    return room == _cur_room;
+  });
 }
 
-function room_is(_room_or_room_array) {
-    if not is_array(_room_or_room_array) {
-        return room == _room_or_room_array;
-    }
-
-    for (var i = 0; i < array_length(_room_or_room_array); i++) {
-        var _current_room = array_get(_room_or_room_array, i);
-    
-        if room == _current_room then return true;
-    }
-
-    return false;
-}
-
+/// @desc This function checks whether an audio into the `_audio_array` is a valid sound and it's currently playing.
+/// @param {Array<Asset.GMAudio>} _audio_array An array of audio.
 function audio_is_playing_any(_audio_array) {
-    for (var i = 0; i < array_length(_audio_array); i++) {
-        var _audio = array_get(_audio_array, i);
-    
-        if audio_is_playing(_audio) then return true;
-    }
-
-    return false;
+  return array_any(_audio_array, function(_audio) {
+    return asset_get_type(_audio) == asset_sound and audio_is_playing(_audio);
+  });
 }
 
-function instance_exists_any(_instance_array) {
-    for (var i = 0; i < array_length(_instance_array); i++) {
-        var _instance = array_get(_instance_array, i);
-    
-        if instance_exists(_instance) then return true;
-    }
-
-    return false;
+/// @desc This function uses `instance_exists` function on every instance into the array on `_instance_array` variable and returns `true` whether any of the instance or object exists in the current room.
+/// @param {Array<Asset.GMObject>|Array<Id.Instance>} _obj_array The array of objects or instances to check the existance of.
+function instance_exists_any(_obj_array) {
+  return array_any(_obj_array, function(_obj) {
+    return instance_exists(_obj);
+  })
 }
 
+/// @desc This function changes the current object's position when it is outside the room. If it's at the outside left of the room, it goes to the right side of the room and vice-versa. The same happens for the vertical position.
 function object_set_room_wrapping() {
    if x < 0 then x += room_width; 
    if x > room_width then x -= room_width;
@@ -69,6 +44,7 @@ function object_set_room_wrapping() {
    if y > room_height then y -= room_height;
 }
 
+/// @desc This function checks whether the current object is outside the current room.
 function object_is_outside_room() {
 	return x < 0 or x >= room_width or y < 0 or y >= room_height;
 }
@@ -95,27 +71,28 @@ function in_hub_view() {
 	return rectangle_in_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, _x1, _y1, _x2, _y2);
 }
 
+/// @desc This function checks whether the current room is the game's main hub.
 function is_at_hub() {
 	return room_is([Room100]);
 }
 
-/// @description Checks whether the current OS is one of the items in the array.
-/// @param {Array<Constant.OperatingSystem>} os_type_array 
+/// @description This function checks whether the current OS is one of the items in the array.
+/// @param {Array<Constant.OperatingSystem>} os_type_array An array of OS types.
 function is_os_type_any(_os_type_array) {
   return array_any(_os_type_array, function(_os_type) { return os_type == _os_type });
 }
 
-/// @desc Checks whether the current OS is desktop.
+/// @desc This function checks whether the current OS is desktop.
 function is_on_desktop() {
 	return is_os_type_any([os_windows, os_linux, os_macosx]);
 }
 
-/// @desc Checks whether the current OS is console.
+/// @desc This function checks whether the current OS is console.
 function is_on_console() {
 	return is_os_type_any([os_ps4, os_ps5, os_xboxseriesxs, os_gdk, os_switch, os_switch2]);
 }
 
-/// @desc Checks whether the current OS is mobile.
+/// @desc This function checks whether the current OS is mobile.
 function is_on_mobile() {
 	return is_os_type_any([os_android, os_ios]);
 }
@@ -183,7 +160,7 @@ function string_filename_create(_str) {
   return _new_name;
 }
 
-/// @desc Draws a rectangle border around the collision bounding box.
+/// @desc This function draws a rectangle border around the collision bounding box.
 /// @param {Constant.Color} _color The rectangle border color.
 function draw_bbox_rect(_color = c_orange) {
   draw_set_color(_color);

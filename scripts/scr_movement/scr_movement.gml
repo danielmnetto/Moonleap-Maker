@@ -1,5 +1,6 @@
-#macro MOVING_PLATFORM_OBJECTS [oLady, oLadyVer, oBat, oBatVer]
+#macro MOVING_PLATFORM_OBJECTS [oSnail, oSnailNight, oSnailGray, oLady, oLadyVer, oBat, oBatVer]
 
+/// @desc This function initializes variables and methods related to object's movement and it must be called in the object's Create event.
 function init_movement_variables() {
   hsp = 0;
   vsp = 0;
@@ -8,8 +9,10 @@ function init_movement_variables() {
   _hsp_rest = 0;
   _vsp_rest = 0;
   
+  _moving_platform = noone;
+  
   /// @desc Calculates the current horizontal and vertical speeds, making them integer numbers and storing the decimal rest to sum the speeds on the next calculation.
-  calc_subpixel_movement = function() {
+  __calc_subpixel_movement = function() {
     _hsp_rest += hsp;
    	_vsp_rest += vsp;
    	hsp_final = floor(_hsp_rest);
@@ -19,7 +22,7 @@ function init_movement_variables() {
   };
   
   /// @desc Applies movement when moving up or down on slopes.
-  apply_slopes_movement = function() {
+  __apply_slopes_movement = function() {
     var _place_meeting = can_collision_wrap() ? place_meeting_wrap_room : place_meeting;
     
     if _place_meeting(x + sign(hsp), y, oSolid)
@@ -36,7 +39,7 @@ function init_movement_variables() {
   };
   
   /// @desc Calculates collision and movement when on moving platforms.
-  apply_moving_platform_movement = function() {
+  __apply_moving_platform_movement = function() {
     var _platforms_bottom = can_collision_wrap() 
       ? instance_place_array_wrap_room(x, y + 1, MOVING_PLATFORM_OBJECTS)
       : instance_place_array(x, y + 1, MOVING_PLATFORM_OBJECTS, true);
@@ -69,7 +72,7 @@ function init_movement_variables() {
   }
   
   /// @desc Calculates collision and movement when this object is moving against moving platform horizontally in order to stop it.
-  apply_stop_going_against_moving_platform = function() {
+  __apply_stop_going_against_moving_platform = function() {
     if sign(hsp_final) == 0 {
       return;
     }
@@ -101,4 +104,38 @@ function init_movement_variables() {
       x += _step;
     }
   };
+  
+  /// @desc Moves the object by its final speeds and stops moving when colliding with wall objects.
+  /// @param {bool} enable_slopes_movement When `true`, when moving horizontally, it will detect for slopes to move on them. It's not suitable for flying objects. Default: `true`
+  /// @param {bool} avoid_other_moving_platforms  When `true`, this object will not be moved by other moving platforms. It's suitable for moving platforms. Default: `false`.
+  apply_movement_collision = function(enable_slopes_movement = true, avoid_other_moving_platforms = false) {
+    __calc_subpixel_movement();
+    
+    if not avoid_other_moving_platforms {
+      __apply_stop_going_against_moving_platform();
+      __apply_moving_platform_movement();
+    }
+    
+    repeat(abs(vsp_final)) {
+    	if has_collided(0, sign(vsp_final)) {
+    		vsp = 0;
+        vsp_final = 0;
+        break;
+    	}
+    	
+    	y += sign(vsp_final);
+    }
+    
+    repeat(abs(hsp_final)) {
+      if enable_slopes_movement then __apply_slopes_movement();
+    	
+    	if has_collided(sign(hsp_final), 0) {
+    		hsp = 0;
+        hsp_final = 0;
+    		break;
+    	}
+    	
+    	x += sign(hsp_final);
+    }
+  }
 }

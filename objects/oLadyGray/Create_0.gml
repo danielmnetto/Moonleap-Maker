@@ -5,12 +5,6 @@ maxspd = 0.45;
 
 mynight=true
 
-//hsp = 0;
-//vsp = 0;
-//
-//cx = 0;
-//cy = 0;
-
 xx = 0;
 yy = 0;
 

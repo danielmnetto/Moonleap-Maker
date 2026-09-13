@@ -2,11 +2,7 @@ init_movement_variables();
 
 levelnumb = 0;
 night = false;
-//hsp = 0;
-//vsp = 0;
 prevsp = 0;
-//cx = 0;
-//cy = 0;
 xx = 0;
 yy = 0;
 maxspd = 0.55;

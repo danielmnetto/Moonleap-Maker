@@ -1,5 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
 pal_swap_set(sSnailPal,palette_index,0)
 
 if round(hsp)!=0 { drawhsp=hsp}

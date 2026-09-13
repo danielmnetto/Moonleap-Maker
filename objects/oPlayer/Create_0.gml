@@ -45,7 +45,7 @@ or instance_exists(oDunDay) {
 }
 
 if instance_exists(oNeutralFlag) {
-    neutral = true;
+  neutral = true;
 }
 
 levelnumb = 0;
@@ -68,10 +68,10 @@ grace_time = 0;
 grace_time_frames = 10;
 
 jumpspeed = 2.25;
-v_max = 1;
-v_ace = 0.25; 
-v_fric = 0.25;
-grav = 0.125;
+v_max_move = 1;
+v_acceleration = 0.25; 
+v_friction = 0.25;
+v_grav = 0.125;
 
 numb = 0;
 
@@ -105,8 +105,8 @@ has_collected_all_stars = function() {
 
 stars_to_collect = instance_number(oStar);
 
-// If level is secret bird level
-if room == Room58 { 
+// If level is the secret lonely bird level.
+if room_is(Room58) { 
 	stars_to_collect = 1;
 }
 
@@ -130,8 +130,8 @@ if instance_exists(oSaveManager) and room != RoomIntro0 {
 	PlayerHappy=		sPlayerHappy	
 }
 
-if room == RoomFinal {
-    night = oCamera.endnight
+if room_is(RoomFinal) {
+  night = oCamera.endnight;
 }
 
 mask_index = sPlayerIdle;
@@ -146,7 +146,7 @@ state = new SnowState("idle");
 state.add("idle", {
 	step: function() {
 		sprite_index = PlayerIdle;
-		v_fric = 0.25;
+		v_friction = 0.25;
 		set_idle_timer();
 
 		check_change_by_direction();
@@ -176,7 +176,7 @@ state.add("idle", {
 state.add("run", {
 	step: function() {
 		sprite_index = PlayerRun;
-		v_fric = 0.25;
+		v_friction = 0.25;
 		check_change_by_direction();
 		
 		set_movement_and_gravity();
@@ -317,15 +317,15 @@ set_movement_and_gravity = function() {
 	// Left 
 	if key_left and not key_right and not sticking {
 	   move = -1;
-	   if hsp > -v_max {
-	      hsp = approach(hsp, -v_max, v_ace);
+	   if hsp > -v_max_move {
+	      hsp = approach(hsp, -v_max_move, v_acceleration);
 	   }
     
 	// Right
 	} else if key_right and not key_left and not sticking {
 	   move = 1;
-		if hsp < v_max { 
-	      hsp = approach(hsp, v_max, v_ace);
+		if hsp < v_max_move { 
+	      hsp = approach(hsp, v_max_move, v_acceleration);
 	   }
 	}
     
@@ -333,7 +333,7 @@ set_movement_and_gravity = function() {
     
 	// Friction
 	if not key_right and not key_left {
-	   hsp = approach(hsp, 0, v_fric);
+	   hsp = approach(hsp, 0, v_friction);
 	}
     
    // Vertical movement
@@ -342,13 +342,13 @@ set_movement_and_gravity = function() {
 		last_plat = instance_place(x, y + 6, oBrokenStone);
    } else {
 		if vsp > -1 and vsp < 1 {
-		   grav = 0.09;
+		   v_grav = 0.09;
 		} else {
-		   grav = 0.125;
+		   v_grav = 0.125;
 		}
     
 	   //gravidade limitada por 4 de vsp
-		vsp = approach(vsp, 3 + (key_down * 2), grav);
+		vsp = approach(vsp, 3 + (key_down * 2), v_grav);
 		grace_time = approach(grace_time, 0, 1) + ghost;
 	}
 	
@@ -372,7 +372,7 @@ set_godmode_toggling = function() {
 set_godmode_movement = function() {
   if not godmode then return;
 
-  grav = 0;
+  v_grav = 0;
   if key_jump or key_up then vsp = -4;
   if key_down then vsp = 2;
   if key_left then hsp = -3;
@@ -991,7 +991,7 @@ check_mushroom_collision = function() {
       hsp = jumpspeed
     }
 
-    v_fric = 0;
+    v_friction = 0;
     image_index = 0;
     _play_mush_sound();
     shake_gamepad(0.4, 2);
@@ -1013,7 +1013,7 @@ check_mushroom_collision = function() {
       hsp = -jumpspeed;
     }
           
-    v_fric = 0;
+    v_friction = 0;
     image_index = 0;
     _play_mush_sound();
     shake_gamepad(0.4, 2);

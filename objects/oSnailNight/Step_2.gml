@@ -9,6 +9,4 @@ or (instance_exists(oPlayer) and oPlayer.state.state_is("win")) {
 
 image_speed = 1;
 
-var _cx = (hsp * night * on_ground_var) + hsp_plus;
-
-scr_moving_plat(_cx);
+apply_movement_collision();

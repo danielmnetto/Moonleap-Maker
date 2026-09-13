@@ -1,17 +1,15 @@
-hsp = 0;
-vsp = 0;
+init_movement_variables();
+v_fly = 1;
+hsp = image_index == 1 ? 0.5 : -0.5;
 
 dir = image_xscale;
 drawhsp = image_xscale;
 image_xscale = 1;
 
-hsp = image_index == 1 ? 0.5 : -0.5;
+
 startindex = image_index;
 night = false;
 early_night = false;
-
-cx = 0;
-cy = 0;
 
 layer = layer_get_id("Instances_2");
 drawy = y;

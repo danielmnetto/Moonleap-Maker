@@ -1,3 +1,7 @@
+if instance_exists(oPauseUI) {
+  exit;
+}
+
 on_ground_var = has_collided(0, 1, true, [oPermaSpike]);
 
 if not on_ground_var and image_angle == 0

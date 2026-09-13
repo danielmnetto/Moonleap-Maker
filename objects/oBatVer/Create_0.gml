@@ -1,5 +1,7 @@
-hsp = 0;
-vsp = 0;
+init_movement_variables();
+v_fly = 1;
+vsp = image_index == 1 ? 0.5 : -0.5;
+
 wing = 2;
 startindex = image_index;
 dir = image_yscale;
@@ -7,12 +9,7 @@ night = false;
 change = false;
 early_night = false;
 
-cx = 0;
-cy = 0;
-
 drawy = y;
-
-vsp = image_index == 1 ? 0.5 : -0.5;
 
 xx = x;
 yy = y;

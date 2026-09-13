@@ -1,31 +1,4 @@
-calc_subpixel_movement();
-
-apply_stop_going_against_moving_platform();
-apply_moving_platform_movement();
-
-// Vertical collision
-repeat(abs(vsp_final)) {
-	if has_collided(0, sign(vsp_final)) {
-		vsp = 0;
-    vsp_final = 0;
-    break;
-	}
-	
-	y += sign(vsp_final);
-}
-
-// Horizontal collision
-repeat(abs(hsp_final)) {
-  apply_slopes_movement();
-	
-	if has_collided(sign(hsp_final), 0) {
-		hsp = 0;
-    hsp_final = 0;
-		break;
-	}
-	
-	x += sign(hsp_final);
-}
+apply_movement_collision();
 
 if is_at_hub() {
   trueblack = not (y > 360 and y < 720);
@@ -58,7 +31,7 @@ if gowhite {
 	var nearp = instance_nearest(x, y, oPortal);
 
 	white += gowhite / 4;
-	grav = 0;
+	v_grav = 0;
 	vsp = 0;
 	hsp = 0;
 	x = smooth_approach(x,nearp.x,0.1)
