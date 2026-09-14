@@ -9,4 +9,4 @@ or (instance_exists(oPlayer) and oPlayer.state.state_is("win")) {
 
 image_speed = 1;
 
-apply_movement_collision();
+apply_movement_collision(false);

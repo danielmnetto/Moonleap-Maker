@@ -118,7 +118,8 @@ function init_movement_variables() {
   /// @desc Moves the object by its final speeds and stops moving when colliding with wall objects.
   /// @param {bool} enable_slopes_movement When `true`, when moving horizontally, it will detect for slopes to move on them. It's not suitable for flying objects. Default: `true`
   /// @param {bool} avoid_other_moving_platforms  When `true`, this object will not be moved by other moving platforms when it's above them. It's suitable for moving platforms. Default: `false`.
-  apply_movement_collision = function(enable_slopes_movement = true, avoid_other_moving_platforms = false) {
+  /// @param {Array<GM.Object>} exclude_collision_objects An array of objects and/or instances to ignore collision. Default: empty array.
+  apply_movement_collision = function(enable_slopes_movement = true, avoid_other_moving_platforms = false, exclude_collision_objects = []) {
     __calc_subpixel_movement();
     
     if not avoid_other_moving_platforms {
@@ -127,7 +128,7 @@ function init_movement_variables() {
     }
     
     repeat(abs(vsp_final)) {
-    	if has_collided(0, sign(vsp_final)) {
+    	if has_collided(0, sign(vsp_final), true, [], exclude_collision_objects) {
     		vsp = 0;
         vsp_final = 0;
         break;
@@ -141,7 +142,7 @@ function init_movement_variables() {
         __apply_slopes_movement();
       }
     	
-    	if has_collided(sign(hsp_final), 0) {
+    	if has_collided(sign(hsp_final), 0, true, [], exclude_collision_objects) {
     		hsp = 0;
         hsp_final = 0;
     		break;
