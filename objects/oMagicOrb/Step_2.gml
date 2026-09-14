@@ -30,13 +30,6 @@ or (instance_exists(oPlayer) and oPlayer.state.state_is("win")) {
   exit;
 }
 
-var hsp_new, vsp_new;
-
-calc_subpixel_movement();
-
-apply_stop_going_against_moving_platform();
-apply_moving_platform_movement();
-
 apply_movement_collision();
 
 if abs(hsp_final) > 0 and on_ground_var and irandom_range(1, 3) == 1 {

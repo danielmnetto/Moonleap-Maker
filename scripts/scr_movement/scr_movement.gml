@@ -38,59 +38,70 @@ function init_movement_variables() {
     }
   };
   
-  /// @desc Calculates collision and movement when on moving platforms.
-  __apply_moving_platform_movement = function() {
-    var _platforms_bottom = can_collision_wrap() 
-      ? instance_place_array_wrap_room(x, y + 1, MOVING_PLATFORM_OBJECTS)
-      : instance_place_array(x, y + 1, MOVING_PLATFORM_OBJECTS, true);
+  __find_platform_below = function() {
+    var _platforms_below = can_collision_wrap() ?
+      instance_place_array_wrap_room(x, y + 1, MOVING_PLATFORM_OBJECTS)
+      : instance_place_array(x, y + 1, MOVING_PLATFORM_OBJECTS);
     
-    if array_length(_platforms_bottom) == 0 {
+    if array_length(_platforms_below) == 0 {
+      _moving_platform = noone;
+      return
+    }
+    
+    _moving_platform = _platforms_below[0];
+  };
+  
+  /// @desc Calculates movement and collision above the moving plataform.
+  __apply_movement_above_moving_platform = function() {
+    if _moving_platform == noone {
       return;
     }
-
-    var _platform = _platforms_bottom[0],
-        _step = sign(vsp_final);
     
-    array_push(_platforms_bottom, oSolid);
-    
-    repeat abs(vsp_final) {
-      var _place_met = can_collision_wrap()
-        ? place_meeting_wrap_room(x, y + _step, _platforms_bottom)
-        : place_meeting(x, y + _step, _platforms_bottom);
+    repeat abs(_moving_platform.vsp_final) {
+      var _step = sign(_moving_platform.vsp_final);
       
-      if _place_met {
-        vsp = 0;
-        vsp_final = 0;
+      if has_collided(0, _step) {
         break;
       }
-      
       y += _step;
     }
-    
-    vsp_final += _platform.vsp_final;
-    hsp_final += _platform.hsp_final;
+
+    repeat abs(_moving_platform.hsp_final) {
+      var _step = sign(_moving_platform.hsp_final);
+      
+      if has_collided(_step, 0) {
+        break;
+      }
+      x += _step;
+    }
   }
   
-  /// @desc Calculates collision and movement when this object is moving against moving platform horizontally in order to stop it.
-  __apply_stop_going_against_moving_platform = function() {
-    if sign(hsp_final) == 0 {
-      return;
-    }
+  /// @desc This function makes the object get pushed by moving platforms when they are coming from sides.
+  __get_pushed_by_moving_platform_sides = function() {
+    var _platform_side_left = can_collision_wrap() ?
+      instance_place_array_wrap_room(x - 1, y, MOVING_PLATFORM_OBJECTS)
+      : instance_place_array(x - 1, y, MOVING_PLATFORM_OBJECTS, true);
+    var _platforms_side_right = can_collision_wrap() ?
+      instance_place_array_wrap_room(x + 1, y, MOVING_PLATFORM_OBJECTS)
+      : instance_place_array(x + 1, y, MOVING_PLATFORM_OBJECTS, true);
+    var _platforms_side = [];
     
-    var _step = sign(hsp_final),
-        _platforms_side = can_collision_wrap() ?
-          instance_place_array_wrap_room(x + sign(hsp_final), y, MOVING_PLATFORM_OBJECTS)
-          : instance_place_array(x + sign(hsp_final), y, MOVING_PLATFORM_OBJECTS, true);
+    array_foreach(_platform_side_left, method({ side: _platforms_side }, function(_platforms) {
+      array_push(side, _platforms);
+    }));
+    array_foreach(_platforms_side_right, method({ side: _platforms_side }, function(_platforms) {
+      array_push(side, _platforms);
+    }));
     
     if array_length(_platforms_side) == 0 {
       return;
     }
 
     var _platform = _platforms_side[0];
+    var _step = sign(_platform.hsp_final);
+    //array_push(_platforms_side, oSolid);
     
-    array_push(_platforms_side, oSolid);
-    
-    repeat abs(hsp_final) {
+    repeat abs(_platform.hsp_final) {
       var _place_met = can_collision_wrap()
         ? place_meeting_wrap_room(x + _step, y, _platforms_side)
         : place_meeting(x + _step, y, _platforms_side);
@@ -112,8 +123,8 @@ function init_movement_variables() {
     __calc_subpixel_movement();
     
     if not avoid_other_moving_platforms {
-      __apply_stop_going_against_moving_platform();
-      __apply_moving_platform_movement();
+      __apply_movement_above_moving_platform();
+      __get_pushed_by_moving_platform_sides();
     }
     
     repeat(abs(vsp_final)) {
@@ -127,7 +138,9 @@ function init_movement_variables() {
     }
     
     repeat(abs(hsp_final)) {
-      if enable_slopes_movement then __apply_slopes_movement();
+      if enable_slopes_movement {
+        __apply_slopes_movement();
+      }
     	
     	if has_collided(sign(hsp_final), 0) {
     		hsp = 0;
@@ -136,6 +149,10 @@ function init_movement_variables() {
     	}
     	
     	x += sign(hsp_final);
+    }
+    
+    if not avoid_other_moving_platforms {
+      __find_platform_below();
     }
   }
 }
