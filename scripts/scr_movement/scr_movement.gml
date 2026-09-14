@@ -11,7 +11,7 @@ function init_movement_variables() {
   
   _moving_platform = noone;
   
-  /// @desc Calculates the current horizontal and vertical speeds, making them integer numbers and storing the decimal rest to sum the speeds on the next calculation.
+  /// @desc This function uses the current speeds (`hsp` and `vsp`) to calculate the final speeds (`hsp_final` and `vsp_final`), making them integer numbers and storing the decimal rest to sum the final speeds on the next calculation frame.
   __calc_subpixel_movement = function() {
     _hsp_rest += hsp;
    	_vsp_rest += vsp;
@@ -21,7 +21,7 @@ function init_movement_variables() {
    	_vsp_rest -= vsp_final;
   };
   
-  /// @desc Applies movement when moving up or down on slopes.
+  /// @desc This function applies movement when moving up or down on slopes.
   __apply_slopes_movement = function() {
     var _place_meeting = can_collision_wrap() ? place_meeting_wrap_room : place_meeting;
     
@@ -51,7 +51,7 @@ function init_movement_variables() {
     _moving_platform = _platforms_below[0];
   };
   
-  /// @desc Calculates movement and collision above the moving plataform.
+  /// @desc This function applies movement and collision above the moving plataform.
   __apply_movement_above_moving_platform = function() {
     if _moving_platform == noone {
       return;
@@ -99,7 +99,6 @@ function init_movement_variables() {
 
     var _platform = _platforms_side[0];
     var _step = sign(_platform.hsp_final);
-    //array_push(_platforms_side, oSolid);
     
     repeat abs(_platform.hsp_final) {
       var _place_met = can_collision_wrap()
@@ -118,7 +117,7 @@ function init_movement_variables() {
   
   /// @desc Moves the object by its final speeds and stops moving when colliding with wall objects.
   /// @param {bool} enable_slopes_movement When `true`, when moving horizontally, it will detect for slopes to move on them. It's not suitable for flying objects. Default: `true`
-  /// @param {bool} avoid_other_moving_platforms  When `true`, this object will not be moved by other moving platforms. It's suitable for moving platforms. Default: `false`.
+  /// @param {bool} avoid_other_moving_platforms  When `true`, this object will not be moved by other moving platforms when it's above them. It's suitable for moving platforms. Default: `false`.
   apply_movement_collision = function(enable_slopes_movement = true, avoid_other_moving_platforms = false) {
     __calc_subpixel_movement();
     
