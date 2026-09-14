@@ -8,8 +8,8 @@ if (key_jump or key_start) and input_interval_frames == -1 and duration_frames >
 }
 
 if duration_frames == -1 {
-  alpha = max(0, alpha - alpha_fade_speed);
+  message_duration_frames = max(0, message_duration_frames - 1);
 }
-if alpha == 0 {
+if message_duration_frames == 0 {
   instance_destroy();
 }

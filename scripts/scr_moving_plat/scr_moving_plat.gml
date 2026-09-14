@@ -1,6 +1,6 @@
 function scr_moving_plat(_cx = hsp, _cy = vsp) {
 	if instance_exists_any([oPauseUI, oDead])
-	or (instance_exists(oTransition) and oTransition.wait != 0)
+	or (instance_exists(oTransition) and oTransition.title_display_wait != 0)
   or maker_transition_is_running()
 	or (not instance_exists(oPlayer) or (instance_exists(oPlayer) and oPlayer.state.state_is("win"))) {
 		image_speed = 0;

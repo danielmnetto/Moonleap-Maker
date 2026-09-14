@@ -251,7 +251,7 @@ action_save_level = function() {
   var _is_level_valid = level_maker_check_level_validation();
   
   if not _is_level_valid {
-    level_maker_save_show_missing_objects_message();
+    message_popup_call_level_requirements(true);
     return;
   }
   shake_gamepad_on_press();
@@ -280,7 +280,7 @@ action_test_level = function() {
   var _is_level_valid = level_maker_check_level_validation();
   
   if not _is_level_valid {
-    level_maker_test_show_missing_objects_message();
+    message_popup_call_level_requirements();
     return;
   }
   

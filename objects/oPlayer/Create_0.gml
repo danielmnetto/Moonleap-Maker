@@ -758,7 +758,7 @@ check_controls_disabling = function() {
   if not state.state_is("win")
   and not instance_exists(oPauseUI)
   and numb <= 0
-  and not (instance_exists(oTransition) and (oTransition.wait != 0 or is_at_hub()))
+  and not (instance_exists(oTransition) and (oTransition.title_display_wait != 0 or is_at_hub()))
   and not maker_transition_is_running()
   {
     return;

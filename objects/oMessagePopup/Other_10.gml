@@ -9,7 +9,7 @@ var _message_height = string_height(message),
     _text_line_distance = 12,
     _text_line_width = 288,
     _text_break_on_space = false,
-    _text_alpha = alpha,
+    _text_alpha = 1,
     
     _message_x = GUI_W / 2,
     _message_y = GUI_H / 2,
@@ -24,6 +24,9 @@ draw_rectangle(_box_left, _box_top, _box_right, _box_bottom, _is_outline_rectang
 draw_set_font(oCamera.font);
 draw_set_halign(_message_halign);
 draw_set_valign(_message_valign);
+
+message_color = message_duration_frames >= 5 ? COLOR_NICE_WHITE : COLOR_NICE_BLUE;
+
 draw_set_color(message_color);
 
 draw_text_nox(
