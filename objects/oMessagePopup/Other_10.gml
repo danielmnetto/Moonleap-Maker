@@ -18,7 +18,7 @@ var _message_height = string_height(message),
     _message_valign = fa_middle;
 
 draw_set_color(box_color);
-draw_set_alpha(alpha);
+draw_set_alpha(1);
 draw_rectangle(_box_left, _box_top, _box_right, _box_bottom, _is_outline_rectangle);
 
 draw_set_font(oCamera.font);
