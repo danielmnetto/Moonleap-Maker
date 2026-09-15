@@ -2,14 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function scr_inputget()
 {
-	if (!key_up_axis_pressed and !key_down_axis_pressed) {
-		key_axis_pressed = false;
-	}
-	
-	//if(!key_axis_pressed){
-	if (key_up_axis_pressed or key_down_axis_pressed) {
-		key_axis_pressed = true;
-	}
+	key_axis_pressed = key_right_axis_pressed or key_left_axis_pressed or key_down_axis_pressed or key_up_axis_pressed;
 
 	//get inputs
 	if (not oCamera.arcade) {
@@ -24,6 +17,9 @@ function scr_inputget()
 		
 		key_down_axis_pressed = gamepad_axis_value(_gpad_device_index, gp_axislv) > _gpad_axis_deadzone;
 		key_up_axis_pressed = gamepad_axis_value(_gpad_device_index, gp_axislv) < -_gpad_axis_deadzone;
+		key_right_axis_pressed = gamepad_axis_value(_gpad_device_index, gp_axislh) > _gpad_axis_deadzone;
+		key_left_axis_pressed = gamepad_axis_value(_gpad_device_index, gp_axislh) < -_gpad_axis_deadzone;
+    
     key_right = keyboard_check(ord("D"))
       or keyboard_check(vk_right) 
       or gamepad_button_check(_gpad_device_index, gp_padr)
@@ -32,8 +28,8 @@ function scr_inputget()
 		key_right_pressed = keyboard_check_pressed(ord("D"))
       or keyboard_check_pressed(vk_right) 
       or gamepad_button_check_pressed(_gpad_device_index, gp_padr)
-      or (gamepad_axis_value(_gpad_device_index, gp_axislh) > _gpad_axis_deadzone)
       or obDirection.key_right;
+    
     key_left = keyboard_check(ord("A"))
       or keyboard_check(vk_left)
       or gamepad_button_check(_gpad_device_index, gp_padl)
@@ -42,20 +38,22 @@ function scr_inputget()
 		key_left_pressed = keyboard_check_pressed(ord("A"))
       or keyboard_check_pressed(vk_left)
       or gamepad_button_check_pressed(_gpad_device_index, gp_padl)
-      or gamepad_axis_value(_gpad_device_index, gp_axislh) < -_gpad_axis_deadzone
       or obDirection.key_left;
+    
+    key_down = keyboard_check_pressed(ord("S"))
+      or keyboard_check_pressed(vk_down) 
+      or gamepad_button_check_pressed(_gpad_device_index, gp_padd)
+      or obDirection.key_down;
     key_down_notpressed = keyboard_check(ord("S"))
       or keyboard_check(vk_down)
       or gamepad_button_check(_gpad_device_index, gp_padd)
       or obDirection.key_down;
-		key_down = keyboard_check_pressed(ord("S"))
-      or keyboard_check_pressed(vk_down) 
-      or gamepad_button_check_pressed(_gpad_device_index, gp_padd)
-      or obDirection.key_down;
+    
 		key_up = keyboard_check_pressed(ord("W"))
       or keyboard_check_pressed(vk_up)
       or gamepad_button_check_pressed(_gpad_device_index, gp_padu)
       or obDirection.key_up;
+    
     key_jump = 
       keyboard_check(vk_space)
       or keyboard_check(ord("X"))

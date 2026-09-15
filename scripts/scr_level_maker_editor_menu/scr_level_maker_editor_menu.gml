@@ -44,6 +44,46 @@ function menu_level_editor_get_main() {
 };
 
 function menu_level_editor_get_level_options() {
+  var _option_perfect_score = new MenuOptionDirectionalToggle();
+  
+  _option_perfect_score.label = function(_is_toggling) {
+    var _left_arrow = _is_toggling ? " < " : "";
+    var _right_arrow = _is_toggling ? " >" : "";
+    
+    return $"{LANG.maker_perfect_score}{_left_arrow}{oLevelMaker.perfect_score}{_right_arrow}";
+  };
+  _option_perfect_score.toggle_left_callback = function() {
+    var _perfect_score = oLevelMaker.perfect_score;
+    
+    _perfect_score -= 1;
+    _perfect_score = clamp(_perfect_score, LEVEL_MAKER_MIN_PERFECT_SCORE, LEVEL_MAKER_MAX_PERFECT_SCORE);
+    oLevelMaker.perfect_score = _perfect_score;
+  };
+  _option_perfect_score.toggle_right_callback = function() {
+    var _perfect_score = oLevelMaker.perfect_score;
+    
+    _perfect_score += 1;
+    _perfect_score = clamp(_perfect_score, LEVEL_MAKER_MIN_PERFECT_SCORE, LEVEL_MAKER_MAX_PERFECT_SCORE);
+    oLevelMaker.perfect_score = _perfect_score;
+  };
+  _option_perfect_score.toggle_down_callback = function() {
+    var _perfect_score = oLevelMaker.perfect_score;
+    
+    _perfect_score -= 10;
+    _perfect_score = clamp(_perfect_score, LEVEL_MAKER_MIN_PERFECT_SCORE, LEVEL_MAKER_MAX_PERFECT_SCORE);
+    oLevelMaker.perfect_score = _perfect_score;
+  };
+  _option_perfect_score.toggle_up_callback = function() {
+    var _perfect_score = oLevelMaker.perfect_score;
+    
+    _perfect_score += 10;
+    _perfect_score = clamp(_perfect_score, LEVEL_MAKER_MIN_PERFECT_SCORE, LEVEL_MAKER_MAX_PERFECT_SCORE);
+    oLevelMaker.perfect_score = _perfect_score;
+  };
+  _option_perfect_score.description = function() {
+    return LANG.maker_perfect_score_help;
+  };
+  
   var _menu_level_editor_level_options = [
     // Edit level name
     new MenuOptionCloseMenu(
@@ -78,25 +118,7 @@ function menu_level_editor_get_level_options() {
     ),
     
     // Edit perfect score
-    new MenuOptionActionCall(
-      function() {
-        var _perfect_score = $"{oLevelMaker.perfect_score}";
-        
-        return $"{LANG.maker_perfect_score}{_perfect_score}";
-      },
-      function() {
-        var _perfect_score = oLevelMaker.perfect_score;
-        
-        _perfect_score += 1;
-        if _perfect_score > LEVEL_MAKER_MAX_PERFECT_SCORE {
-          _perfect_score = LEVEL_MAKER_MIN_PERFECT_SCORE;
-        }
-        oLevelMaker.perfect_score = _perfect_score;
-      },
-      function() {
-        return LANG.maker_perfect_score_help
-      }
-    ),
+    _option_perfect_score,
 
     // Use night music
     new MenuOptionActionCall(

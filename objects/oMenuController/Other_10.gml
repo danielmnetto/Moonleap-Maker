@@ -154,7 +154,7 @@ for (var _i = 0; _i < _options_length; _i++) {
 
       _option_x = _option_base_x,
       _option_y = _option_base_y + (_option_y_gap * _i),
-      _option_text = _menu_option.get_label(),
+      _option_text = _is_toggling ? _menu_option.get_label(_is_toggling) : _menu_option.get_label(),
       _option_color = _is_option_selected ? _option_color_selected : _option_color_default;
   
   draw_set_color(_option_color);

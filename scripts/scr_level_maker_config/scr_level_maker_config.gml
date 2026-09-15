@@ -11,7 +11,7 @@ global.is_maker_mode = true;
 
 // Perfect score
 #macro LEVEL_MAKER_MIN_PERFECT_SCORE 0
-#macro LEVEL_MAKER_MAX_PERFECT_SCORE 30
+#macro LEVEL_MAKER_MAX_PERFECT_SCORE 99
 
 // Level name length
 #macro LEVEL_MAKER_LEVEL_NAME_LENGTH_MIN 6
