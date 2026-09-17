@@ -46,7 +46,7 @@ if image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL {
   exit;
 }
 
-update_hover_text();
+__update_hover_text();
 
 if instance_exists(oMessagePopup) {
   exit;
@@ -66,34 +66,34 @@ if _is_mouse_hover and _is_left_pressing {
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.PAGE_UP
 and key_maker_list_page_up {
-	action_items_page_up();
+	__action_items_page_up();
 }
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.PAGE_DOWN
 and key_maker_list_page_down {
-	action_items_page_down();
+	__action_items_page_down();
 }
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.SAVE_LEVEL
 and keyboard_check(vk_control)
 and keyboard_check_pressed(ord("S")) {
-  action_save_level();
+  __action_save_level();
 }
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.MENU
 and key_maker_creator_menu {
-  action_menu();
+  __action_menu();
 }
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.LOAD_LEVEL
 and keyboard_check(vk_control)
 and keyboard_check_pressed(ord("O")) {
-  action_load_level();
+  __action_load_level();
 }
 
 if image_index == LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL
 and key_maker_toggle_test {
-  action_test_level();
+  __action_test_level();
 }
 
 // ===================================
@@ -102,7 +102,7 @@ and key_maker_toggle_test {
 
 switch(image_index) {
   case LEVEL_MAKER_BUTTON_TYPE.CLEAR_LEVEL:
-    action_clear_level();
+    __action_clear_level();
   break;
 }
 
@@ -110,43 +110,43 @@ switch(image_index) {
 if _has_left_pressed and _is_mouse_hover {
   switch(image_index) {
     case LEVEL_MAKER_BUTTON_TYPE.PAGE_UP:
-      action_items_page_up();
+      __action_items_page_up();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.PAGE_DOWN:
-      action_items_page_down();
+      __action_items_page_down();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.MENU:
-      action_menu();
+      __action_menu();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.SAVE_LEVEL:
-      action_save_level();
+      __action_save_level();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.LOAD_LEVEL:
-      action_load_level();
+      __action_load_level();
     break;
   
     case LEVEL_MAKER_BUTTON_TYPE.TEST_LEVEL:
-      action_test_level();
+      __action_test_level();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.HELP:
-      action_help();
+      __action_help();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.CHANGE_STYLE:
-      action_change_style();
+      __action_change_style();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.ERASER:
-      action_eraser();
+      __action_eraser();
     break;
 
     case LEVEL_MAKER_BUTTON_TYPE.CHANGE_LAYER:
-      action_change_layer();
+      __action_change_layer();
     break;
   }
 }
